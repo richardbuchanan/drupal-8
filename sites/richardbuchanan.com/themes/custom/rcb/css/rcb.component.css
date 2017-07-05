@@ -1,0 +1,57 @@
+/**
+ * @file
+ * Discrete, reusable UI elements.
+ */
+
+/**
+ * UIkit articles.
+ */
+.uk-article-meta h3>a {
+  color: #278ac5;
+}
+.uk-article-meta h3:focus>a,
+.uk-article-meta h3:hover>a {
+  color: #0879bc;
+  text-decoration: underline;
+}
+
+/**
+ * UIkit buttons.
+ */
+.uk-button-primary {
+  background-color: #278ac5;
+}
+.uk-button-primary:focus,
+.uk-button-primary:hover {
+  background-color: #0879bc;
+}
+
+/**
+ * UIkit icons.
+ */
+.uk-divider-icon {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22none%22%20stroke%3D%22%23278ac5%22%20stroke-width%3D%222%22%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%227%22%3E%3C%2Fcircle%3E%0A%3C%2Fsvg%3E%0A");
+}
+.uk-divider-icon::after,
+.uk-divider-icon::before {
+  border-color: #278ac5;
+}
+
+/**
+ * UIkit modal.
+ */
+[class*=uk-modal-close-] {
+  cursor: pointer !important;
+}
+
+/**
+ * UIkit navbar.
+ */
+.uk-navbar-container {
+  height: 235px;
+}
+@media (min-width: 960px) {
+  .uk-navbar-container {
+    height: 245px;
+  }
+}

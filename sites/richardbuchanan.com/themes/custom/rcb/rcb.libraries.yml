@@ -1,0 +1,17 @@
+global-style:
+  version: VERSION
+  css:
+    base:
+      css/rcb.base.css: {}
+      //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css: { type: external }
+    layout:
+      css/rcb.layout.css: {}
+    component:
+      css/rcb.component.css: {}
+    theme:
+      css/rcb.theme.css: {}
+  js:
+    js/rcb.theme.js: {}
+    //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js: { type: external }
+  dependencies:
+    - uikit_blog/global-style

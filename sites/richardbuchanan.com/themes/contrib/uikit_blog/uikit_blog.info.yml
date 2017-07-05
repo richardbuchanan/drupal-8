@@ -1,0 +1,22 @@
+name: 'UIkit Blog'
+type: theme
+description: 'UIkit Sub-theme'
+# core: 8.x
+base theme: uikit
+
+regions:
+  navbar: 'Navigation Bar'
+  offcanvas: 'Offcanvas Navigation'
+  content: Content
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'
+  footer: 'Footer'
+
+libraries:
+  - uikit_blog/global-style
+
+# Information added by Drupal.org packaging script on 2017-06-25
+version: '8.x-3.0-rc1'
+core: '8.x'
+project: 'uikit_blog'
+datestamp: 1498402453

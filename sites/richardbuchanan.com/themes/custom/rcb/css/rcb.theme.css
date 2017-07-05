@@ -1,0 +1,132 @@
+/**
+ * @file
+ * Purely visual styling (“look-and-feel”) for a component.
+ */
+
+/**
+ * UIkit close.
+ */
+[uk-close] svg+svg {
+  display: none;
+}
+
+/**
+ * Site branding.
+ */
+.site-branding__logo,
+.site-branding__slogan {
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+.site-branding__logo .uk-logo {
+  padding: 24px 0;
+}
+.site-branding__slogan span {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/**
+ * Login modal.
+ */
+#login-modal .uk-background-cover {
+  background-image: url(images/login-photo.jpeg);
+  box-sizing: border-box;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+/**
+ * Navbar block.
+ */
+.block--navbar-menu {
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+.block--navbar-menu .uk-navbar-nav {
+  display: inline-block;
+  float: none;
+}
+.block--navbar-menu .uk-navbar-nav>li {
+  display: inline-block;
+  float: none;
+  line-height: normal;
+  padding: 15px 12px;
+  vertical-align: middle;
+}
+.block--navbar-menu .uk-navbar-nav>li>a {
+  font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: auto;
+  line-height: normal;
+  color: #444;
+  padding: 0;
+  text-transform: uppercase;
+}
+.block--navbar-menu__block-rcb-account-menu .uk-navbar-nav>li>a {
+  color: #bdbdbd;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+.block--navbar-menu__block-rcb-account-menu .uk-navbar-nav>li:focus>a,
+.block--navbar-menu__block-rcb-account-menu .uk-navbar-nav>li:hover>a {
+  color: #6b6b6b;
+}
+
+/**
+ * Page title block.
+ */
+.block-page-title-block .uk-article-title {
+  background: #278ac5;
+  color: #fff;
+  margin: 0 0 15px;
+  padding: 15px;
+}
+
+/**
+ * Nodes.
+ */
+.node--content p {
+  text-align: justify;
+}
+
+/**
+ * Media queries.
+ */
+@media (min-width: 960px) {
+  .uk-article-meta--full-node {
+    width: 350px !important;
+  }
+}
+@media (max-width: 959px) {
+  #login-modal .uk-background-cover {
+    display: none;
+  }
+  .block-page-title-block .uk-article-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  .uk-article-meta--full-node {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+@media (max-width: 639px) {
+  .block-page-title-block {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .block-page-title-block .uk-article-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+}

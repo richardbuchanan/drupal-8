@@ -1,0 +1,11 @@
+/**
+ * @file
+ * Macro arrangement of a web page, including any grid systems.
+ */
+
+@media (max-width: 659px) {
+  .uk-navbar-center:not(:only-child) {
+    left: 25%;
+    transform: translate(-16.666%, -50%);
+  }
+}

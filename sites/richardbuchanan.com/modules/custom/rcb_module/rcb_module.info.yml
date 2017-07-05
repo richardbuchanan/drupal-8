@@ -1,0 +1,4 @@
+name: 'RCB Module'
+type: 'module'
+description: 'Custom module for richardbuchanan.com'
+core: '8.x'

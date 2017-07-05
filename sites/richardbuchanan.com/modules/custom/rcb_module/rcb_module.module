@@ -1,0 +1,72 @@
+<?php
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_mail().
+ */
+function rcb_module_mail($key, &$message, $params) {
+  switch($key) {
+    case 'comment_saved':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function rcb_module_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'comment_comment_form') {
+    $form['actions']['submit']['#submit'][] = 'rcb_module_form_comment_comment_form_submit';
+  }
+}
+
+/**
+ * Submit handler for comment_comment_form.
+ *
+ * @param array $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function rcb_module_form_comment_comment_form_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  global $base_url;
+
+  // Set site variables.
+  $site_email = \Drupal::config('system.site')->get('mail');
+  $site_name = \Drupal::config('system.site')->get('name');
+
+  // Get the comment subject and body.
+  $get_subject = $form_state->getValue('subject')[0]['value'];
+  $get_body = $form_state->getValue('comment_body')[0]['value'];
+
+  // Construct a URL string for the comment.
+  $get_redirect = $form_state->getRedirect();
+  $route_name = $get_redirect->getRouteName();
+  $route_parameters = $get_redirect->getRouteParameters();
+  $options = $get_redirect->getOptions();
+  $get_url = Url::fromRoute($route_name, $route_parameters, $options);
+
+  // Construct the message body.
+  $message_body = !empty($get_subject) ? '[Subject]: ' . $get_subject . "\n" : '';
+  $message_body .= '[URL]: ' . $base_url . $get_url->toString() . "\n";
+  $message_body .= '[Comment]: ' . $get_body;
+
+  // Set the message parameters to pass to rcb_module_mail.
+  $params = array(
+    'message' => $message_body,
+    'subject' => t('Comment saved on @site', array('@site' => $site_name)),
+  );
+
+  // Use the site's language code.
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  // Only send the email on the production site.
+  $send = $base_url == 'http://richardbuchanan.com' ? TRUE : FALSE;
+
+  // Use the mail plugin manager to send the email.
+  $mailManager = \Drupal::service('plugin.manager.mail');
+  $mailManager->mail('rcb_module', 'comment_saved', $site_email, $langcode, $params, $reply = NULL, $send);
+}

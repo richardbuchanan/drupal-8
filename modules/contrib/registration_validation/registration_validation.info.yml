@@ -1,0 +1,12 @@
+type: module
+name: 'Registration validation'
+description: 'Create custom validation rules for new user registrations.'
+# core: 8.x
+
+configure: registration_validation.admin
+
+# Information added by Drupal.org packaging script on 2017-05-31
+version: '8.x-1.2'
+core: '8.x'
+project: 'registration_validation'
+datestamp: 1496210645
