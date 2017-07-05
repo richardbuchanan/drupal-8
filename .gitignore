@@ -56,3 +56,4 @@ core/phpunit.xml
 .idea
 sites/default/files
 sites/localhost.*
+sites/sites.php
