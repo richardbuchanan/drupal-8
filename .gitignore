@@ -54,6 +54,7 @@ core/phpunit.xml
 *~
 .eslintrc
 .idea
+modules/contrib/devel
 sites/default/files
 sites/localhost.*
 sites/sites.php
