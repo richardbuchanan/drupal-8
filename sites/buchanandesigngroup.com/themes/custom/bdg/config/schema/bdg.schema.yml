@@ -1,0 +1,5 @@
+# Schema for the configuration files of the BDG theme.
+
+bdg.settings:
+  type: theme_settings
+  label: 'BDG settings'

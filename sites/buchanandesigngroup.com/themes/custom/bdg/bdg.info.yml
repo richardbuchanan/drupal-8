@@ -1,0 +1,16 @@
+name: BDG
+type: theme
+description: 'UIkit sub-theme for buchanandesigngroup.com'
+core: 8.x
+base theme: uikit
+
+regions:
+  navbar: 'Navigation Bar'
+  offcanvas: 'Offcanvas Navigation'
+  content: Content
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'
+  footer: 'Footer'
+
+libraries:
+  - bdg/global-style

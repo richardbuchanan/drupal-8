@@ -1,0 +1,15 @@
+global-style:
+  version: VERSION
+  css:
+    base:
+      css/bdg.base.css: {}
+    layout:
+      css/bdg.layout.css: {}
+    component:
+      css/bdg.component.css: {}
+    theme:
+      css/bdg.theme.css: {}
+  js:
+    js/bdg.theme.js: {}
+  dependencies:
+    - uikit/uikit
