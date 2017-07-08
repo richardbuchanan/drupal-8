@@ -16,6 +16,13 @@
 }
 
 /**
+ * UIkit breadcrumbs.
+ */
+.uk-breadcrumb {
+  margin-top: 0;
+}
+
+/**
  * UIkit buttons.
  */
 .uk-button-primary {
@@ -54,4 +61,11 @@
   .uk-navbar-container {
     height: 245px;
   }
+}
+
+/**
+ * UIkit tabs.
+ */
+#primary-tasks .uk-tab {
+  margin-top: 0;
 }

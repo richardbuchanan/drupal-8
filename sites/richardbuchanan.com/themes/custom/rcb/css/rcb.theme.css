@@ -104,7 +104,7 @@
  */
 @media (min-width: 960px) {
   .uk-article-meta--full-node {
-    width: 350px !important;
+    min-width: 275px;
   }
 }
 @media (max-width: 959px) {

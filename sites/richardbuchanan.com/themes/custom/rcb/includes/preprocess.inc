@@ -67,13 +67,12 @@ function rcb_preprocess_node(&$variables) {
     $meta_attributes = new Attribute;
     $meta_attributes->addClass('uk-article-meta');
     $meta_attributes->addClass('uk-article-meta--full-node');
-    $meta_attributes->addClass('uk-float-right');
-    $meta_attributes->addClass('uk-margin-large-left');
+    $meta_attributes->addClass('uk-float-left');
+    $meta_attributes->addClass('uk-margin-right');
 
     $variables['attributes']['id'] = "article--node-$nid";
     $variables['comment_attributes'] = $comment_attributes;
     $variables['content_attributes']['class'][] = 'node--content';
-    //$variables['content_attributes']['class'][] = 'uk-width-2-3@m';
     $variables['content_attributes']['class'][] = 'uk-margin-small-top';
     $variables['meta_attributes'] = $meta_attributes;
   }
