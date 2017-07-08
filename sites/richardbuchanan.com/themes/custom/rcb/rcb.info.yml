@@ -7,6 +7,8 @@ base theme: uikit_blog
 regions:
   navbar: 'Navigation Bar'
   offcanvas: 'Offcanvas Navigation'
+  page_title: 'Page Title'
+  search_bar: 'Search Bar'
   content: Content
   sidebar_first: 'Left Sidebar'
   sidebar_second: 'Right Sidebar'

@@ -20,6 +20,14 @@ function rcb_preprocess_page(&$variables) {
   $variables['header_attributes']->removeAttribute('uk-sticky');
   $variables['header_attributes']->removeAttribute('media');
   $variables['navbar_attributes']->addClass('uk-navbar-transparent');
+
+  $variables['page_title_attributes'] = new Attribute;
+  $variables['page_title_attributes']->setAttribute('id', 'page--title');
+  $variables['page_title_attributes']->addClass('uk-width-1-1');
+
+  $variables['search_bar_attributes'] = new Attribute;
+  $variables['search_bar_attributes']->setAttribute('id', 'search--bar');
+  $variables['search_bar_attributes']->addClass('uk-width-1-1');
 }
 
 /**
