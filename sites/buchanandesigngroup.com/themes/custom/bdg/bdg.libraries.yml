@@ -11,5 +11,3 @@ global-style:
       css/bdg.theme.css: {}
   js:
     js/bdg.theme.js: {}
-  dependencies:
-    - uikit/uikit
