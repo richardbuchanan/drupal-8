@@ -38,19 +38,18 @@ function template_preprocess_uikit_view_accordion(array &$variables) {
   $variables['items'] = $items;
 
   // Create attributes for accordion.
-  $accordion_data[] = 'showfirst: ' . ($options['showfirst'] ? 'true' : 'false');
-  $accordion_data[] = 'collapse: ' . ($options['collapse'] ? 'false' : 'true');
-  $accordion_data[] = 'animate: ' . ($options['animate'] ? 'true' : 'false');
-  $accordion_data[] = "easing: '" . $options['easing'] . "'";
+  $accordion_data[] = 'targets: ' . ($options['targets'] ? $options['targets'] : '> *');
+  $accordion_data[] = 'active: ' . ($options['active'] ? $options['active'] : 'false');
+  $accordion_data[] = 'collapsible: ' . ($options['collapsible'] ? 'true' : 'false');
+  $accordion_data[] = 'multiple: ' . ($options['multiple'] ? 'true' : 'false');
+  $accordion_data[] = 'animation: ' . ($options['animation'] ? 'true' : 'false');
+  $accordion_data[] = 'transition: ' . $options['transition'];
   $accordion_data[] = 'duration: ' . $options['duration'];
-  $accordion_data[] = "toggle: '" . $options['toggle'] . "'";
-  $accordion_data[] = "containers: '" . $options['containers'] . "'";
-  $accordion_data[] = "clsactive: '" . $options['clsactive'] . "'";
-  $data_accordion = '{' . implode(', ', $accordion_data) . '}';
+  $data_accordion = implode('; ', $accordion_data);
 
   $accordion_attributes = new Attribute();
   $accordion_attributes->addClass('uk-accordion');
-  $accordion_attributes->setAttribute('data-uk-accordion', $data_accordion);
+  $accordion_attributes->setAttribute('uk-accordion', $data_accordion);
 
   // Set accordion attributes for twig template.
   $variables['accordion_attributes'] = $accordion_attributes;
@@ -80,12 +79,8 @@ function template_preprocess_uikit_view_grid(array &$variables) {
     $grid_classes[] = $options['grid_gutter'];
   }
 
-  foreach (['small', 'medium', 'large', 'xlarge'] as $size) {
+  foreach (['@s', '@m', '@l', '@xl'] as $size) {
     $grid_classes[] = $options["width_" . $size];
-  }
-
-  if ($options['row_class']) {
-    $grid_classes[] = $options['row_class'];
   }
 
   $variables['grid_classes'] = implode(' ', $grid_classes);
@@ -93,6 +88,16 @@ function template_preprocess_uikit_view_grid(array &$variables) {
   $variables['id'] = UIkitViews::getUniqueId($view);
   $variables['options'] = $options;
   $variables['uikit_version'] = UIkitComponents::getUIkitLibraryVersion();
+
+  $items = [];
+
+  // Iterate over each rendered views result row.
+  foreach ($variables['rows'] as $result_index => $item) {
+    $items[$result_index]['content'] = $item;
+  }
+
+  // Add items to the variables array.
+  $variables['items'] = $items;
 }
 
 /**
@@ -108,12 +113,30 @@ function template_preprocess_uikit_view_grid(array &$variables) {
 function template_preprocess_uikit_view_list(array &$variables) {
   $view = $variables['view'];
   $options = $view->style_plugin->options;
+
+  // Set the wrapper attributes.
+  $variables['attributes'] = new Attribute();
+  if ($options['wrapper_class']) {
+    $variables['attributes']->addClass($options['wrapper_class']);
+  }
+
+  // Set the list attributes.
   $variables['list_attributes'] = new Attribute();
   $variables['list_attributes']['class'] = ['uk-list'];
 
   if ($options['class'] != 'default') {
     $variables['list_attributes']['class'][] = $options['class'];
   }
+
+  $items = [];
+
+  // Iterate over each rendered views result row.
+  foreach ($variables['rows'] as $result_index => $item) {
+    $items[$result_index]['content'] = $item;
+  }
+
+  // Add items to the variables array.
+  $variables['items'] = $items;
 }
 
 /**
