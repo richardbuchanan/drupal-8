@@ -72,11 +72,15 @@
  * @ingroup uikit_themeable
  */
 #}
-<article{{ attributes.addClass('uk-article', 'uk-margin') }}>
-  {% if node.isPublished() == false %}
-    <div class="uk-alert uk-alert-warning">The {{ node.getType() }} <em class="placeholder">{{ label }}</em> is not published.</div>
-  {% endif %}
-
+{%
+  set classes = [
+    'uk-article',
+    'uk-margin',
+    node.isPublished() == false ? 'uk-alert',
+    node.isPublished() == false ? 'uk-alert-warning',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
   <div{{ meta_attributes }}>
     <footer>
       {{ title_prefix }}

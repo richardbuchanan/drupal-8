@@ -72,7 +72,15 @@
  * @ingroup uikit_themeable
  */
 #}
-<article{{ attributes.addClass('uk-article', 'uk-margin') }}>
+{%
+  set classes = [
+    'uk-article',
+    'uk-margin',
+    node.isPublished() == false ? 'uk-alert',
+    node.isPublished() == false ? 'uk-alert-warning',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
   <div class="uk-grid">
 
     <div class="uk-article-meta uk-width-1-3@m">
