@@ -70,6 +70,7 @@ function uikit_views_theme_registry_alter(&$theme_registry) {
   $theme_registry['uikit_view_accordion']['path'] = $module_path . '/templates/views';
   $theme_registry['uikit_view_grid']['path'] = $module_path . '/templates/views';
   $theme_registry['uikit_view_list']['path'] = $module_path . '/templates/views';
+  $theme_registry['uikit_view_slideshow']['path'] = $module_path . '/templates/views';
   $theme_registry['uikit_view_table']['path'] = $module_path . '/templates/views';
 }
 

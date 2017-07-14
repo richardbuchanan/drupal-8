@@ -1,6 +1,6 @@
-name: BDG
+name: 'BDG'
 type: theme
-description: 'UIkit sub-theme for buchanandesigngroup.com'
+description: 'UIkit Sub-theme'
 core: 8.x
 base theme: uikit
 
