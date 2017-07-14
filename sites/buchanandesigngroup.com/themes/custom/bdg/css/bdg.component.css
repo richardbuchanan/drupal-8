@@ -1,1 +1,19 @@
-/* Discrete, reusable UI elements. */
+/**
+ * @file
+ * Discrete, reusable UI elements.
+ */
+
+.contextual+.uk-h1,
+.contextual+.uk-h2,
+.contextual+.uk-h3,
+.contextual+.uk-h4,
+.contextual+.uk-h5,
+.contextual+.uk-h6,
+.contextual+h1,
+.contextual+h2,
+.contextual+h3,
+.contextual+h4,
+.contextual+h5,
+.contextual+h6 {
+  margin-top: 0;
+}
