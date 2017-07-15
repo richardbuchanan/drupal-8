@@ -9,6 +9,8 @@
 
   Drupal.behaviors.rcb = {
     attach: function () {
+      var mediaAll = $('[media="bogusAll"]');
+      mediaAll.prop('media', 'all');
       var loginLink = $('[href="/user/login"]');
       var loginModal = $("#login-modal");
       var loginContent = loginModal.clone();
