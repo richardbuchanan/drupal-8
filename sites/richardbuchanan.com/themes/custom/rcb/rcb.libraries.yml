@@ -3,7 +3,7 @@ global-style:
   css:
     base:
       css/rcb.base.css: {}
-      //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css: { type: external, attributes: { defer: true, async: true } }
+      //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css: { type: external, attributes: { defer: true } }
     layout:
       css/rcb.layout.css: {}
     component:
@@ -12,6 +12,6 @@ global-style:
       css/rcb.theme.css: {}
   js:
     js/rcb.theme.js: {}
-    //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js: { type: external, attributes: { defer: true, async: true } }
+    //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js: { type: external, attributes: { defer: true } }
   dependencies:
     - uikit_blog/global-style
