@@ -30,6 +30,7 @@ sites/*/files/php
 sites/*/files/private
 sites/*/files/tmp
 sites/*/logs
+sites/*/xmlsitemap
 
 # Ignore SimpleTest multi-site environment.
 sites/simpletest
