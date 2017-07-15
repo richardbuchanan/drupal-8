@@ -3,6 +3,7 @@ global-style:
   css:
     base:
       css/rcb.base.css: {}
+      //fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i: { type: external, media: bogusAll }
       //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css: { type: external, media: bogusAll }
     layout:
       css/rcb.layout.css: {}
@@ -15,3 +16,21 @@ global-style:
     //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js: { type: external, attributes: { defer: true } }
   dependencies:
     - uikit_blog/global-style
+
+uikit:
+  remote: https://getuikit.com/
+  version: 3.0.0-beta.25
+  license:
+    name: MIT
+    url: https://github.com/uikit/uikit/blob/develop/LICENSE.md
+    gpl-compatible: true
+  css:
+    base:
+      //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/css/uikit.min.css: { type: external, minified: true, media: bogusAll }
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit.min.js: { type: external, minified: true, attributes: { defer: true } }
+    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit-icons.min.js: { type: external, minified: true, attributes: { defer: true } }
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal

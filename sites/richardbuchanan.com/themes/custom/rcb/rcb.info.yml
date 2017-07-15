@@ -14,5 +14,12 @@ regions:
   sidebar_second: 'Right Sidebar'
   footer: 'Footer'
 
+libraries-override:
+  uikit/uikit: rcb/uikit
+  uikit_blog/global-styling:
+    css:
+      base:
+        //fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i: false
+
 libraries:
   - rcb/global-style
