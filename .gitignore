@@ -29,9 +29,8 @@ sites/*/files/js
 sites/*/files/php
 sites/*/files/private
 sites/*/files/tmp
+sites/*/files/xmlsitemap
 sites/*/logs
-sites/*/xmlsitemap
-sites/*/xmlsitemap/*
 
 # Ignore SimpleTest multi-site environment.
 sites/simpletest
