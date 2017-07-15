@@ -322,6 +322,17 @@ class HtmlResponseAttachmentsProcessor implements AttachmentsResponseProcessorIn
     $content = $response->getContent();
     foreach ($placeholders as $type => $placeholder) {
       if (isset($variables[$type])) {
+        if ($type == 'styles') {
+          foreach ($variables[$type] as $index => $item) {
+            if (isset($item['#attributes']['rel']) && $item['#attributes']['rel'] == 'stylesheet') {
+              $components = parse_url($item['#attributes']['href']);
+              if (isset($components['host'])) {
+                $variables[$type][$index]['#attributes']['defer'] = '';
+              }
+            }
+          }
+        }
+
         $content = str_replace($placeholder, $this->renderer->renderPlain($variables[$type]), $content);
       }
     }
