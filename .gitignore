@@ -31,6 +31,7 @@ sites/*/files/private
 sites/*/files/tmp
 sites/*/logs
 sites/*/xmlsitemap
+sites/*/xmlsitemap/*
 
 # Ignore SimpleTest multi-site environment.
 sites/simpletest
