@@ -20,7 +20,7 @@
 
 <div{{ accordion_attributes }}>
   {% for row in items %}
-    <h3 class="uk-accordion-title">{{ row.title }}</h3>
-    <div class="uk-accordion-content">{{ row.content }}</div>
+    <h3 class="{{ accordion_toggle }}">{{ row.title }}</h3>
+    <div class="{{ accordion_container }}">{{ row.content }}</div>
   {% endfor %}
 </div>
