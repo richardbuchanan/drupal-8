@@ -3,46 +3,10 @@
  * CSS reset/normalize plus HTML element styling.
  */
 html {
-  position: relative;
   overflow-y: scroll;
-  min-height: 100%;
 }
-html.toolbar-horizontal,
-html.toolbar-vertical {
-  height: calc(100% - 1px);
+#drupal-live-announce {
+  display: none !important;
+  height: 0;
+  width: 0;
 }
-html.toolbar-horizontal.toolbar-tray-open {
-  height: calc(100% - 2px);
-}
-
-body {
-  background: #f9f9f7;
-  height: 100%;
-}
-body.toolbar-horizontal,
-body.toolbar-vertical {
-  height: calc(100% - 39px);
-}
-body.toolbar-horizontal.toolbar-tray-open {
-  height: calc(100% - 79px);
-}
-.uk-offcanvas-content {
-  position: absolute !important;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-body.toolbar-horizontal .uk-offcanvas-content {
-  top: 39px;
-  height: calc(100% - 40px);
-}
-body.toolbar-horizontal.toolbar-tray-open .uk-offcanvas-content {
-  top: 78px;
-  height: calc(100% - 79px);
-}
-
-  body.toolbar-fixed .uk-offcanvas-content {
-    top: 39px;
-    height: calc(100% - 40px);
-  }

@@ -29,6 +29,7 @@ sites/*/files/js
 sites/*/files/php
 sites/*/files/private
 sites/*/files/tmp
+sites/*/files/translations
 sites/*/files/xmlsitemap
 sites/*/logs
 

@@ -73,9 +73,9 @@
   {{ title_prefix }}
   {{ title_suffix }}
 
-  <div class="uk-position-relative" uk-grid>
+  <div uk-grid>
     {% if display_submitted or content.comment or content.field_tags %}
-      <div class="node--metadata uk-width-1-1 uk-width-small@m">
+      <div class="node--metadata uk-width-1-1 uk-width-1-4@l">
         {% if display_submitted %}
           <div class="node--submitted" uk-grid>
             <i class="uk-margin-right" uk-icon="icon: calendar; ratio: 1.5"></i>

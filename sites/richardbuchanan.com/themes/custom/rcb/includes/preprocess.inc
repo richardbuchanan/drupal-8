@@ -11,6 +11,9 @@
  * @see process.inc
  */
 
+use Drupal\core\Link;
+use Drupal\core\Url;
+
 /**
  * Implements template_preprocess_html().
  */
@@ -29,6 +32,27 @@ function rcb_preprocess_region(&$variables) {
     case 'sidebar_first':
       $variables['attributes']['class'][] = 'uk-height-1-1';
       break;
+  }
+}
+
+/**
+ * Implements template_preprocess_block().
+ */
+function rcb_preprocess_block(&$variables) {
+  $id = $variables['elements']['#id'];
+
+  if ($id == 'rcb_powered') {
+    $drupal_url = Url::fromUri('https://www.drupal.org');
+    $uikit_url = Url::fromUri('https://getuikit.com');
+    $drupal_text = t('Drupal');
+    $uikit_text = t('UIkit');
+    $url_options = array('attributes' => array('target' => '_blank'));
+    $drupal_url->setOptions($url_options);
+    $uikit_url->setOptions($url_options);
+    $drupal_link = Link::fromTextAndUrl($drupal_text, $drupal_url);
+    $uikit_link = Link::fromTextAndUrl($uikit_text, $uikit_url);
+    $content = t('Powered by ') . $drupal_link->toString() . ' and ' . $uikit_link->toString();
+    $variables['content']['#markup'] = $content;
   }
 }
 

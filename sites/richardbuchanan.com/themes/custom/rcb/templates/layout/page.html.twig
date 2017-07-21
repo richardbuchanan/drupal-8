@@ -58,23 +58,23 @@
     </div>
   </nav>
 
-  <aside class="rcb-sidebar-left uk-height-1-1 uk-visible@m">
+  <aside class="rcb-sidebar-left uk-visible@m">
     {{ page.sidebar_first }}
   </aside>
 
   <div class="rcb-main" uk-grid>
-    <main class="uk-width-1-1 uk-width-2-3@l">
+    <main class="uk-width-1-1 uk-width-3-4@m uk-width-4-5@l">
       <a id="main-content" tabindex="-1"></a>
       {{ page.content }}
-
-      <footer role="contentinfo">
-        {{ page.footer }}
-      </footer>
     </main>
 
-    <aside class="rcb-sidebar-right uk-width-expand">
+    <aside class="rcb-sidebar-right uk-width-expand uk-visible@m">
       {{ page.sidebar_second }}
     </aside>
+
+    <footer class="rcb-footer uk-width-1-1" role="contentinfo">
+      {{ page.footer }}
+    </footer>
   </div>
 
   <div id="offcanvas" uk-offcanvas="mode: reveal">
