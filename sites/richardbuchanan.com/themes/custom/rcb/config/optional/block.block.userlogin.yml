@@ -7,8 +7,8 @@ dependencies:
     - rcb
 id: userlogin
 theme: rcb
-region: content
-weight: 1
+region: sidebar_second
+weight: -7
 provider: null
 plugin: user_login_block
 settings:
