@@ -11,8 +11,8 @@
  * @see process.inc
  */
 
-use Drupal\core\Link;
-use Drupal\core\Url;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Implements template_preprocess_html().
