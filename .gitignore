@@ -26,6 +26,7 @@ sites/*/files/color
 sites/*/files/config_*
 sites/*/files/css
 sites/*/files/js
+sites/*/files/languages
 sites/*/files/php
 sites/*/files/private
 sites/*/files/tmp
