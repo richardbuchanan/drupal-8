@@ -71,8 +71,11 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
 /**
  * Nodes
  */
-.node--teaser>h2.uk-text-lead {
+.node.node--teaser>h2.uk-text-lead {
   margin: 0;
+}
+.node .node--metadata {
+  margin-bottom: 10px;
 }
 
 /**
@@ -80,4 +83,15 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
  */
 #search-block-form .form-actions {
   margin: 0 !important;
+}
+
+@media (min-width: 960px) {
+  .node .node--metadata {
+    width: 180px;
+  }
+}
+@media (min-width: 1400px) {
+  .node .node--metadata {
+    width: 300px;
+  }
 }

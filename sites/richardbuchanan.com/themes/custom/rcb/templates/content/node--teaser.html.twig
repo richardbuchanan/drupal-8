@@ -79,44 +79,44 @@
 
   <hr>
 
-  <div class="uk-position-relative">
+  <div class="uk-position-relative" uk-grid>
     {% if display_submitted or content.comment or content.field_tags %}
-      <div class="uk-float-left uk-margin-right">
-        <div{{ author_attributes.addClass('uk-width-medium') }}>
-          {% if display_submitted %}
-            <div class="node--submitted" uk-grid>
-              <i class="uk-margin-right" uk-icon="icon: calendar; ratio: 1.5"></i>
-              <div class="uk-width-expand uk-padding-remove">
-                <a href="{{ url }}">{{ date }}</a>
-              </div>
-              {{ metadata }}
+      <div class="node--metadata uk-width-1-1 uk-width-small@m">
+        {% if display_submitted %}
+          <div class="node--submitted" uk-grid>
+            <i class="uk-margin-right" uk-icon="icon: calendar; ratio: 1.5"></i>
+            <div class="uk-width-expand uk-padding-remove">
+              <a href="{{ url }}">{{ date }}</a>
             </div>
-          {% endif %}
+            {{ metadata }}
+          </div>
+        {% endif %}
 
-          {% if content.comment %}
-            <div class="node--add-comment uk-margin-small-top" uk-grid>
-              <i class="uk-margin-right" uk-icon="icon: comment; ratio: 1.5"></i>
-              <div class="uk-width-expand uk-padding-remove">
-                <a href="{{ url }}#comment-form">Add new comment</a>
-              </div>
+        {% if content.comment %}
+          <div class="node--add-comment uk-margin-small-top" uk-grid>
+            <i class="uk-margin-right" uk-icon="icon: comment; ratio: 1.5"></i>
+            <div class="uk-width-expand uk-padding-remove">
+              <a href="{{ url }}#comment-form">Add new comment</a>
             </div>
-          {% endif %}
+          </div>
+        {% endif %}
 
-          {% if content.field_tags %}
-            <div class="node--tags uk-margin-small-top" uk-grid>
-              <i class="uk-margin-right" uk-icon="icon: tag; ratio: 1.5"></i>
-              <div class="uk-width-expand uk-padding-remove">
-                {{ content.field_tags }}
-              </div>
+        {% if content.field_tags %}
+          <div class="node--tags uk-margin-small-top" uk-grid>
+            <i class="uk-margin-right" uk-icon="icon: tag; ratio: 1.5"></i>
+            <div class="uk-width-expand uk-padding-remove">
+              {{ content.field_tags }}
             </div>
-          {% endif %}
-        </div>
+          </div>
+        {% endif %}
       </div>
     {% endif %}
 
-    <div{{ content_attributes }}>
-      {{ content|without('field_tags')|without('links') }}
+    <div{{ content_attributes.addClass('uk-width-expand') }}>
+      {{ content|without('field_tags')|without('links')|without('comment') }}
     </div>
   </div>
+
+  {{ content.comment }}
 
 </article>
