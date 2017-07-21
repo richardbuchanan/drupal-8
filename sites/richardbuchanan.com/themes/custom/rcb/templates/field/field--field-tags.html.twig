@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for a field.
+ * Theme override to display a tags field.
  *
  * To override output, copy the "field.html.twig" from the templates directory
  * to your theme's directory and customize it, just like customizing other
@@ -38,17 +38,8 @@
  * @ingroup uikit_themeable
  */
 #}
-{%
-  set classes = [
-    'uk-subnav',
-    'uk-margin-small-top',
-  ]
-%}
-{% if not label_hidden %}
-  <h5{{ title_attributes }}>{{ label }}</h5>
-{% endif %}
+{% set classes = ['uk-list'] %}
 <ul{{ attributes.addClass(classes) }}>
-  <li><span class="uk-margin-small-right" uk-icon="tag"></span></li>
   {% for item in items %}
     <li{{ item.attributes }}>{{ item.content }}</li>
   {% endfor %}

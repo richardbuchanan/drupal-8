@@ -8,7 +8,7 @@ dependencies:
 id: rcb_help
 theme: rcb
 region: content
-weight: -1
+weight: -2
 provider: null
 plugin: help_block
 settings:

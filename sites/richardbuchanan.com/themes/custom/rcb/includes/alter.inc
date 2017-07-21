@@ -16,38 +16,24 @@
  * @see \Drupal\Core\Render\Renderer
  */
 
+use Drupal\Core\Template\Attribute;
+use Drupal\block\Entity\Block;
+
 /**
- * Implements hook_theme_suggestions_HOOK_alter() for container templates.
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
-function rcb_theme_suggestions_container_alter(array &$suggestions, array $variables) {
-  $type = isset($variables['element']['#type']) ? $variables['element']['#type'] : 0;
-
-  if ($type && $type != 'container') {
-    $submit = isset($variables['element']['submit']);
-    $submit_value = $submit && isset($variables['element']['submit']['#value']) ? $variables['element']['submit']['#value']->getUntranslatedString() : 0;
-
-    if ($submit_value && $submit_value != 'Search') {
-      $suggestions[] = "container__$type";
-    }
-    else {
-      $suggestions[] = "container__$type" . '__search';
-    }
-  }
-
-  if (isset($variables['element']['administration_menu'])) {
-    $suggestions[] = 'container__admin__toolbar';
-  }
+function rcb_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  $block_id = $variables['elements']['#id'];
+  $block = Block::load($block_id);
+  $region = $block->getRegion();
+  $suggestions[] = 'block__' . $region . '__' . $block_id;
 }
 
 /**
- * Implements hook_theme_suggestions_HOOK_alter() for form element templates.
+ * Implements hook_form_FORM_ID_alter() for user_login_form().
  */
-function rcb_theme_suggestions_form_element_alter(array &$suggestions, array $variables) {
-  $type = $variables['element']['#type'];
-  $parents = isset($variables['element']['#array_parents']) ? $variables['element']['#array_parents'] : [];
-  $key = array_search('form_element__search', $suggestions);
-
-  if ($type == 'search' && $parents && !in_array('basic', $parents) && $key !== false) {
-    unset($suggestions[$key]);
-  }
+function rcb_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['actions']['#attributes'] = new Attribute;
+  $form['actions']['#attributes']->addClass('uk-display-inline-block');
+  $form['actions']['#attributes']->addClass('uk-width-1-1');
 }

@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Template\Attribute;
-use Drupal\uikit\UIkit;
 use Drupal\uikit_components\UIkitComponents;
 use Drupal\uikit_views\UIkitViews;
 
@@ -21,7 +20,6 @@ use Drupal\uikit_views\UIkitViews;
  *   - rows: The raw row data.
  */
 function template_preprocess_uikit_view_accordion(array &$variables) {
-  $variables['#attached']['library'][] = UIkit::getUIkitComponent('accordion');
   $view = $variables['view'];
   $options = $view->style_plugin->options;
   $title_field = $options['title_field'];
@@ -40,27 +38,21 @@ function template_preprocess_uikit_view_accordion(array &$variables) {
   $variables['items'] = $items;
 
   // Create attributes for accordion.
-  $accordion_data[] = 'showfirst: ' . ($options['showfirst'] ? 'true' : 'false');
-  $accordion_data[] = 'collapse: ' . ($options['collapse'] ? 'true' : 'false');
-  $accordion_data[] = 'animate: ' . ($options['animate'] ? 'true' : 'false');
-  $accordion_data[] = "easing: '" . $options['easing'] . "'";
+  $accordion_data[] = 'targets: ' . ($options['targets'] ? $options['targets'] : '> *');
+  $accordion_data[] = 'active: ' . ($options['active'] ? $options['active'] : 'false');
+  $accordion_data[] = 'collapsible: ' . ($options['collapsible'] ? 'true' : 'false');
+  $accordion_data[] = 'multiple: ' . ($options['multiple'] ? 'true' : 'false');
+  $accordion_data[] = 'animation: ' . ($options['animation'] ? 'true' : 'false');
+  $accordion_data[] = 'transition: ' . $options['transition'];
   $accordion_data[] = 'duration: ' . $options['duration'];
-  $accordion_data[] = "toggle: '" . $options['toggle'] . "'";
-  $accordion_data[] = "containers: '" . $options['containers'] . "'";
-  $accordion_data[] = "clsactive: '" . $options['clsactive'] . "'";
-  $data_accordion = '{' . implode(', ', $accordion_data) . '}';
+  $data_accordion = implode('; ', $accordion_data);
 
   $accordion_attributes = new Attribute();
   $accordion_attributes->addClass('uk-accordion');
-  $accordion_attributes->setAttribute('data-uk-accordion', $data_accordion);
+  $accordion_attributes->setAttribute('uk-accordion', $data_accordion);
 
   // Set accordion attributes for twig template.
   $variables['accordion_attributes'] = $accordion_attributes;
-
-  // Set the accordion toggle and container elements.
-  $selectors = '/[.#\[\]]/i';
-  $variables['accordion_toggle'] = preg_replace($selectors, '', $options['toggle']);
-  $variables['accordion_container'] = preg_replace($selectors, '', $options['containers']);
 }
 
 /**
@@ -87,7 +79,7 @@ function template_preprocess_uikit_view_grid(array &$variables) {
     $grid_classes[] = $options['grid_gutter'];
   }
 
-  foreach (['small', 'medium', 'large', 'xlarge'] as $size) {
+  foreach (['@s', '@m', '@l', '@xl'] as $size) {
     $grid_classes[] = $options["width_" . $size];
   }
 

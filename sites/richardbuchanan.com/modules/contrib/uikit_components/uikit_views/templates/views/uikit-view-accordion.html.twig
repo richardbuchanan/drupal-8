@@ -13,14 +13,15 @@
  * @see template_preprocess_uikit_view_accordion()
  */
 #}
-{{ attach_library('uikit/uikit.accordion') }}
 {% if title %}
   <h3>{{ title }}</h3>
 {% endif %}
 
-<div{{ accordion_attributes }}>
+<ul{{ accordion_attributes }}>
   {% for row in items %}
-    <h3 class="{{ accordion_toggle }}">{{ row.title }}</h3>
-    <div class="{{ accordion_container }}">{{ row.content }}</div>
+    <li>
+      <h3 class="uk-accordion-title">{{ row.title }}</h3>
+      <div class="uk-accordion-content">{{ row.content }}</div>
+    </li>
   {% endfor %}
-</div>
+</ul>

@@ -6,7 +6,7 @@ dependencies:
 id: rcb_local_actions
 theme: rcb
 region: content
-weight: -3
+weight: -4
 provider: null
 plugin: local_actions_block
 settings:

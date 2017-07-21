@@ -8,11 +8,11 @@ dependencies:
     - rcb
 third_party_settings:
   uikit_components:
-    uikit_navbar_alignment: center
+    uikit_navbar_alignment: left
 id: rcb_branding
 theme: rcb
-region: navbar
-weight: -8
+region: sidebar_first
+weight: -9
 provider: null
 plugin: system_branding_block
 settings:

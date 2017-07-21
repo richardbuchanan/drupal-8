@@ -10,11 +10,11 @@ dependencies:
     - rcb
 third_party_settings:
   uikit_components:
-    uikit_navbar_alignment: center
+    uikit_navbar_alignment: left
 id: rcb_main_menu
 theme: rcb
-region: navbar
-weight: -7
+region: sidebar_first
+weight: -8
 provider: null
 plugin: 'system_menu_block:main'
 settings:

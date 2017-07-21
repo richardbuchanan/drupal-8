@@ -11,42 +11,33 @@
  * @see process.inc
  */
 
-use Drupal\Core\Template\Attribute;
-
 /**
- * Implements template_preprocess_page().
+ * Implements template_preprocess_html().
  */
-function rcb_preprocess_page(&$variables) {
-  $variables['header_attributes']->removeAttribute('uk-sticky');
-  $variables['header_attributes']->removeAttribute('media');
-  $variables['navbar_attributes']->addClass('uk-navbar-transparent');
-
-  $variables['page_title_attributes'] = new Attribute;
-  $variables['page_title_attributes']->setAttribute('id', 'page--title');
-  $variables['page_title_attributes']->addClass('uk-width-1-1');
-
-  $variables['search_bar_attributes'] = new Attribute;
-  $variables['search_bar_attributes']->setAttribute('id', 'search--bar');
-  $variables['search_bar_attributes']->addClass('uk-width-1-1');
-}
-
-/**
- * Implements template_preprocess_block().
- */
-function rcb_preprocess_block(&$variables) {
-  if ($variables['plugin_id'] == 'system_main_block') {
-    $variables['attributes']['class'][] = 'uk-margin-top';
+function rcb_preprocess_html(&$variables) {
+  $user = \Drupal::currentUser();
+  if ($user->hasPermission('access toolbar')) {
+    $variables['html_attributes']->addClass('toolbar-fixed');
   }
 }
 
 /**
- * Implements template_preprocess_breadcrumb().
+ * Implements template_preprocess_region().
  */
-function rcb_preprocess_breadcrumb(&$variabes) {
-  $current_path = \Drupal::service('path.current')->getPath();
+function rcb_preprocess_region(&$variables) {
+  switch ($variables['region']) {
+    case 'sidebar_first':
+      $variables['attributes']['class'][] = 'uk-height-1-1';
+      break;
+  }
+}
 
-  if ($current_path == '/search/content' || $current_path == '/search/content/help') {
-    unset($variabes['breadcrumb'][0]);
+/**
+ * Implements hook_preprocess_HOOK() for page-title.html.twig.
+ */
+function rcb_preprocess_page_title(&$variables) {
+  if (($key = array_search('uk-text-center', $variables['title_attributes']['class'])) !== false) {
+    unset($variables['title_attributes']['class'][$key]);
   }
 }
 
@@ -57,37 +48,48 @@ function rcb_preprocess_node(&$variables) {
   $timestamp = $variables['node']->getCreatedTime();
   $date = \Drupal::service('date.formatter')->format($timestamp, $type = 'short');
   $variables['date'] = $date;
+}
 
-  if (!$variables['teaser']) {
-    $nid = $variables['node']->id();
+/**
+ * Implements template_preprocess_form_element().
+ */
+function rcb_preprocess_form_element(&$variables) {
+  switch ($variables['type']) {
+    case 'textarea':
+      $variables['margin'] = FALSE;
+      break;
 
-    $comment_attributes = new Attribute;
-    $comment_attributes->setAttribute('id', "#article--comments-$nid");
-
-    $meta_attributes = new Attribute;
-    $meta_attributes->addClass('uk-article-meta');
-    $meta_attributes->addClass('uk-article-meta--full-node');
-    $meta_attributes->addClass('uk-float-left');
-    $meta_attributes->addClass('uk-margin-right');
-
-    $variables['attributes']['id'] = "article--node-$nid";
-    $variables['comment_attributes'] = $comment_attributes;
-    $variables['content_attributes']['class'][] = 'node--content';
-    $variables['content_attributes']['class'][] = 'uk-margin-small-top';
-    $variables['meta_attributes'] = $meta_attributes;
+    default:
+      $variables['margin'] = TRUE;
   }
 }
 
 /**
- * Implements template_preprocess_field().
+ * Implements hook_preprocess_HOOK() for input.html.twig.
  */
-function rcb_preprocess_field(&$variables) {
-  $entity = isset($variables['element']['#object']) ? $variables['element']['#object'] : [];
-  $field_name = $variables['field_name'];
+function rcb_preprocess_input(&$variables) {
+  $element = $variables['element'];
+  $submit = isset($element['#type']) && $element['#type'] == 'submit';
 
-  if ($entity && $field_name == 'field_tags') {
-    $variables['title_attributes']['class'][] = 'uk-text-bold';
-    $variables['title_attributes']['class'][] = 'uk-margin-remove-bottom';
-    $variables['title_attributes']['class'][] = 'uk-margin-small-top';
+  if ($submit) {
+    // Add the uk-button class.
+    $variables['attributes']['class'] = ['uk-button'];
+
+    // Add uk-button-* classes based on the value of the button.
+    $value = $element['#value']->render();
+    switch ($value) {
+      case 'Advanced search':
+      case 'Create new account':
+      case 'Log in':
+      case 'Save':
+      case 'Search':
+      case 'Send message':
+      case 'Submit':
+        $variables['attributes']['class'][] = 'uk-button-primary';
+        break;
+
+      default:
+        $variables['attributes']['class'][] = 'uk-button-default';
+    }
   }
 }

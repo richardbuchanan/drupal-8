@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for a form element.
+ * Theme override to display a search block form element.
  *
  * Available variables:
  * - attributes: HTML attributes for the containing element.
@@ -42,28 +42,15 @@
  * - title_display: Title display setting.
  *
  * @see template_preprocess_form_element()
+ * @see uikit_preprocess_form_element()
  *
- * @ingroup uikit_themeable
+ * @ingroup uikit_blog_themeable
  */
 #}
-{%
-  set classes = [
-    'js-form-item',
-    'form-item',
-    'js-form-type-' ~ type|clean_class,
-    name ? 'form-item-' ~ name|clean_class,
-    name ? 'js-form-item-' ~ name|clean_class,
-    title_display not in ['after', 'before'] ? 'form-no-label',
-    disabled == 'disabled' ? 'form-disabled',
-    errors ? 'form-item--error',
-  ]
-%}
-<div{{ attributes.addClass(classes) }}>
-  {{ children }}
+{{ children }}
 
-  {% if errors %}
-    <div class="form-item--error-message uk-alert uk-alert-danger">
-      {{ errors }}
-    </div>
-  {% endif %}
-</div>
+{% if errors %}
+  <div class="form-item--error-message uk-alert uk-alert-danger">
+    {{ errors }}
+  </div>
+{% endif %}

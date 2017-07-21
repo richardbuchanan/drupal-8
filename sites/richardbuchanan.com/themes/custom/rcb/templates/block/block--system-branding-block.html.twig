@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for a branding block.
+ * Theme override to display the branding block.
  *
  * Each branding element variable (logo, name, slogan) is only available if
  * enabled in the block configuration.
@@ -11,17 +11,18 @@
  * - site_name: Name for site as defined in Site information settings.
  * - site_slogan: Slogan for site as defined in Site information settings.
  *
+ * @see template_preprocess_block()
+ * @see uikit_preprocess_block()
+ *
  * @ingroup uikit_themeable
  */
 #}
-<div{{ attributes }}>
-  <div class="site-branding__logo">
-    <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="uk-logo uk-inline">
-      <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />{% if site_name %} {{ site_name }}{% endif %}
-    </a>
-  </div>
+{% if site_logo %}
+  <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="uk-navbar-item uk-logo">
+    <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
+  </a>
+{% endif %}
 
-  <div class="site-branding__slogan">
-    <span class="uk-inline">{{ site_slogan }}</span>
-  </div>
-</div>
+{% if site_slogan %}
+  <span>{{ site_slogan }}</span>
+{% endif %}

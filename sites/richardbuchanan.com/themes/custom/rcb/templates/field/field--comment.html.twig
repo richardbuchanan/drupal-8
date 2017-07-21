@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for comment fields.
+ * Theme override to display comment fields.
  *
  * Available variables:
  * - attributes: HTML attributes for the containing element.
@@ -24,10 +24,11 @@
  *
  * @see template_preprocess_field()
  * @see comment_preprocess_field()
+ * @see uikit_preprocess_field__comment()
  */
 #}
 {% if comments or comment_form %}
-  <hr class="uk-divider-icon">
+  <hr>
 {% endif %}
 
 <section{{ attributes }}>

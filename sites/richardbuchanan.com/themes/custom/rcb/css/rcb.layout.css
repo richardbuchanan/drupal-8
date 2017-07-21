@@ -2,10 +2,82 @@
  * @file
  * Macro arrangement of a web page, including any grid systems.
  */
-
-@media (max-width: 659px) {
-  .uk-navbar-center:not(:only-child) {
-    left: 25%;
-    transform: translate(-16.666%, -50%);
+.rcb-sidebar-left {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 240px !important;
+  overflow: auto;
+}
+body.toolbar-horizontal .rcb-sidebar-left,
+body.toolbar-vertical .rcb-sidebar-left {
+  top: 39px;
+}
+body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
+  top: 78px;
+}
+.rcb-main {
+  padding-left: 30px;
+}
+.rcb-main main {
+  padding-right: 30px;
+}
+.rcb-main .region-content {
+  padding-top: 20px;
+}
+.rcb-sidebar-left .region,
+.rcb-sidebar-right .region {
+  padding: 20px;
+}
+.rcb-sidebar-left .region {
+  position: relative;
+  top: 0;
+  bottom: 0;
+}
+.rcb-sidebar-left .uk-navbar-item,
+.rcb-sidebar-left .uk-list-divider {
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 0;
+}
+.rcb-sidebar-left .uk-list-divider {
+  padding-top: 40px;
+}
+.rcb-sidebar-left .uk-list-divider>li {
+  position: relative;
+}
+@media (min-width: 960px) {
+  .rcb-sidebar-left+.rcb-main {
+    padding-left: 270px;
   }
+}
+@media (min-width: 1400px) {
+  .rcb-sidebar-left {
+    width: 300px !important;
+  }
+  .rcb-sidebar-left+.rcb-main {
+    padding-left: 340px;
+  }
+}
+
+/**
+ * Blocks
+ */
+.block-page-title-block>h1.uk-article-title {
+  margin-top: 0;
+}
+
+/**
+ * Nodes
+ */
+.node--teaser>h2.uk-text-lead {
+  margin: 0;
+}
+
+/**
+ * Forms
+ */
+#search-block-form .form-actions {
+  margin: 0 !important;
 }

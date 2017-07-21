@@ -1,4 +1,4 @@
-UIkit Components 8.x-2.x, 06-10-2017 (development version)
+UIkit Components 8.x-3.x, 06-10-2017 (development version)
 -----------------------
 
 Provide separate branches to support both UIkit 2.x.x and 3.x.x library versions

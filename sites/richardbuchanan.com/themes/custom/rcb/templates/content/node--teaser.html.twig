@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override to display a node.
+ * Theme override to display a teaser node.
  *
  * Available variables:
  * - node: The node entity with limited access to object properties and methods.
@@ -65,66 +65,54 @@
  *
  * @see template_preprocess_node()
  *
- * @todo Remove the id attribute (or make it a class), because if that gets
- *   rendered twice on a page this is invalid CSS for example: two lists
- *   in different view modes.
- *
  * @ingroup uikit_themeable
  */
 #}
-{%
-  set classes = [
-    'uk-article',
-    'uk-margin',
-    node.isPublished() == false ? 'uk-alert',
-    node.isPublished() == false ? 'uk-alert-warning',
-  ]
-%}
+{% set classes = ['node', 'node--teaser', 'uk-article', 'uk-margin-large-bottom'] %}
 <article{{ attributes.addClass(classes) }}>
-  <div class="uk-grid">
 
-    <div class="uk-article-meta uk-width-1-3@m">
+  {{ title_prefix }}
+  <h2{{ title_attributes.addClass('uk-text-lead') }}>
+    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  </h2>
+  {{ title_suffix }}
 
-      <footer>
-        {{ title_prefix }}
-        {% if not page %}
-          <h3{{ title_attributes.addClass('uk-margin-small-bottom') }}>
-            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-          </h3>
-        {% endif %}
-        {{ title_suffix }}
+  <hr>
 
+  <div class="uk-position-relative">
+    <div class="uk-float-left uk-margin-right">
+      <div{{ author_attributes.addClass('uk-width-medium') }}>
         {% if display_submitted %}
-          <div{{ author_attributes }}>
-            <h5 class="uk-margin-remove-bottom uk-margin-small-top uk-text-bold">Author</h5>
-            {{ author_name }}
-
-            <h5 class="uk-margin-remove-bottom uk-margin-small-top uk-text-bold">Date</h5>
-            {{ date }}
-
-            {% if content.field_tags %}
-              {{ content.field_tags }}
-            {% endif %}
-
+          <div class="node--submitted" uk-grid>
+            <i class="uk-margin-right" uk-icon="icon: calendar; ratio: 1.5"></i>
+            <div class="uk-width-expand uk-padding-remove">
+              <a href="{{ url }}">{{ date }}</a>
+            </div>
             {{ metadata }}
           </div>
-
         {% endif %}
-      </footer>
 
+        <div class="node--add-comment uk-margin-small-top" uk-grid>
+          <i class="uk-margin-right" uk-icon="icon: comment; ratio: 1.5"></i>
+          <div class="uk-width-expand uk-padding-remove">
+            <a href="{{ url }}#comment-form">Add new comment</a>
+          </div>
+        </div>
+
+        {% if content.field_tags %}
+          <div class="node--tags uk-margin-small-top" uk-grid>
+            <i class="uk-margin-right" uk-icon="icon: tag; ratio: 1.5"></i>
+            <div class="uk-width-expand uk-padding-remove">
+              {{ content.field_tags }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
     </div>
 
-    <div{{ content_attributes.addClass('uk-width-2-3@m', 'uk-margin-small-top') }}>
+    <div{{ content_attributes }}>
       {{ content|without('field_tags')|without('links') }}
     </div>
-
-    {% if content.links %}
-      <div class="uk-width-1-1">
-        <div class="uk-float-right">
-          {{ content.links }}
-        </div>
-      </div>
-    {% endif %}
   </div>
-  <hr class="uk-divider-icon">
+
 </article>

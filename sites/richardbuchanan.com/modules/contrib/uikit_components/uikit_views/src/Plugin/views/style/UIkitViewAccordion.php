@@ -41,14 +41,13 @@ class UIkitViewAccordion extends StylePluginBase {
     $options = parent::defineOptions();
 
     $options['title_field'] = ['default' => NULL];
-    $options['showfirst'] = ['default' => TRUE];
-    $options['collapse'] = ['default' => TRUE];
-    $options['animate'] = ['default' => TRUE];
-    $options['easing'] = ['default' => 'swing'];
-    $options['duration'] = ['default' => 300];
-    $options['toggle'] = ['default' => '.uk-accordion-title'];
-    $options['containers'] = ['default' => '.uk-accordion-content'];
-    $options['clsactive'] = ['default' => 'uk-active'];
+    $options['targets'] = ['default' => '> *'];
+    $options['active'] = ['default' => 0];
+    $options['collapsible'] = ['default' => TRUE];
+    $options['multiple'] = ['default' => FALSE];
+    $options['animation'] = ['default' => TRUE];
+    $options['transition'] = ['default' => 'ease'];
+    $options['duration'] = ['default' => 200];
 
     return $options;
   }
@@ -75,59 +74,57 @@ class UIkitViewAccordion extends StylePluginBase {
         '#title' => $this->t('Accordion options'),
         '#open' => TRUE,
       ];
-      $form['showfirst'] = [
-        '#type' => 'checkbox',
-        '#title' => $this->t('Show first item on init'),
-        '#default_value' => $this->options['showfirst'],
-        '#fieldset' => 'accordion_options',
-      ];
-      $form['collapse'] = [
-        '#type' => 'checkbox',
-        '#title' => $this->t('Allow multiple open items'),
-        '#default_value' => $this->options['collapse'],
-        '#fieldset' => 'accordion_options',
-      ];
-      $form['animate'] = [
-        '#type' => 'checkbox',
-        '#title' => $this->t('Animate toggle'),
-        '#default_value' => $this->options['animate'],
-        '#fieldset' => 'accordion_options',
-      ];
-      $form['easing'] = [
+      $form['targets'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Animation function'),
-        '#default_value' => $this->options['easing'],
-        '#description' => $this->t('<strong>Note:</strong> The only easing implementations in the jQuery library are the default, called <em class="placeholder">swing</em>, and one that progresses at a constant pace, called <em class="placeholder">linear</em>. More easing functions are available with the use of plug-ins, most notably the <a href=":jqueryUI" target="_blank">jQuery UI suite</a>.', [':jqueryUI' => 'http://jqueryui.com/']),
+        '#title' => $this->t('CSS selector of the element(s) to toggle.'),
+        '#default_value' => $this->options['targets'],
+        '#fieldset' => 'accordion_options',
+      ];
+      $form['active'] = [
+        '#type' => 'number',
+        '#title' => $this->t('Index of the element to open initially.'),
+        '#default_value' => $this->options['active'],
+        '#fieldset' => 'accordion_options',
+      ];
+      $form['collapsible'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Allow all items to be closed.'),
+        '#default_value' => $this->options['collapsible'],
+        '#fieldset' => 'accordion_options',
+      ];
+      $form['multiple'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Allow multiple open items.'),
+        '#default_value' => $this->options['multiple'],
+        '#fieldset' => 'accordion_options',
+      ];
+      $form['animation'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Reveal item directly (unchecked) or with a transition (checked).'),
+        '#default_value' => $this->options['animation'],
+        '#fieldset' => 'accordion_options',
+      ];
+      $form['transition'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Css selector for toggles'),
+        '#default_value' => $this->options['transition'],
+        '#description' => $this->t('Uses a keyword from <a href="@transition" target="_blank">easing functions</a>.', array('@transition' => 'https://developer.mozilla.org/en-US/docs/Web/CSS/single-transition-timing-function#Keywords_for_common_timing-functions')),
+        '#options' => array(
+          'linear' => 'linear',
+          'ease' => 'ease',
+          'ease-in' => 'ease-in',
+          'ease-in-out' => 'ease-in-out',
+          'ease-out' => 'ease-out',
+          'step-start' => 'step-start',
+          'step-end' => 'step-end',
+        ),
         '#fieldset' => 'accordion_options',
         '#required' => TRUE,
       ];
       $form['duration'] = [
         '#type' => 'number',
-        '#title' => $this->t('Animation duration'),
+        '#title' => $this->t('Animation duration in milliseconds.'),
         '#default_value' => $this->options['duration'],
-        '#fieldset' => 'accordion_options',
-        '#required' => TRUE,
-      ];
-      $form['toggle'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Css selector for toggles'),
-        '#default_value' => $this->options['toggle'],
-        '#description' => $this->t('Be sure to use a class selector since a page is likely to have more than one accordion.'),
-        '#fieldset' => 'accordion_options',
-        '#required' => TRUE,
-      ];
-      $form['containers'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Css selector for content containers'),
-        '#default_value' => $this->options['containers'],
-        '#description' => $this->t('Be sure to use a class selector since a page is likely to have more than one accordion.'),
-        '#fieldset' => 'accordion_options',
-        '#required' => TRUE,
-      ];
-      $form['clsactive'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Class to add when an item is active'),
-        '#default_value' => $this->options['clsactive'],
         '#fieldset' => 'accordion_options',
         '#required' => TRUE,
       ];
