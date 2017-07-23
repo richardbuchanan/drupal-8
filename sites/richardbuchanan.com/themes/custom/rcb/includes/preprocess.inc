@@ -135,6 +135,13 @@ function rcb_preprocess_node(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for feed-icon.html.twig.
+ */
+function rcb_preprocess_feed_icon(&$variables) {
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+}
+
+/**
  * Implements template_preprocess_form_element().
  */
 function rcb_preprocess_form_element(&$variables) {
