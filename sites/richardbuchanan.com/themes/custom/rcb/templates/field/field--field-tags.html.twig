@@ -38,7 +38,7 @@
  * @ingroup uikit_themeable
  */
 #}
-{% set classes = ['uk-list'] %}
+{% set classes = ['uk-subnav', 'uk-subnav-divider'] %}
 <ul{{ attributes.addClass(classes) }}>
   {% for item in items %}
     <li{{ item.attributes }}>{{ item.content }}</li>

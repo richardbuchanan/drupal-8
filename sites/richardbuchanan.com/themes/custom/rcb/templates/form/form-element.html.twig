@@ -63,7 +63,7 @@
   ]
 %}
 <div{{ attributes.addClass(classes) }}>
-  <div class="uk-form-controls">
+  {% if type != 'item' %}<div class="uk-form-controls">{% endif %}
     {% if label_display in ['before', 'invisible'] %}
       {{ label }}
     {% endif %}
@@ -99,5 +99,5 @@
         {{ description.content }}
       </p>
     {% endif %}
-  </div>
+    {% if type != 'item' %}</div>{% endif %}
 </div>

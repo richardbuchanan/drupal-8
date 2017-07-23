@@ -13,6 +13,7 @@
 
 use Drupal\block\Entity\Block;
 use Drupal\rcb\RCB;
+use Drupal\views\Plugin\views\field\Date;
 
 /**
  * Implements template_preprocess_html().
@@ -138,6 +139,7 @@ function rcb_preprocess_node(&$variables) {
  */
 function rcb_preprocess_form_element(&$variables) {
   switch ($variables['type']) {
+    case 'item':
     case 'textarea':
       $variables['margin'] = FALSE;
       break;
@@ -191,6 +193,11 @@ function rcb_preprocess_input(&$variables) {
   }
 }
 
+/**
+ * Implements template_preprocess_user().
+ */
 function rcb_preprocess_user(&$variables) {
-  //$variables['content']['user_picture'] = [];
+  $created = $variables['elements']['#user']->getCreatedTime();
+  $member_for = \Drupal::service('date.formatter')->formatInterval(\Drupal::time()->getRequestTime() - $created);
+  $variables['content']['member_for']['#markup'] = t('<p><strong>Member for</strong> @member_for</p>', ['@member_for' => $member_for]);
 }
