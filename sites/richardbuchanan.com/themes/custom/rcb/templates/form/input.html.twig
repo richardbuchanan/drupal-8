@@ -16,12 +16,12 @@
 #}
 {%
   set classes = [
-    attributes.type == 'email' or attributes.type == 'password' or attributes.type == 'search' or attributes.type == 'text' ? 'uk-input',
-    attributes.type == 'email' or attributes.type == 'password' or attributes.type == 'text' ? 'uk-form-width-large',
-    attributes.type == 'search' ? 'uk-width-1-1',
+    attributes.type != 'checkbox' and attributes.type != 'radio' and attributes.type != 'range' ? 'uk-input',
     attributes.type == 'checkbox' ? 'uk-checkbox',
-    attributes.type == 'radio' ? 'uk-radio',
     attributes.type == 'hidden' ? 'uk-margin',
+    attributes.type == 'radio' ? 'uk-radio',
+    attributes.type == 'range' ? 'uk-range',
+    attributes.type == 'search' ? 'uk-width-1-1',
     errors ? 'uk-form-danger',
   ]
 %}
