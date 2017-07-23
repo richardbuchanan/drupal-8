@@ -63,9 +63,10 @@
 %}
 {%
   set description_classes = [
-    'description',
-    description_display == 'invisible' ? 'visually-hidden',
-    'uk-form-help-block',
+    description_display == 'invisible' ? 'uk-invisible',
+    'uk-margin-remove',
+    'uk-text-muted',
+    'uk-text-small',
   ]
 %}
 <div{{ attributes.addClass(classes) }}>

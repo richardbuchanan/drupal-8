@@ -17,13 +17,13 @@
 #}
 {% if primary %}
   <div id="primary-tasks">
-    <h2 class="visually-hidden">{{ 'Primary tasks'|t }}</h2>
+    <h2 class="uk-invisible">{{ 'Primary tasks'|t }}</h2>
     <ul{{ primary_attributes }}>{{ primary }}</ul>
   </div>
 {% endif %}
 {% if secondary %}
   <div id="secondary-tasks">
-    <h2 class="visually-hidden">{{ 'Secondary tasks'|t }}</h2>
+    <h2 class="uk-invisible">{{ 'Secondary tasks'|t }}</h2>
     <ul{{ secondary_attributes }}>{{ secondary }}</ul>
   </div>
 {% endif %}

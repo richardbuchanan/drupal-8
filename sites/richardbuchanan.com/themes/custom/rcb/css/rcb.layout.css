@@ -91,9 +91,11 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
 }
 @media (min-width: 960px) {
   .rcb-main>main,
-  .rcb-main>aside,
   .rcb-main>footer {
     padding-left: 15px;
+  }
+  .rcb-main>aside {
+    padding-left: 30px;
   }
   .region-content,
   .region-footer {
