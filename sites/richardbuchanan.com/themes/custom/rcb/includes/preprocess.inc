@@ -146,7 +146,10 @@ function rcb_preprocess_form_element(&$variables) {
  */
 function rcb_preprocess_input(&$variables) {
   $element = $variables['element'];
-  $submit = isset($element['#type']) && $element['#type'] == 'submit';
+  $type = $variables['attributes']['type'];
+  $submit = $type == 'submit';
+  $text_inputs = $type != 'checkbox' & $type != 'radio' && $type != 'range' && $type != 'submit';
+  $variables['size_modifier'] = FALSE;
 
   if ($submit) {
     // Add the uk-button class.
@@ -167,6 +170,17 @@ function rcb_preprocess_input(&$variables) {
 
       default:
         $variables['attributes']['class'][] = 'uk-button-default';
+    }
+  }
+
+  if ($text_inputs) {
+    $size = $variables['attributes']['size'];
+
+    if ($size > 0) {
+      $variables['size_modifier'] = 'uk-form-width-large';
+    }
+    else {
+      $variables['size_modifier'] = 'uk-form-width-medium';
     }
   }
 }

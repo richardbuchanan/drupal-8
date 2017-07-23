@@ -5,8 +5,10 @@
 a,
 .uk-link {
   color: #1f6f9e;
-  -webkit-transition: all .1s linear;
-  transition: all .1s linear;
+  -webkit-transition: .1s ease-in-out;
+  transition: .1s ease-in-out;
+  -webkit-transition-property: color;
+  transition-property: color;
 }
 a:focus,
 a:hover,
@@ -30,12 +32,67 @@ a:hover,
   background: #ffcfc0;
   color: #f85825;
 }
-.uk-nav-default>li.uk-nav-header>a {
+.uk-button-default {
+  color: #619ec2;
+  border-color: #619ec2;
+}
+.uk-button-default:focus,
+.uk-button-default:hover {
+  color: #3f7fa5;
+  border-color: #3f7fa5;
+}
+.uk-button-default.uk-active,
+.uk-button-default:active {
+  color: #266a93;
+  border-color: #266a93;
+}
+.uk-button-primary {
+  background-color: #1f6f9e;
+}
+.uk-button-primary:focus,
+.uk-button-primary:hover {
+  background-color: #0b5885;
+}
+.uk-button-primary.uk-active,
+.uk-button-primary:active {
+  background-color: #054469;
+}
+.uk-button-danger {
+  background-color: #f85825;
+}
+.uk-button-danger:focus,
+.uk-button-danger:hover {
+  background-color: #d13807;
+}
+.uk-button-danger.uk-active,
+.uk-button-danger:active {
+  background-color: #a52800;
+}
+.uk-input,
+.uk-select,
+.uk-textarea {
+  border-color: #8dbfdc;
+}
+.uk-select[multiple],
+.uk-select[size],
+.uk-textarea {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.uk-input:focus,
+.uk-select:focus,
+.uk-textarea:focus {
+  border-color: #0b5885;
+}
+.uk-nav-default>li.uk-nav-header>* {
   color: #222;
+}
+.uk-nav-default>li.uk-nav-header>a {
+  color: #1f6f9e;
 }
 .uk-nav-default>li.uk-nav-header>a:focus,
 .uk-nav-default>li.uk-nav-header>a:hover {
-  color: #666;
+  color: #0b5885;
 }
 .uk-offcanvas .uk-nav-default>li.uk-nav-header>a {
   color: #ddd;
@@ -43,4 +100,24 @@ a:hover,
 .uk-offcanvas .uk-nav-default>li.uk-nav-header>a:focus,
 .uk-offcanvas .uk-nav-default>li.uk-nav-header>a:hover {
   color: #999;
+}
+.uk-pagination>*>* {
+  color: #1f6f9e;
+  -webkit-transition: .1s ease-in-out;
+  transition: .1s ease-in-out;
+  -webkit-transition-property: color;
+  transition-property: color;
+}
+.uk-pagination>*>:focus,
+.uk-pagination>*>:hover {
+  color: #0b5885;
+}
+.uk-select {
+  width: auto;
+}
+.filter-help {
+  float: none;
+}
+.filter-wrapper .form-item label {
+  display: block;
 }

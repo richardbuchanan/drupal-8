@@ -51,15 +51,15 @@
   set classes = [
     'form-item',
     name ? 'form-item-' ~ name|clean_class,
-    'uk-margin',
-    'uk-grid-small',
-    'uk-child-width-auto',
+    margin ? 'uk-margin',
   ]
 %}
 {%
   set description_classes = [
-    description_display == 'invisible' ? 'visually-hidden',
-    'uk-form-help-block',
+    description_display == 'invisible' ? 'uk-invisible',
+    'uk-margin-remove',
+    'uk-text-muted',
+    'uk-text-small',
   ]
 %}
 <div{{ attributes.addClass(classes) }} uk-grid>

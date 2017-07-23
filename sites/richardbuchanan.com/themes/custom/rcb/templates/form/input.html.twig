@@ -16,12 +16,13 @@
 #}
 {%
   set classes = [
-    attributes.type != 'checkbox' and attributes.type != 'radio' and attributes.type != 'range' ? 'uk-input',
+    attributes.type != 'checkbox' and attributes.type != 'radio' and attributes.type != 'range' and attributes.type != 'submit' ? 'uk-input',
     attributes.type == 'checkbox' ? 'uk-checkbox',
     attributes.type == 'hidden' ? 'uk-margin',
     attributes.type == 'radio' ? 'uk-radio',
     attributes.type == 'range' ? 'uk-range',
     attributes.type == 'search' ? 'uk-width-1-1',
+    size_modifier ? size_modifier,
     errors ? 'uk-form-danger',
   ]
 %}

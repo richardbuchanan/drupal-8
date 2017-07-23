@@ -26,15 +26,9 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
 .rcb-sidebar-left .uk-list-divider>li {
   position: relative;
 }
-.rcb-sidebar-left+.rcb-main {
-  padding: 0 15px;
-}
 @media (min-width: 960px) {
   .rcb-sidebar-left+.rcb-main {
-    padding: 0 0 0 270px;
-  }
-  .rcb-main>main {
-    padding-right: 30px;
+    padding: 0 15px 0 270px;
   }
 }
 @media (max-width: 1199px) {
@@ -64,9 +58,6 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
   .rcb-sidebar-left+.rcb-main {
     padding-left: 280px;
   }
-  .rcb-main>main {
-    padding-right: 0;
-  }
 }
 @media (min-width: 1400px) {
   .rcb-sidebar-left {
@@ -80,8 +71,45 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
 /**
  * Regions
  */
-.region-content {
+.region-content,
+.region-footer {
+  padding: 0 15px;
+}
+.region-content,
+.region-sidebar-second {
   margin-top: 20px;
+}
+.region-footer {
+  margin-bottom: 20px !important;
+}
+.region-sidebar-second #user-login-form #edit-user-links {
+  margin-bottom: 0;
+}
+.region-sidebar-second #user-login-form #edit-user-links a {
+  display: block;
+  float: none;
+}
+@media (min-width: 960px) {
+  .rcb-main>main,
+  .rcb-main>aside,
+  .rcb-main>footer {
+    padding-left: 15px;
+  }
+  .region-content,
+  .region-footer {
+    padding: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .region-sidebar-second #user-login-form #edit-user-links {
+    margin-bottom: 0;
+  }
+  .region-sidebar-second #user-login-form #edit-user-links a.uk-float-left {
+    float: left;
+  }
+  .region-sidebar-second #user-login-form #edit-user-links a.uk-float-right {
+    float: right;
+  }
 }
 
 /**
