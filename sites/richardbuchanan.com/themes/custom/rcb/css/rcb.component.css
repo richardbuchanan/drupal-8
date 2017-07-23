@@ -30,3 +30,17 @@ a:hover,
   background: #ffcfc0;
   color: #f85825;
 }
+.uk-nav-default>li.uk-nav-header>a {
+  color: #222;
+}
+.uk-nav-default>li.uk-nav-header>a:focus,
+.uk-nav-default>li.uk-nav-header>a:hover {
+  color: #666;
+}
+.uk-offcanvas .uk-nav-default>li.uk-nav-header>a {
+  color: #ddd;
+}
+.uk-offcanvas .uk-nav-default>li.uk-nav-header>a:focus,
+.uk-offcanvas .uk-nav-default>li.uk-nav-header>a:hover {
+  color: #999;
+}

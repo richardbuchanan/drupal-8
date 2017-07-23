@@ -11,8 +11,8 @@
  * @see process.inc
  */
 
-use Drupal\Core\Link;
-use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
+use Drupal\rcb\RCB;
 
 /**
  * Implements template_preprocess_html().
@@ -39,20 +39,73 @@ function rcb_preprocess_region(&$variables) {
  * Implements template_preprocess_block().
  */
 function rcb_preprocess_block(&$variables) {
-  $id = $variables['elements']['#id'];
+  $base_plugin_id = $variables['base_plugin_id'];
+  $book_navigation = $base_plugin_id == 'book_navigation';
+  $system_powered_by_block = $base_plugin_id == 'system_powered_by_block';
 
-  if ($id == 'rcb_powered') {
-    $drupal_url = Url::fromUri('https://www.drupal.org');
-    $uikit_url = Url::fromUri('https://getuikit.com');
-    $drupal_text = t('Drupal');
-    $uikit_text = t('UIkit');
-    $url_options = array('attributes' => array('target' => '_blank'));
-    $drupal_url->setOptions($url_options);
-    $uikit_url->setOptions($url_options);
-    $drupal_link = Link::fromTextAndUrl($drupal_text, $drupal_url);
-    $uikit_link = Link::fromTextAndUrl($uikit_text, $uikit_url);
-    $content = t('Powered by ') . $drupal_link->toString() . ' and ' . $uikit_link->toString();
-    $variables['content']['#markup'] = $content;
+  $block = Block::load($variables['elements']['#id']);
+  $region = $block->getRegion();
+
+  switch ($region) {
+    case 'footer':
+      if ($system_powered_by_block) {
+        $system_powered_by_content = RCB::systemPoweredByContent();
+        $variables['content'] = $system_powered_by_content;
+      }
+      break;
+
+    case 'offcanvas':
+    case 'sidebar_second':
+      if ($book_navigation) {
+        $variables['content']['#theme'] = 'book_all_books_block__' . $region;
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for book-all-books-block.html.twig.
+ */
+function rcb_preprocess_book_all_books_block(&$variables) {
+  $theme_original_hook = $variables['theme_hook_original'];
+  $theme_hook = str_replace('book_all_books_block__', '', $theme_original_hook);
+  $variables['book_menus'][0]['menu']['#theme'] = 'book_tree__' . $theme_hook;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for book-tree.html.twig.
+ */
+function rcb_preprocess_book_tree(&$variables) {
+  $theme_hook_original = $variables['theme_hook_original'];
+  $sidebar_second_book_tree = $theme_hook_original == 'book_tree__sidebar_second';
+  $offcanvas_book_tree = $theme_hook_original == 'book_tree__offcanvas';
+
+  if ($sidebar_second_book_tree || $offcanvas_book_tree) {
+    // Create copy of parent for first menu level.
+    $items = $variables['items'];
+    reset($items);
+    $header = key($items);
+    $nav_header = $items[$header];
+
+    // Create copy of parent below for the first menu level.
+    $header_below_items = $nav_header['below'];
+
+    // Setup the new copy of parent for first menu level.
+    $nav_header['below'] = [];
+    $nav_header['attributes']->addClass('uk-nav-header');
+
+    // Add copy of first parent as nav header.
+    $variables['items'] = [
+      $nav_header
+    ];
+
+    // Add copy of each parent below item.
+    foreach ($header_below_items as $key => $new_item) {
+      if ($new_item['in_active_trail']) {
+        $new_item['attributes']->addClass('uk-active');
+      }
+      $variables['items'][$key] = $new_item;
+    }
   }
 }
 
