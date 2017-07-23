@@ -43,6 +43,7 @@ sites/simpletest
 # Ignore configuration files that may contain sensitive information.
 # */settings*.php
 google*.html
+.well-known/
 
 # Ignore paths that contain user-generated content.
 # */files
