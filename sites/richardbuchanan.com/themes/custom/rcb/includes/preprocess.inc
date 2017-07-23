@@ -110,6 +110,18 @@ function rcb_preprocess_book_tree(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_container().
+ */
+function rcb_preprocess_container(&$variables) {
+  $filter_wrapper = in_array('filter-wrapper', $variables['attributes']['class']);
+  $anonymous_user = \Drupal::currentUser()->isAnonymous();
+
+  if ($filter_wrapper && $anonymous_user) {
+    $variables['attributes']['class'][] = 'uk-hidden';
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK() for page-title.html.twig.
  */
 function rcb_preprocess_page_title(&$variables) {

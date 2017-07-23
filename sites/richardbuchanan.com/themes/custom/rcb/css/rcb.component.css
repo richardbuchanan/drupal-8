@@ -2,6 +2,10 @@
  * @file
  * Discrete, reusable UI elements.
  */
+
+/**
+ * UIkit components
+ */
 a,
 .uk-link {
   color: #1f6f9e;
@@ -115,6 +119,10 @@ a:hover,
 .uk-select {
   width: auto;
 }
+
+/**
+ * Text filters
+ */
 .filter-help {
   float: none;
 }

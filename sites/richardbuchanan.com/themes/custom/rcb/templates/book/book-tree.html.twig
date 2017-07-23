@@ -29,6 +29,7 @@
 {% macro book_links(items, attributes, menu_level) %}
   {% import _self as book_tree %}
   {% if items %}
+    <hr>
     <div class="rcb-book-navigation--tree uk-margin">
       {% set classes = [
         'uk-child-width-1-1',
@@ -39,7 +40,7 @@
       <div{{ attributes.addClass(classes) }} uk-grid>
         {% for item in items %}
           <div{{ item.attributes }}>
-            {{ link(item.title, item.url) }}
+            {{ link(item.title, item.url, { 'class':['uk-display-block']} ) }}
           </div>
         {% endfor %}
       </div>

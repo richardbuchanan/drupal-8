@@ -68,7 +68,18 @@
  * @ingroup uikit_themeable
  */
 #}
-<article{{ attributes.addClass('uk-article') }}>
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'uk-article',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
 
   {{ title_prefix }}
   {% if not page %}
@@ -88,8 +99,17 @@
     </footer>
   {% endif %}
 
-  <div{{ content_attributes }}>
-    {{ content }}
+  <div{{ content_attributes.addClass('node--content') }}>
+    {{ content|without('links')|without('comment') }}
+
+    {% if content.links %}
+      <hr>
+      {{ content.links }}
+    {% endif %}
+
+    {% if content.comment %}
+      {{ content.comment }}
+    {% endif %}
   </div>
 
 </article>
