@@ -13,13 +13,22 @@
 
 use Drupal\block\Entity\Block;
 use Drupal\rcb\RCB;
-use Drupal\views\Plugin\views\field\Date;
+use Drupal\rcb\RCBNodeImage;
 
 /**
  * Implements template_preprocess_html().
  */
 function rcb_preprocess_html(&$variables) {
   $variables['html_attributes']->addClass('uk-height-1-1');
+}
+
+/**
+ * Implements template_preprocess_page().
+ */
+function rcb_preprocess_page(&$variables) {
+  $node = isset($variables['node']) ? $variables['node'] : FALSE;
+  $fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
+  $variables['node_image'] = RCBNodeImage::buildResponsiveImage($fid, 'wide');
 }
 
 /**
@@ -59,6 +68,15 @@ function rcb_preprocess_block(&$variables) {
       }
       break;
   }
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function rcb_preprocess_node(&$variables) {
+  $timestamp = $variables['node']->getCreatedTime();
+  $date = \Drupal::service('date.formatter')->format($timestamp, $type = 'short');
+  $variables['date'] = $date;
 }
 
 /**
@@ -114,24 +132,6 @@ function rcb_preprocess_container(&$variables) {
   if ($filter_wrapper && $anonymous_user) {
     $variables['attributes']['class'][] = 'uk-hidden';
   }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for page-title.html.twig.
- */
-function rcb_preprocess_page_title(&$variables) {
-  if (($key = array_search('uk-text-center', $variables['title_attributes']['class'])) !== false) {
-    unset($variables['title_attributes']['class'][$key]);
-  }
-}
-
-/**
- * Implements template_preprocess_node().
- */
-function rcb_preprocess_node(&$variables) {
-  $timestamp = $variables['node']->getCreatedTime();
-  $date = \Drupal::service('date.formatter')->format($timestamp, $type = 'short');
-  $variables['date'] = $date;
 }
 
 /**
@@ -197,6 +197,15 @@ function rcb_preprocess_input(&$variables) {
     else {
       $variables['size_modifier'] = 'uk-form-width-medium';
     }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page-title.html.twig.
+ */
+function rcb_preprocess_page_title(&$variables) {
+  if (($key = array_search('uk-text-center', $variables['title_attributes']['class'])) !== false) {
+    unset($variables['title_attributes']['class'][$key]);
   }
 }
 

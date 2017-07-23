@@ -7,6 +7,7 @@ base theme: uikit_blog
 regions:
   navbar: 'Navigation Bar'
   offcanvas: 'Offcanvas Navigation'
+  page_header: 'Page Header'
   content: Content
   sidebar_first: 'Left Sidebar'
   sidebar_second: 'Right Sidebar'

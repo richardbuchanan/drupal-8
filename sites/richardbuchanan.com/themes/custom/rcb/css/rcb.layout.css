@@ -2,6 +2,25 @@
  * @file
  * Macro arrangement of a web page, including any grid systems.
  */
+.rcb-page-header.has-node-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.rcb-page-header .region-page-header {
+  margin-top: 15px;
+}
+.rcb-page-header.has-node-image .region-page-header {
+  padding-left: 15px;
+}
+.rcb-page-header.has-node-image .uk-article-title,
+.rcb-page-header.has-node-image .uk-breadcrumb>:last-child>* {
+  color: #fff;
+}
+.rcb-page-header.has-node-image .uk-breadcrumb>*>* {
+  color: #ddd;
+}
 .rcb-sidebar-left {
   position: fixed;
   top: 0;
@@ -70,7 +89,10 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
   float: none;
 }
 @media (min-width: 960px) {
-  .rcb-main>main,
+  .rcb-main>main {
+    padding-left: 0;
+  }
+  .rcb-main>main .region,
   .rcb-main>footer {
     padding-left: 15px;
   }

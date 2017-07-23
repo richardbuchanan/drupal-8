@@ -64,6 +64,19 @@
 
   <div class="rcb-main" uk-grid>
     <main class="uk-width-1-1 uk-width-2-3@m uk-width-3-4@xl">
+      {% if page.page_header %}
+        <div class="uk-position-relative">
+          {% if node_image %}
+            {{ node_image }}
+          {% endif %}
+
+          {% set header_classes = node_image ? 'rcb-page-header has-node-image' : 'rcb-page-header' %}
+          <div class="{{ header_classes }}">
+            {{ page.page_header }}
+          </div>
+        </div>
+      {% endif %}
+
       <a id="main-content" tabindex="-1"></a>
       {{ page.content }}
     </main>
