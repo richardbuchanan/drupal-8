@@ -40,7 +40,13 @@
 
     <ul{{ attributes.addClass(classes) }}{% if menu_level == 0 %} uk-nav{% endif %}>
       {% for item in items %}
-        {% set item_classes = [item.below ? 'uk-parent'] %}
+        {%
+          set item_classes = [
+            item.below ? 'uk-parent',
+            item.in_active_trail ? 'uk-active',
+            item.in_active_trail and item.below ? 'uk-open',
+          ]
+        %}
         <li{{ item.attributes.addClass(item_classes) }}>
           {{ link(item.title, item.url) }}
           {% if item.below %}

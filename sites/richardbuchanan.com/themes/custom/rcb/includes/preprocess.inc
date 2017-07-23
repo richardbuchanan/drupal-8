@@ -18,10 +18,7 @@ use Drupal\rcb\RCB;
  * Implements template_preprocess_html().
  */
 function rcb_preprocess_html(&$variables) {
-  $user = \Drupal::currentUser();
-  if ($user->hasPermission('access toolbar')) {
-    $variables['html_attributes']->addClass('toolbar-fixed');
-  }
+  $variables['html_attributes']->addClass('uk-height-1-1');
 }
 
 /**
@@ -101,9 +98,6 @@ function rcb_preprocess_book_tree(&$variables) {
 
     // Add copy of each parent below item.
     foreach ($header_below_items as $key => $new_item) {
-      if ($new_item['in_active_trail']) {
-        $new_item['attributes']->addClass('uk-active');
-      }
       $variables['items'][$key] = $new_item;
     }
   }
@@ -195,4 +189,8 @@ function rcb_preprocess_input(&$variables) {
       $variables['size_modifier'] = 'uk-form-width-medium';
     }
   }
+}
+
+function rcb_preprocess_user(&$variables) {
+  //$variables['content']['user_picture'] = [];
 }

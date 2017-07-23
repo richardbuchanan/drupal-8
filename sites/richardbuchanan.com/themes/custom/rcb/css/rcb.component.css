@@ -88,14 +88,17 @@ a:hover,
 .uk-textarea:focus {
   border-color: #0b5885;
 }
-.uk-nav-default>li.uk-nav-header>* {
-  color: #222;
-}
-.uk-nav-default>li.uk-nav-header>a {
+.uk-nav-default>li.uk-nav-header>*,
+.uk-nav-default>li.uk-nav-header>a,
+.uk-nav-default .uk-nav-sub .uk-active>a {
   color: #1f6f9e;
 }
+.uk-nav-default>li.uk-nav-header>*:focus,
+.uk-nav-default>li.uk-nav-header>*:hover,
 .uk-nav-default>li.uk-nav-header>a:focus,
-.uk-nav-default>li.uk-nav-header>a:hover {
+.uk-nav-default>li.uk-nav-header>a:hover,
+.uk-nav-default .uk-nav-sub .uk-active>a:focus,
+.uk-nav-default .uk-nav-sub .uk-active>a:hover {
   color: #0b5885;
 }
 .uk-offcanvas .uk-nav-default>li.uk-nav-header>a {
