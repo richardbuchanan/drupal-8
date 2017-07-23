@@ -31,7 +31,7 @@
 #}
 {% if items %}
   <nav class="pager" role="navigation" aria-labelledby="pagination-heading">
-    <h4 id="pagination-heading" class="uk-invisible">{{ 'Pagination'|t }}</h4>
+    <h4 id="pagination-heading" class="visually-hidden">{{ 'Pagination'|t }}</h4>
     <ul class="pager__items js-pager__items uk-pagination uk-flex-center">
       {# Print first item if we are not on the first page. #}
       {% if items.first %}
@@ -65,7 +65,7 @@
             <span>{{- key -}}</span>
           {% else %}
             <a href="{{ item.href }}" title="{{ title }}"{{ item.attributes|without('href', 'title') }}>
-              <span class="uk-invisible">
+              <span class="visually-hidden">
                 {{ current == key ? 'Current page'|t : 'Page'|t }}
               </span>
               {{- key -}}

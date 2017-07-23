@@ -13,7 +13,7 @@
 #}
 {% if breadcrumb and display_breadcrumbs %}
   <nav role="navigation" aria-labelledby="system-breadcrumb">
-    <h2 id="system-breadcrumb" class="uk-invisible">{{ 'Breadcrumb'|t }}</h2>
+    <h2 id="system-breadcrumb" class="visually-hidden">{{ 'Breadcrumb'|t }}</h2>
     <ol class="uk-breadcrumb">
     {% for item in breadcrumb %}
       {% if item.url %}
