@@ -138,3 +138,12 @@ a:hover,
 .filter-wrapper .form-item label {
   display: block;
 }
+#drupal-live-announce {
+  display: none !important;
+  height: 0;
+  width: 0;
+}
+
+.toolbar-oriented .toolbar-bar {
+  z-index: 1500;
+}

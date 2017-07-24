@@ -76,7 +76,7 @@
   {% if display_submitted %}
     <div class="node--submitted uk-article-meta uk-margin-small-bottom">
       <i class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 1"></i>
-      <span>{% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}</span>
+      <span>{% trans %}{{ author_name }} | {{ date }}{% endtrans %}</span>
       {{ metadata }}
     </div>
   {% endif %}

@@ -3,10 +3,67 @@
  * CSS reset/normalize plus HTML element styling.
  */
 html {
+  -webkit-font-smoothing: antialiased;
   overflow-y: scroll;
 }
-#drupal-live-announce {
-  display: none !important;
-  height: 0;
-  width: 0;
+.uk-1, h1,
+.uk-article-title {
+  font-size: 32px;
+  line-height: 40px;
+  margin: 0 0 20px 0;
+}
+.uk-2, h2 {
+  font-size: 28px;
+  line-height: 35px;
+  margin: 0 0 20px 0;
+}
+.uk-3, h3 {
+  font-size: 24px;
+  line-height: 30px;
+  margin: 0 0 15px 0;
+}
+.uk-h4, h4 {
+  font-size: 20px;
+  line-height: 25px;
+  margin: 0 0 15px 0;
+}
+.uk-5, h5 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 22px;
+  margin: 0 0 10px 0;
+}
+.uk-6, h6 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+  margin: 0 0 10px 0;
+}
+
+@media (min-width: 960px) {
+  .uk-1, h1,
+  .uk-article-title {
+    font-size: 40px;
+    line-height: 50px;
+  }
+  .uk-2, h2 {
+    font-size: 32px;
+    line-height: 35px;
+  }
+  .uk-3, h3 {
+    font-size: 28px;
+    line-height: 35px;
+  }
+  .uk-h4, h4 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .uk-5, h5 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+  .uk-6, h6 {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }
