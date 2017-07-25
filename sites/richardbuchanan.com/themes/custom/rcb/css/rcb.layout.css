@@ -9,15 +9,35 @@
   left: 0;
   bottom: 0;
 }
-.rcb-page-header .page-header-navigation {
+.rcb-page-header .page-header-book-navigation {
+  display: none;
+  right: 0;
   bottom: 0;
+  left: 0;
 }
-.rcb-page-header .page-header-navigation hr,
-.rcb-page-header .page-header-navigation .rcb-book-navigation--links {
+.rcb-page-header .page-header-book-navigation hr,
+.rcb-page-header .page-header-book-navigation .rcb-book-navigation--links {
   display: none;
 }
-.rcb-page-header .page-header-navigation .rcb-book-navigation--tree a {
+.rcb-page-header .page-header-book-navigation .rcb-book-navigation--tree {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…BoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+  background: -moz-linear-gradient( top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: -webkit-gradient( linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.7)), color-stop(100%, rgba(0, 0, 0, 0.7)));
+  background: -webkit-linear-gradient( top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: -o-linear-gradient( top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: -ms-linear-gradient( top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: linear-gradient( to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', endColorstr='#b3000000',GradientType=0);
+  margin: 0 !important;
+  padding: 25px;
+}
+.rcb-page-header .page-header-book-navigation .rcb-book-navigation--tree a {
   color: #fff;
+  padding-bottom: 5px;
+}
+.rcb-page-header .page-header-book-navigation .rcb-book-navigation--tree *+.uk-grid-margin,
+.rcb-page-header .page-header-book-navigation .rcb-book-navigation--tree .uk-grid>.uk-grid-margin {
+  margin-top: 10px;
 }
 .rcb-page-header .region-page-header {
   margin-top: 15px;
@@ -67,6 +87,9 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
   }
 }
 @media (min-width: 1400px) {
+  .rcb-page-header .page-header-book-navigation {
+    display: block;
+  }
   .rcb-sidebar-left {
     width: 300px !important;
   }
