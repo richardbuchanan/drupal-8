@@ -23,6 +23,16 @@
     }
   };
 
+  Drupal.behaviors.rcbFootnotes = {
+    attach: function(context, settings) {
+      $('[rcb-footnote-popup]').each(function () {
+        var $id = $(this).attr('rcb-footnote-popup');
+        var $sup = $(context).find('sup[rcb-footnote-id="' + $id + '"]');
+        $(this).insertAfter($sup);
+      })
+    }
+  };
+
   function getToolbarHeight() {
     var $body = $('body');
     var $toolbar = $('#toolbar-administration');

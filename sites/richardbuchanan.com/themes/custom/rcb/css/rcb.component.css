@@ -130,6 +130,14 @@ a:hover,
 }
 
 /**
+ * Footnotes
+ */
+[rcb-footnote-popup] {
+  font-size: 12px;
+  min-width: 280px;
+}
+
+/**
  * Text filters
  */
 .filter-help {
