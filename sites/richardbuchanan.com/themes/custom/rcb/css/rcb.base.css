@@ -6,17 +6,18 @@ html {
   -webkit-font-smoothing: antialiased;
   overflow-y: scroll;
 }
+blockquote {
+  margin: 15px 0;
+}
 blockquote::before {
   display: block;
   content: "\201C";
   float: left;
   font-size: 4em;
-  line-height: 0.1em;
+  line-height: 0.9;
   margin-right: 0.25em;
-  vertical-align: -0.4em;
 }
-blockquote>* {
-  margin-top: -25px;
+blockquote p {
   padding-left: 50px;
 }
 .uk-1, h1,
