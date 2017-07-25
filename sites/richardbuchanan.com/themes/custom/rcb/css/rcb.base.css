@@ -6,6 +6,19 @@ html {
   -webkit-font-smoothing: antialiased;
   overflow-y: scroll;
 }
+blockquote::before {
+  display: block;
+  content: "\201C";
+  float: left;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote>* {
+  margin-top: -25px;
+  padding-left: 50px;
+}
 .uk-1, h1,
 .uk-article-title {
   font-size: 32px;
