@@ -5,8 +5,19 @@
 .rcb-page-header.has-node-image {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
+  left: 0;
+  bottom: 0;
+}
+.rcb-page-header .page-header-navigation {
+  bottom: 0;
+}
+.rcb-page-header .page-header-navigation hr,
+.rcb-page-header .page-header-navigation .rcb-book-navigation--links {
+  display: none;
+}
+.rcb-page-header .page-header-navigation .rcb-book-navigation--tree a {
+  color: #fff;
 }
 .rcb-page-header .region-page-header {
   margin-top: 15px;
@@ -127,6 +138,10 @@ body.toolbar-horizontal.toolbar-tray-open .rcb-sidebar-left {
 /**
  * Books
  */
+.node--type-book.has-node-image .rcb-book-navigation>hr:first-child,
+.node--type-book.has-node-image .rcb-book-navigation--tree {
+  display: none;
+}
 .node--type-book .links::after {
   content: "";
   border-bottom: 1px solid #e5e5e5;

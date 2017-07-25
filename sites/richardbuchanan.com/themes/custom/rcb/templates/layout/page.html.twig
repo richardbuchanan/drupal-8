@@ -70,9 +70,14 @@
             {{ node_image }}
           {% endif %}
 
-          {% set header_classes = node_image ? 'rcb-page-header has-node-image' : 'rcb-page-header' %}
-          <div class="{{ header_classes }}">
+          <div{{ page_header_attributes }}>
             {{ page.page_header }}
+
+            {% if book_navigation %}
+              <div class="page-header-navigation uk-position-absolute">
+                {{ book_navigation }}
+              </div>
+            {% endif %}
           </div>
         </div>
       {% endif %}

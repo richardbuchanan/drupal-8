@@ -12,6 +12,8 @@
  */
 
 use Drupal\block\Entity\Block;
+use Drupal\Core\Template\Attribute;
+use Drupal\node\Entity\Node;
 use Drupal\rcb\RCB;
 use Drupal\rcb\RCBNodeImage;
 
@@ -29,6 +31,36 @@ function rcb_preprocess_page(&$variables) {
   $node = isset($variables['node']) ? $variables['node'] : FALSE;
   $fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
   $variables['node_image'] = RCBNodeImage::buildResponsiveImage($fid, 'wide');
+  $variables['book_navigation'] = [];
+
+  if ($node && $node->bundle() == 'book') {
+    if (!empty($node->book['bid']) && empty($node->in_preview)) {
+      $book_node = Node::load($node->book['bid']);
+
+      if ($book_node->access()) {
+        $variables['book_navigation'] = [
+          '#theme' => 'book_navigation',
+          '#book_link' => $node->book,
+          '#weight' => 100,
+          // The book navigation is a listing of Node entities, so associate its
+          // list cache tag for correct invalidation.
+          '#cache' => [
+            'tags' => $node->getEntityType()->getListCacheTags(),
+          ],
+        ];
+      }
+    }
+  }
+
+  $variables['page_header_attributes'] = new Attribute;
+  $variables['page_header_attributes']->addClass('rcb-page-header');
+
+  if ($variables['node_image']) {
+    $variables['page_header_attributes']->addClass('has-node-image');
+  }
+  if ($variables['book_navigation']) {
+    $variables['page_header_attributes']->addClass('has-book-navigation');
+  }
 }
 
 /**
@@ -74,9 +106,18 @@ function rcb_preprocess_block(&$variables) {
  * Implements template_preprocess_node().
  */
 function rcb_preprocess_node(&$variables) {
-  $timestamp = $variables['node']->getCreatedTime();
-  $date = \Drupal::service('date.formatter')->format($timestamp, $type = 'short');
+  $node = $variables['node'];
+  $timestamp = $node->getCreatedTime();
+  $date = \Drupal::service('date.formatter')->format($timestamp, 'short');
   $variables['date'] = $date;
+
+  if ($node->bundle() == 'book') {
+    $variables['has_node_image'] = FALSE;
+
+    if (!empty($node->book['bid']) && empty($node->in_preview) && isset($node->field_image->entity)) {
+      $variables['has_node_image'] = TRUE;
+    }
+  }
 }
 
 /**
