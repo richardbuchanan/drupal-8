@@ -36,17 +36,17 @@ class RCBNodeImage {
         $image = \Drupal::service('image.factory')->get($file->getFileUri());
 
         if ($image->isValid()) {
-          $variables['width'] = $image->getWidth();
-          $variables['height'] = $image->getHeight();
+          //$variables['width'] = $image->getWidth();
+          //$variables['height'] = $image->getHeight();
         }
         else {
-          $variables['width'] = $variables['height'] = NULL;
+          //$variables['width'] = $variables['height'] = NULL;
         }
 
         $image_build = [
           '#theme' => 'responsive_image',
-          '#width' => $variables['width'],
-          '#height' => $variables['height'],
+          //'#width' => $variables['width'],
+          //'#height' => $variables['height'],
           '#responsive_image_style_id' => $variables['responsive_image_style_id'],
           '#uri' => $variables['uri'],
         ];
