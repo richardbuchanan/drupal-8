@@ -112,3 +112,17 @@
 .node--metadata .uk-list>li>a:hover {
   color: #000;
 }
+
+/**
+ * Footnotes
+ */
+.node--references>h3 {
+  margin: 0;
+}
+.node--references>hr {
+  margin: 5px 0;
+}
+.node--references>.uk-list {
+  font-size: 0.9375rem;
+  margin-top: 0;
+}

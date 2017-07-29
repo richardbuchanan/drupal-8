@@ -36,28 +36,32 @@ function rcb_footnote_link($variables) {
 /**
  * Implements theme_footnote_list().
  */
-function rcb_footnote_list($footnotes) {
-  $footnotes = $footnotes['footnotes']['#footnotes'];
-  $str = '<ul class="footnotes">';
+function rcb_footnote_list($variables) {
+  $footnotes = $variables['footnotes']['#footnotes'];
+  $output = '<div class="node--references">';
+  $output .= '<h3>References</h3>';
+  $output .= '<hr>';
+  $output .= '<ul class="uk-list">';
+
   foreach ($footnotes as $fn) {
     if (!is_array($fn['ref_id'])) {
-      $str .= '<li class="footnote" id="' . $fn['fn_id'] . '"><a class="footnote-label" href="#' . $fn['ref_id'] . '">' . $fn['value'] . '.</a> ';
-      $str .= html_entity_decode($fn['text']) . '</li>';
+      $output .= '<li class="footnote" id="' . $fn['fn_id'] . '"><a class="footnote-label" href="#' . $fn['ref_id'] . '">' . $fn['value'] . '.</a> ';
+      $output .= html_entity_decode($fn['text']) . '</li>';
     }
     else {
       $abc = str_split("abcdefghijklmnopqrstuvwxyz"); $i = 0;
 
-      $str .= '<li class="footnote" id="' . $fn['fn_id'] . '"><a href="#' . $fn['ref_id'][0] . '" class="footnote-label">' . $fn['value'] . '.</a> ';
+      $output .= '<li class="footnote" id="' . $fn['fn_id'] . '"><a href="#' . $fn['ref_id'][0] . '" class="footnote-label">' . $fn['value'] . '.</a> ';
 
       foreach ($fn['ref_id'] as $ref) {
-        $str .= '<a class="footnote-multi" href="#' . $ref . '">' . $abc[$i] . '.</a> ';
+        $output .= '<a class="footnote-multi" href="#' . $ref . '">' . $abc[$i] . '.</a> ';
         $i++;
       }
-      $str .= html_entity_decode($fn['text']) . '</li>';
+      $output .= html_entity_decode($fn['text']) . '</li>';
     }
   }
 
-  $str .= '</ul>';
+  $output .= '</ul></div>';
 
-  return $str;
+  return $output;
 }
