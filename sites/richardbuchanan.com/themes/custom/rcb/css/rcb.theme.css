@@ -123,6 +123,16 @@
   margin: 5px 0;
 }
 .node--references>.uk-list {
-  font-size: 0.9375rem;
   margin-top: 0;
+}
+.node--references>.uk-list>.footnote {
+  font-size: 0.9375rem;
+  padding: 2px;
+}
+.footnote-reference:focus,
+.node--references>.uk-list>.footnote:focus,
+.node--references>.uk-list>.footnote.focused {
+  background-color: #def;
+  background-color: rgba(0, 127, 255, 0.133);
+  outline: 0;
 }

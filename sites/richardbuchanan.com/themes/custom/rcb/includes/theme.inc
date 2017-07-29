@@ -18,9 +18,14 @@ function rcb_footnote_link($variables) {
   $fn = $variables['fn']['fn'];
   $fn_id = $fn['ref_id'];
   $fn_value = $fn['value'];
-  $fn_url_options = ['attributes' => ['id' => $fn_id]];
+  $fn_url_options = [
+    'attributes' => [
+      'id' => $fn_id,
+      'class' => ['footnote-reference'],
+    ],
+  ];
   $fn_url = Url::fromUserInput("#$fn_id", $fn_url_options);
-  $fn_text = t('@text', ['@text' => $fn_value]);
+  $fn_text = t('[@text]', ['@text' => $fn_value]);
   $fn_link = Link::fromTextAndUrl($fn_text, $fn_url)->toString();
 
   $output = '<sup class="rcb-footnote" rcb-footnote-id="' . $fn_id . '">';
