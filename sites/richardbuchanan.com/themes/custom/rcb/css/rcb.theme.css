@@ -112,6 +112,9 @@
 .node--metadata .uk-list>li>a:hover {
   color: #000;
 }
+.node .field--name-field-referenced-page {
+  margin-bottom: 20px;
+}
 
 /**
  * Footnotes
