@@ -44,6 +44,7 @@ function rcb_form_comment_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
  * Implements hook_form_FORM_ID_alter() for user_login_form().
  */
 function rcb_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['user_links']['reset_password']['#attributes']['class'] = ['uk-link', 'uk-link-muted'];
   $form['actions']['#attributes'] = new Attribute;
   $form['actions']['#attributes']->addClass('uk-display-inline-block');
   $form['actions']['#attributes']->addClass('uk-width-1-1');
