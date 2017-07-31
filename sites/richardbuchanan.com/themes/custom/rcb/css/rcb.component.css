@@ -122,6 +122,9 @@ a:hover,
 .uk-select {
   width: auto;
 }
+.uk-tooltip {
+  max-width: 300px;
+}
 [uk-icon*=rss] {
   color: #fa9b39;
 }
@@ -132,9 +135,31 @@ a:hover,
 /**
  * Footnotes
  */
-[rcb-footnote-popup] {
-  font-size: 12px;
-  min-width: 280px;
+#footnote-references {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 0;
+  padding: 0 0 10px;
+}
+ul.footnotes {
+  font-size: 80%;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 0;
+}
+ul.footnotes>li.footnote {
+  position: relative;
+  padding-left: 30px;
+}
+sup>a.see-footnote:focus,
+sup>a.see-footnote:target,
+ul.footnotes>li.footnote:focus,
+ul.footnotes>li.footnote:target {
+  background-color: #cde6f4;
+  outline: 0;
+}
+ul.footnotes>li.footnote>a.footnote-label {
+  position: absolute;
+  left: 0;
 }
 
 /**

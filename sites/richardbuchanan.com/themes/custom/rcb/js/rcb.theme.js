@@ -23,38 +23,6 @@
     }
   };
 
-  Drupal.behaviors.rcbFootnotes = {
-    attach: function(context, settings) {
-      $(document).click(function (e) {
-        removeFocusedFootnote(e.target);
-      });
-
-      $('[rcb-footnote-popup]').each(function () {
-        var $id = $(this).attr('rcb-footnote-popup');
-        var $sup = $(context).find('sup[rcb-footnote-id="' + $id + '"]');
-        $(this).insertAfter($sup);
-      });
-
-      $('sup[rcb-footnote-id]').click(function () {
-        $('.node--references li').each(function () {
-          $(this).removeClass('focused')
-        });
-        var $id = $(this).attr('rcb-footnote-id').replace('footnoteref', 'footnote');
-        $('.node--references').find('#' + $id).addClass('focused');
-      });
-    }
-  };
-
-  function removeFocusedFootnote(target) {
-    var $footnote_reference = $(target).hasClass('footnote-reference');
-
-    if (!$footnote_reference) {
-      $('.node--references li').each(function () {
-        $(this).removeClass('focused')
-      })
-    }
-  }
-
   function getToolbarHeight() {
     var $body = $('body');
     var $toolbar = $('#toolbar-administration');

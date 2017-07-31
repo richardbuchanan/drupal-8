@@ -16,26 +16,20 @@ use Drupal\Core\Url;
  */
 function rcb_footnote_link($variables) {
   $fn = $variables['fn']['fn'];
-  $fn_id = $fn['ref_id'];
-  $fn_value = $fn['value'];
+
   $fn_url_options = [
     'attributes' => [
-      'id' => $fn_id,
-      'class' => ['footnote-reference'],
+      'id' => $fn['ref_id'],
+      'class' => ['see-footnote'],
+      'title' => html_entity_decode($fn['text_clean']),
+      'uk-tooltip' => '',
     ],
   ];
-  $fn_url = Url::fromUserInput("#$fn_id", $fn_url_options);
-  $fn_text = t('[@text]', ['@text' => $fn_value]);
+  $fn_url = Url::fromUserInput('#' . $fn['fn_id'], $fn_url_options);
+  $fn_text = t('[@text]', ['@text' => $fn['value']]);
   $fn_link = Link::fromTextAndUrl($fn_text, $fn_url)->toString();
 
-  $output = '<sup class="rcb-footnote" rcb-footnote-id="' . $fn_id . '">';
-  $output .= $fn_link;
-  $output .= '</sup>';
-  $output .= '<div rcb-footnote-popup="' . $fn_id . '" uk-dropdown="pos: top-justify">';
-  $output .= html_entity_decode($variables['fn']['fn']['text_clean']);
-  $output .= '</div>';
-
-  return $output;
+  return "<sup>$fn_link</sup>";
 }
 
 /**
@@ -43,10 +37,8 @@ function rcb_footnote_link($variables) {
  */
 function rcb_footnote_list($variables) {
   $footnotes = $variables['footnotes']['#footnotes'];
-  $output = '<div class="node--references">';
-  $output .= '<h3>References</h3>';
-  $output .= '<hr>';
-  $output .= '<ul class="uk-list">';
+  $output = '<h3 id="footnote-references">References</h3>';
+  $output .= '<ul class="footnotes">';
 
   foreach ($footnotes as $fn) {
     if (!is_array($fn['ref_id'])) {
@@ -57,7 +49,6 @@ function rcb_footnote_list($variables) {
       $abc = str_split("abcdefghijklmnopqrstuvwxyz"); $i = 0;
 
       $output .= '<li class="footnote" id="' . $fn['fn_id'] . '"><a href="#' . $fn['ref_id'][0] . '" class="footnote-label">' . $fn['value'] . '.</a> ';
-
       foreach ($fn['ref_id'] as $ref) {
         $output .= '<a class="footnote-multi" href="#' . $ref . '">' . $abc[$i] . '.</a> ';
         $i++;
@@ -66,7 +57,6 @@ function rcb_footnote_list($variables) {
     }
   }
 
-  $output .= '</ul></div>';
-
+  $output .= '</ul>';
   return $output;
 }

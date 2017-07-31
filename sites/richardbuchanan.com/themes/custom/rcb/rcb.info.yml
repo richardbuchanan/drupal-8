@@ -15,3 +15,9 @@ regions:
 
 libraries:
   - rcb/global-style
+
+libraries-override:
+  footnotes/footnotes:
+      css:
+        component:
+          assets/css/footnotes.css: false
