@@ -30,6 +30,17 @@ function rcb_theme_suggestions_block_alter(array &$suggestions, array $variables
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for comment_form().
+ */
+function rcb_form_comment_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (\Drupal::currentUser()->isAnonymous()) {
+    $form['author']['name']['#required'] = TRUE;
+    $form['author']['mail']['#required'] = TRUE;
+    $form['author']['homepage']['#access'] = FALSE;
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter() for user_login_form().
  */
 function rcb_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
