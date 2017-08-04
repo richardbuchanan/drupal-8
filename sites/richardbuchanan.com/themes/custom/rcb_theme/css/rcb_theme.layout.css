@@ -1,0 +1,94 @@
+/* Macro arrangement of a web page, including any grid systems. */
+.site-slogan span {
+  margin: 0 auto;
+}
+
+.region {
+  margin: 0;
+  padding: 15px 0;
+}
+.region-footer ul.menu:first-of-type {
+  margin-top: 0;
+}
+.region-offcanvas {
+  padding: 0 15px;
+}
+.region-offcanvas .site-logo,
+.region-offcanvas .site-name,
+.region-offcanvas .site-slogan {
+  margin: 15px 0;
+}
+
+#page--image {
+  top: 0;
+  left: -15px;
+  margin-right: -30px;
+}
+#page--image .page-title {
+  margin: 15px 0 0;
+  padding: 0 15px;
+}
+#page--content.page-title-hidden .region-content {
+  padding-top: 0;
+}
+#page--content.page-title-hidden .block-page-title-block {
+  display: none;
+}
+@media (min-width: 1200px) {
+  #page--image {
+    margin-right: -15px;
+  }
+}
+
+.region-sidebar-first ul.menu--main>li,
+.region-sidebar-first ul.menu--tools>li,
+.region-sidebar-first ul.menu--account>li {
+  text-align: center;
+}
+.region-sidebar-first ul.menu--main>li>a,
+.region-sidebar-first ul.menu--tools>li>a,
+.region-sidebar-first ul.menu--account>li>a {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  font-size: 1.125rem;
+  line-height: 30px;
+  padding: 5px 0;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #4c8cb2;
+  background-color: transparent;
+  color: #abc9cb;
+  -webkit-transition: all .1s linear;
+  transition: all .1s linear;
+}
+.region-sidebar-first ul.menu--main>li>a::before,
+.region-sidebar-first ul.menu--tools>li>a::before,
+.region-sidebar-first ul.menu--account>li>a::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 0;
+  width: 40px;
+  background: #79a9c5;
+  -webkit-transition: all .1s linear;
+  transition: all .1s linear;
+}
+.region-sidebar-first ul.menu--main>li>a:hover::before,
+.region-sidebar-first ul.menu--tools>li>a:hover::before,
+.region-sidebar-first ul.menu--account>li>a:hover::before {
+  height: 2px;
+  width: 100px;
+  background: #fff;
+}
+
+.field--widget-text-textarea .form-type-textarea {
+  margin: 0;
+}
+.filter-wrapper {
+  border-color: #e5e5e5;
+}

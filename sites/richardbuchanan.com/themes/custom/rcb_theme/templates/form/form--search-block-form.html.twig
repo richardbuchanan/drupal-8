@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Theme override to display a form.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+<form{{ attributes.addClass('form--search-block-forn') }}>
+  <div class="uk-position-relative">
+    {{ children }}
+  </div>
+</form>

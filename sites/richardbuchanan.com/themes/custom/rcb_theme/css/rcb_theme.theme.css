@@ -1,0 +1,61 @@
+/* Purely visual styling (“look-and-feel”) for a component. */
+.uk-link {
+  color: #1f6f9e;
+  -webkit-transition: .1s ease-in-out;
+  transition: .1s ease-in-out;
+  -webkit-transition-property: color;
+  transition-property: color;
+}
+.uk-link:focus,
+.uk-link:hover {
+  color: #0b5885;
+}
+#page {
+  background: #fff;
+}
+#page--navbar {
+  background: #1f6f9e;
+}
+#page--navbar .uk-navbar-toggle {
+  color: #abc9cb;
+}
+#page--navbar .uk-navbar-toggle:focus,
+#page--navbar .uk-navbar-toggle:hover {
+  color: #fff;
+}
+#page--sidebar-first {
+  background: #1f6f9e;
+  color: #abc9cb;
+  padding-right: 15px;
+}
+#page--sidebar-first a {
+  color: #abc9cb;
+}
+#page--sidebar-first a:focus,
+#page--sidebar-first a:hover {
+  color: #fff;
+}
+#page--image .page-title {
+  color: #fff;
+}
+
+/**
+ * CKEditor
+ */
+.cke_chrome,
+.cke_top,
+.cke_float .cke_top,
+.cke_bottom,
+.cke_panel,
+.cke_panel_grouptitle,
+.cke_menuseparator {
+  border-color: #e5e5e5 !important;
+}
+
+/**
+ * Recaptcha
+ */
+.rc-anchor-light.rc-anchor-normal {
+  border-color: #e5e5e5 !important;
+  border-radius: 0 !important;
+}

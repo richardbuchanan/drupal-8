@@ -1,0 +1,13 @@
+global-style:
+  version: VERSION
+  css:
+    base:
+      css/rcb_theme.base.css: {}
+    layout:
+      css/rcb_theme.layout.css: {}
+    component:
+      css/rcb_theme.component.css: {}
+    theme:
+      css/rcb_theme.theme.css: {}
+  js:
+    js/rcb_theme.theme.js: {}

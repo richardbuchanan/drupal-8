@@ -1,0 +1,70 @@
+/* Discrete, reusable UI elements. */
+.contextual {
+  right: -6px;
+  top: 0;
+}
+.contextual+.uk-h1,
+.contextual+.uk-h2,
+.contextual+.uk-h3,
+.contextual+.uk-h4,
+.contextual+.uk-h5,
+.contextual+.uk-h6,
+.contextual+h1,
+.contextual+h2,
+.contextual+h3,
+.contextual+h4,
+.contextual+h5,
+.contextual+h6 {
+  margin-top: 0;
+}
+.uk-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.uk-grid {
+  margin-left: -15px;
+}
+.uk-grid>* {
+  padding-left: 15px;
+}
+@media (min-width: 640px) {
+  .uk-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .uk-grid {
+    margin-left: -15px;
+  }
+  .uk-grid>* {
+    padding-left: 15px;
+  }
+}
+@media (min-width: 960px) {
+  .uk-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .uk-grid {
+    margin-left: -15px;
+  }
+  .uk-grid>* {
+    padding-left: 15px;
+  }
+}
+
+.node--view-mode-teaser>h2.uk-text-lead a {
+  text-decoration: none;
+}
+
+.form--search-block-forn .form-actions {
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  margin: 0 !important;
+  text-align: center;
+}
+.form--search-block-forn .form-actions button {
+  height: 40px;
+  width: 40px;
+}

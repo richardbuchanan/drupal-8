@@ -1,0 +1,5 @@
+# Schema for the configuration files of the RCB Theme theme.
+
+rcb_theme.settings:
+  type: theme_settings
+  label: 'RCB Theme settings'
