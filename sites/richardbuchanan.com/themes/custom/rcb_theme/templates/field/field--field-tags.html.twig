@@ -42,38 +42,38 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
+    'uk-margin-remove',
+    'uk-subnav',
+    label_display == 'inline' ? 'uk-display-inline-block',
   ]
 %}
 {%
   set title_classes = [
     'field__label',
     label_display == 'visually_hidden' ? 'visually-hidden',
+    label_display == 'inline' ? 'uk-display-inline-block' : 'uk-display-block',
   ]
 %}
 
 {% if label_hidden %}
   {% if multiple %}
-    <div{{ attributes.addClass(classes, 'field__items') }}>
+    <ul{{ attributes.addClass(classes) }}>
       {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        <li{{ item.attributes }}>{{ item.content }}</li>
       {% endfor %}
-    </div>
+    </ul>
   {% else %}
-    {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
-    {% endfor %}
+    <ul{{ attributes.addClass(classes) }}>
+      {% for item in items %}
+        <li{{ item.attributes }}>{{ item.content }}</li>
+      {% endfor %}
+    </ul>
   {% endif %}
 {% else %}
-  <div{{ attributes.addClass(classes) }}>
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-    {% if multiple %}
-    <div class="field__items">
-      {% endif %}
-      {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
-      {% endfor %}
-      {% if multiple %}
-    </div>
-    {% endif %}
-  </div>
+  <span{{ title_attributes.addClass(title_classes) }} uk-icon="icon: tag"></span>
+  <ul{{ attributes.addClass(classes) }}>
+    {% for item in items %}
+      <li{{ item.attributes }}>{{ item.content }}</li>
+    {% endfor %}
+  </ul>
 {% endif %}
