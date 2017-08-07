@@ -3,6 +3,7 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 
@@ -33,7 +34,7 @@ function rcb_module_mail($key, &$message, $params) {
 /**
  * Implements hook_form_alter().
  */
-function rcb_module_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function rcb_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'comment_comment_form') {
     $form['actions']['submit']['#submit'][] = 'rcb_module_form_comment_comment_form_submit';
   }
@@ -47,7 +48,7 @@ function rcb_module_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The current state of the form.
  */
-function rcb_module_form_comment_comment_form_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+function rcb_module_form_comment_comment_form_submit(&$form, FormStateInterface $form_state) {
   global $base_url;
 
   // Set site variables.
@@ -85,4 +86,15 @@ function rcb_module_form_comment_comment_form_submit(&$form, \Drupal\Core\Form\F
   // Use the mail plugin manager to send the email.
   $mailManager = \Drupal::service('plugin.manager.mail');
   $mailManager->mail('rcb_module', 'comment_saved', $site_email, $langcode, $params, $reply = NULL, $send);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for comment_form().
+ */
+function rcb_module_form_comment_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\Drupal::currentUser()->isAnonymous()) {
+    $form['author']['name']['#required'] = TRUE;
+    $form['author']['mail']['#required'] = TRUE;
+    $form['author']['homepage']['#access'] = FALSE;
+  }
 }
