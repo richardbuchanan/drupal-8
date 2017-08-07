@@ -4,8 +4,8 @@ description: Override page Cache-Control header based on bubbled cacheability me
 # core: 8.x
 package: Performance and scalability
 
-# Information added by Drupal.org packaging script on 2017-05-17
-version: '8.x-1.x-dev'
+# Information added by Drupal.org packaging script on 2017-07-31
+version: '8.x-1.0-alpha1'
 core: '8.x'
 project: 'cache_control_override'
-datestamp: 1495052589
+datestamp: 1501518844
