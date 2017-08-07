@@ -130,6 +130,7 @@ function rcb_theme_preprocess_comment(&$variables) {
 
   $variables['title'] = Link::fromTextAndUrl($title, $uri);
   $variables['permalink'] = Link::fromTextAndUrl($permalink_title, $permalink_uri);
+  $variables['placeholder_avatar'] = '/sites/richardbuchanan.com/files/pictures/placeholder_avatar.svg';
 }
 
 /**
