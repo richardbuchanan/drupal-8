@@ -11,7 +11,11 @@
  * @see process.inc
  */
 
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
 use Drupal\rcb_theme\RCBNodeImage;
 
@@ -43,11 +47,20 @@ function rcb_theme_preprocess_page(&$variables) {
   $node = isset($variables['node']) ? $variables['node'] : FALSE;
   $fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
   $variables['node_image'] = RCBNodeImage::buildResponsiveImage($fid, 'wide');
+  $variables['page_title'] = [];
+  $variables['breadcrumb'] = [];
+
   if (!empty($variables['node_image'])) {
     $request = \Drupal::request();
     $route_match = \Drupal::routeMatch();
     $variables['page_title'] = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
     $variables['content_attributes']['class'][] = 'page-title-hidden';
+
+    if (!empty($variables['page']['content']['rcb_theme_breadcrumbs']) && ! \Drupal::service('path.matcher')->isFrontPage()) {
+      $breadcrumb_block = \Drupal\block\BlockViewBuilder::lazyBuilder('rcb_theme_breadcrumbs', 'full');
+      $variables['breadcrumb'] = \Drupal::service('renderer')->renderPlain($breadcrumb_block);
+      $variables['content_attributes']['class'][] = 'page-breadcrumb-hidden';
+    }
   }
 }
 
@@ -83,6 +96,43 @@ function rcb_theme_preprocess_block(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_comment().
+ */
+function rcb_theme_preprocess_comment(&$variables) {
+  $comment = $variables['comment'];
+  $comment_number = $variables['elements']['#weight'] + 1;
+  $timestamp = $comment->getCreatedTime();
+  $title = $comment->getSubject();
+  $permalink_title = Markup::create('#');
+
+  $date = '<span>' . \Drupal::service('date.formatter')->format($timestamp, 'short') . '</span>';
+  $date = Markup::create($date);
+  $variables['date'] = $date;
+
+  if (isset($comment->in_preview)) {
+    $uri = new Url('<front>');
+    $permalink_uri = new Url('<front>');
+  }
+  else {
+    $link_icon = '<span class="uk-hidden-hover uk-margin-small-left uk-text-muted" uk-icon="icon: link"></span>';
+    $title = Markup::create($comment->getSubject() . $link_icon);
+    $uri = $comment->permalink();
+    $attributes = $uri->getOption('attributes') ? : [];
+    $attributes += ['class' => [
+      'permalink',
+      'uk-link-reset',
+      'uk-visible-toggle',
+    ], 'rel' => 'bookmark'];
+    $uri->setOption('attributes', $attributes);
+    $permalink_uri = $comment->permalink();
+    $permalink_title = Markup::create('# ' . $comment_number);
+  }
+
+  $variables['title'] = Link::fromTextAndUrl($title, $uri);
+  $variables['permalink'] = Link::fromTextAndUrl($permalink_title, $permalink_uri);
+}
+
+/**
  * Implements template_preprocess_container().
  */
 function rcb_theme_preprocess_container(&$variables) {
@@ -91,6 +141,23 @@ function rcb_theme_preprocess_container(&$variables) {
   switch ($type) {
     case 'actions':
       $variables['attributes']['class'][] = 'uk-margin';
+  }
+}
+
+/**
+ * Implements template_preprocess_field().
+ */
+function rcb_theme_preprocess_field(&$variables) {
+  $field_name = $variables['field_name'];
+
+  if ($field_name == 'uid') {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['content']['#theme'] = 'username__node';
+    }
+  }
+
+  if ($field_name == 'comment') {
+    $variables['attributes']['id'] = 'comments';
   }
 }
 
@@ -159,6 +226,57 @@ function rcb_theme_preprocess_input(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_links() for links--comment.html.twig.
+ */
+function rcb_theme_preprocess_links__comment(&$variables) {
+  $new_links = [];
+
+  if (!empty($variables['links'])) {
+    $links = $variables['links'];
+
+    if (isset($links['comment-reply'])) {
+      $new_links['comment-reply'] = $links['comment-reply'];
+    }
+    if (isset($links['comment-edit'])) {
+      $new_links['comment-edit'] = $links['comment-edit'];
+    }
+    if (isset($links['comment-delete'])) {
+      $new_links['comment-delete'] = $links['comment-delete'];
+    }
+    if (isset($links['comment-approve'])) {
+      $new_links['comment-approve'] = $links['comment-approve'];
+    }
+  }
+
+  $variables['links'] = $new_links;
+}
+
+/**
+ * Implements template_preprocess_links() for links--node.html.twig.
+ */
+function rcb_theme_preprocess_links__node(&$variables) {
+  $variables['node_full'] = TRUE;
+
+  if (isset($variables['links']['node-readmore'])) {
+    $variables['links']['node-readmore']['attributes'] = new Attribute;
+    $variables['links']['node-readmore']['attributes']->addClass('node--readmore');
+    $title = $variables['links']['node-readmore']['link']['#title']->__toString();
+    $title = '<span class="uk-margin-small-right" uk-icon="icon: more"></span>' . $title;
+    $title = new TranslatableMarkup($title);
+    $variables['links']['node-readmore']['link']['#title'] = $title;
+    $variables['node_full'] = FALSE;
+  }
+  if (isset($variables['links']['comment-add'])) {
+    $variables['links']['comment-add']['attributes'] = new Attribute;
+    $variables['links']['comment-add']['attributes']->addClass('node--comment-add');
+    $title = $variables['links']['comment-add']['link']['#title']->__toString();
+    $title = '<span class="uk-margin-small-right" uk-icon="icon: comment"></span>' . $title;
+    $title = new TranslatableMarkup($title);
+    $variables['links']['comment-add']['link']['#title'] = $title;
+  }
+}
+
+/**
  * Implements template_preprocess_menu().
  */
 function rcb_theme_preprocess_menu(&$variables) {
@@ -173,6 +291,19 @@ function rcb_theme_preprocess_menu(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_node().
+ */
+function rcb_theme_preprocess_node(&$variables) {
+  $node = $variables['node'];
+
+  $timestamp = $node->getCreatedTime();
+  $date = '<span><span class="uk-margin-small-right" uk-icon="icon: calendar"></span>';
+  $date .= \Drupal::service('date.formatter')->format($timestamp, 'short') . '</span>';
+  $date = Markup::create($date);
+  $variables['date'] = $date;
+}
+
+/**
  * Implements template_preprocess_user().
  */
 function rcb_theme_preprocess_user(&$variables) {
@@ -182,4 +313,10 @@ function rcb_theme_preprocess_user(&$variables) {
       ->formatInterval(\Drupal::time()->getRequestTime() - $created);
     $variables['content']['member_for']['#markup'] = t('<p><strong>Member for</strong> @member_for</p>', ['@member_for' => $member_for]);
   }
+}
+
+/**
+ * Implements template_preprocess_username().
+ */
+function rcb_theme_preprocess_username(&$variables) {
 }

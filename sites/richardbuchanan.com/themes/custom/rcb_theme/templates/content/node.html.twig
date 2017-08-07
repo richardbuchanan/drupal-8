@@ -78,7 +78,6 @@
   ]
 %}
 <article{{ attributes.addClass(classes) }}>
-
   {{ title_prefix }}
   {% if not page %}
     <h2{{ title_attributes.addClass('uk-text-lead') }}>
@@ -87,22 +86,19 @@
   {% endif %}
   {{ title_suffix }}
 
-  {% if display_submitted %}
-    <footer class="node__meta uk-article-meta uk-margin-small-bottom">
-      {{ author_picture }}
-      <div{{ author_attributes.addClass('node__submitted') }}>
-        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+  <div{{ content_attributes.addClass('node--content') }}>
+
+    {% if display_submitted %}
+      <footer class="node--meta uk-article-meta uk-margin-bottom">
+        <ul class="node--links uk-subnav">
+          <li{{ author_attributes.addClass('node--author') }}>{{ author_name }}</li>
+          <li class="node--date">{{ date }}</li>
+        </ul>
         {{ metadata }}
-      </div>
-    </footer>
-  {% endif %}
-
-  <div{{ content_attributes.addClass('node__content') }}>
-    {{ content|without('comment') }}
-
-    {% if content.comment %}
-      {{ content.comment }}
+      </footer>
     {% endif %}
-  </div>
 
+    {{ content|without('comment') }}
+    {{ content.comment }}
+  </div>
 </article>

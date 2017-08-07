@@ -29,25 +29,35 @@
   padding: 0 15px;
 }
 #page--content.page-title-hidden .region-content {
+  margin-left: -15px;
+  margin-right: -15px;
   padding-top: 0;
+  padding-bottom: 0;
 }
-#page--content.page-title-hidden .block-page-title-block {
+#page--content.page-title-hidden #region--content .block-page-title-block,
+#page--content.page-breadcrumb-hidden #region--content .block-system-breadcrumb-block {
   display: none;
+}
+#page--content:not(.page-breadcrumb-hidden) #region--content .block-system-breadcrumb-block {
+  margin-top: -4px;
 }
 @media (min-width: 1200px) {
   #page--image {
     margin-right: -15px;
   }
+  #page--content.page-title-hidden .region-content {
+    margin-right: 0;
+  }
 }
 
-.region-sidebar-first ul.menu--main>li,
-.region-sidebar-first ul.menu--tools>li,
-.region-sidebar-first ul.menu--account>li {
+#page--sidebar-first ul.menu--main>li,
+#page--sidebar-first ul.menu--tools>li,
+#page--sidebar-first ul.menu--account>li {
   text-align: center;
 }
-.region-sidebar-first ul.menu--main>li>a,
-.region-sidebar-first ul.menu--tools>li>a,
-.region-sidebar-first ul.menu--account>li>a {
+#page--sidebar-first ul.menu--main>li>a,
+#page--sidebar-first ul.menu--tools>li>a,
+#page--sidebar-first ul.menu--account>li>a {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -62,9 +72,9 @@
   -webkit-transition: all .1s linear;
   transition: all .1s linear;
 }
-.region-sidebar-first ul.menu--main>li>a::before,
-.region-sidebar-first ul.menu--tools>li>a::before,
-.region-sidebar-first ul.menu--account>li>a::before {
+#page--sidebar-first ul.menu--main>li>a::before,
+#page--sidebar-first ul.menu--tools>li>a::before,
+#page--sidebar-first ul.menu--account>li>a::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -78,9 +88,9 @@
   -webkit-transition: all .1s linear;
   transition: all .1s linear;
 }
-.region-sidebar-first ul.menu--main>li>a:hover::before,
-.region-sidebar-first ul.menu--tools>li>a:hover::before,
-.region-sidebar-first ul.menu--account>li>a:hover::before {
+#page--sidebar-first ul.menu--main>li>a:hover::before,
+#page--sidebar-first ul.menu--tools>li>a:hover::before,
+#page--sidebar-first ul.menu--account>li>a:hover::before {
   height: 2px;
   width: 100px;
   background: #fff;
@@ -92,3 +102,7 @@
 .filter-wrapper {
   border-color: #e5e5e5;
 }
+
+/**
+ * Nodes
+ */

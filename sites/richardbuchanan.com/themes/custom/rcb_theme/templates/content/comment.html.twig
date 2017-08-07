@@ -80,39 +80,26 @@
 %}
 <li>
   <article{{ attributes.addClass(classes) }}>
-    <header class="uk-comment-header uk-position-relative">
-      <div class="uk-grid-medium uk-flex-middle" uk-grid>
-
-        {% if user_picture %}
-          <div class="uk-width-auto">{{ user_picture }}</div>
-        {% endif %}
-
-        <div class="uk-width-expand">
-          <h4 class="uk-comment-title uk-margin-remove">{{ title }} <span class="uk-text-muted  uk-hidden-hover" uk-icon="link"></span></h4>
-          <p class="uk-comment-meta uk-margin-remove-top">{{ submitted }}</p>
-
-          {#
-            Hide the "new" indicator by default, let a piece of JavaScript ask the
-            server which comments are new for the user. Rendering the final "new"
-            indicator here would break the render cache.
-          #}
-          <mark class="uk-badge uk-label uk-float-right uk-hidden hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
-        </div>
-
-        {#
-          Indicate the semantic relationship between parent and child comments for
-          accessibility. The list is difficult to navigate in a screen reader
-          without this information.
-        #}
-        {% if parent %}
-          <p class="visually-hidden">{{ parent }}</p>
-        {% endif %}
-
-        <span class="uk-hidden">{{ permalink }}</span>
+    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+      <div class="uk-width-auto">
+        <img class="uk-comment-avatar" src="https://getuikit.com/docs/images/avatar.jpg" width="80" height="80" alt="">
       </div>
 
-      <div class="uk-position-top-right uk-position-small uk-hidden-hover">
-        {{ content.links }}
+      <div class="uk-width-expand">
+        {#
+          Hide the "new" indicator by default, let a piece of JavaScript ask the
+          server which comments are new for the user. Rendering the final "new"
+          indicator here would break the render cache.
+        #}
+        <mark class="uk-badge uk-label uk-float-right uk-hidden hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
+
+        <h4 class="uk-comment-title uk-margin-remove">{{ title }}</h4>
+
+        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+          <li>{{ author }}</li>
+          <li>{{ date }}</li>
+          <li>{{ permalink }}</li>
+        </ul>
       </div>
     </header>
 
@@ -123,7 +110,16 @@
         {{ title_suffix }}
       {% endif %}
 
-      {{ content|without('links') }}
+      {{ content }}
     </div>
+
+    {#
+      Indicate the semantic relationship between parent and child comments for
+      accessibility. The list is difficult to navigate in a screen reader
+      without this information.
+    #}
+    {% if parent %}
+      <p class="visually-hidden">{{ parent }}</p>
+    {% endif %}
   </article>
 </li>
