@@ -59,13 +59,13 @@
   {% if multiple %}
     <ul{{ attributes.addClass(classes) }}>
       {% for item in items %}
-        <li{{ item.attributes }}>{{ item.content }}</li>
+        <li{{ item.attributes.addClass('uk-padding-remove') }}>{{ item.content }}</li>
       {% endfor %}
     </ul>
   {% else %}
     <ul{{ attributes.addClass(classes) }}>
       {% for item in items %}
-        <li{{ item.attributes }}>{{ item.content }}</li>
+        <li{{ item.attributes.addClass('uk-padding-remove') }}>{{ item.content }}</li>
       {% endfor %}
     </ul>
   {% endif %}
@@ -73,7 +73,7 @@
   <span{{ title_attributes.addClass(title_classes) }} uk-icon="icon: tag"></span>
   <ul{{ attributes.addClass(classes) }}>
     {% for item in items %}
-      <li{{ item.attributes }}>{{ item.content }}</li>
+      <li{{ item.attributes.addClass('uk-padding-remove') }}>{{ item.content }}</li>
     {% endfor %}
   </ul>
 {% endif %}
