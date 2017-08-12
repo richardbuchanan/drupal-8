@@ -134,6 +134,8 @@ function rcb_theme_preprocess_block(&$variables) {
  * Implements template_preprocess_breadcrumb().
  */
 function rcb_theme_preprocess_breadcrumb(&$variables) {
+  global $base_url;
+
   foreach ($variables['breadcrumb'] as $key => $item) {
     $variables['breadcrumb'][$key]['attributes'] = new Attribute;
     $variables['breadcrumb'][$key]['list_attributes'] = new Attribute;
@@ -141,7 +143,12 @@ function rcb_theme_preprocess_breadcrumb(&$variables) {
     $text = is_object($variables['breadcrumb'][$key]['text']) ? $variables['breadcrumb'][$key]['text']->getUntranslatedString() : $variables['breadcrumb'][$key]['text'];
 
     if ($variables['breadcrumb'][$key]['url']) {
-      $variables['breadcrumb'][$key]['attributes']->setAttribute('href', $variables['breadcrumb'][$key]['url']);
+      if ($text == 'Home') {
+        $variables['breadcrumb'][$key]['attributes']->setAttribute('href', $base_url);
+      }
+      else {
+        $variables['breadcrumb'][$key]['attributes']->setAttribute('href', $variables['breadcrumb'][$key]['url']);
+      }
     }
 
     if ($text == 'Home') {
