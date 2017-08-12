@@ -21,6 +21,23 @@ use Drupal\rcb_theme\RCBNodeImage;
 use Drupal\uikit\UIkit;
 
 /**
+ * Implements template_preprocess_html().
+ */
+function rcb_theme_preprocess_html(&$variables) {
+  global $base_url;
+  $rcb_theme = drupal_get_path('theme', 'rcb_theme');
+  $site_logo = $base_url . '/' . $rcb_theme . '/logo.png';
+
+  $logo_json = '{';
+  $logo_json .= '"@context": "http://schema.org",';
+  $logo_json .= '"@type": "Organization",';
+  $logo_json .= '"url": "' . $base_url . '",';
+  $logo_json .= '"logo": "' . $site_logo . '"';
+  $logo_json .= '}';
+  $variables['schema_organization'] = Markup::create($logo_json);
+}
+
+/**
  * Implements template_preprocess_page().
  */
 function rcb_theme_preprocess_page(&$variables) {

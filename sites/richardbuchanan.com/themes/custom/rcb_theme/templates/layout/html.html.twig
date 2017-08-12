@@ -33,11 +33,12 @@
 %}
 <!DOCTYPE html>
 <html{{ html_attributes }}>
-  <head>
+  <head itemscope itemtype="http://schema.org/WebSite">
     <head-placeholder token="{{ placeholder_token }}">
-    <title>{{ head_title|safe_join(' | ') }}</title>
+    <title itemprop='name'>{{ head_title|safe_join(' | ') }}</title>
     <css-placeholder token="{{ placeholder_token }}">
     <js-placeholder token="{{ placeholder_token }}">
+    <script type="application/ld+json">{{ schema_organization }}</script>
   </head>
   <body{{ attributes.addClass(body_classes) }}>
     {#

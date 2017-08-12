@@ -1,6 +1,8 @@
 <?php
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -96,5 +98,16 @@ function rcb_module_form_comment_form_alter(&$form, FormStateInterface $form_sta
     $form['author']['name']['#required'] = TRUE;
     $form['author']['mail']['#required'] = TRUE;
     $form['author']['homepage']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function rcb_module_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  foreach ($build['#attached']['html_head_link'] as $key => $item) {
+    if (isset($item[0]['rel']) && in_array($item[0]['rel'], array('canonical'))) {
+      $build['#attached']['html_head_link'][$key][0]['itemprop'] = 'url';
+    }
   }
 }
