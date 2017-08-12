@@ -458,8 +458,13 @@ function rcb_theme_preprocess_user(&$variables) {
 function rcb_theme_preprocess_username(&$variables) {
   global $base_url;
   $about = isset($variables['attributes']['about']) ? $variables['attributes']['about'] : FALSE;
+  $href = isset($variables['attributes']['href']) ? $variables['attributes']['href'] : FALSE;
 
   if ($about) {
     $variables['attributes']['about'] = $base_url . $about;
+  }
+
+  if ($href) {
+    $variables['attributes']['href'] = $base_url . $href;
   }
 }
