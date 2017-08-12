@@ -13,6 +13,11 @@ a {
 a:focus, a:hover {
   color: #0b5885;
 }
+blockquote {
+  font-size: 1.125rem;
+  border-left: 5px solid #e5e5e5;
+  padding-left: 15px;
+}
 details>summary {
   cursor: pointer;
 }
