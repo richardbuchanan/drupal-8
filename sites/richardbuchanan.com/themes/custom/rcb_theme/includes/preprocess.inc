@@ -346,6 +346,7 @@ function rcb_theme_preprocess_node(&$variables) {
   $logo_url = $base_url . $logo['url'];
   $modified_timestamp = $node->getChangedTime();
   $date_modified = \Drupal::service('date.formatter')->format($modified_timestamp, 'html_datetime', '', 'UTC');
+  $node_image_fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
   $node_image_url = drupal_get_path('theme', 'rcb_theme') . '/images/default-image.png';
   $node_image_height = '533';
   $node_image_width = '1025';
@@ -354,7 +355,7 @@ function rcb_theme_preprocess_node(&$variables) {
   if ($variables['display_submitted']) {
     $author = $node->getOwner()->getDisplayName();
   }
-  if ($node->hasField('field_image')) {
+  if ($node_image_fid) {
     $node_image_uri = $node->field_image->entity->getFileUri();
     $node_image_url = file_create_url($node_image_uri);
     $image_field = $node->field_image;
