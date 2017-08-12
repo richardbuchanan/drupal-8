@@ -28,19 +28,36 @@ function rcb_theme_preprocess_html(&$variables) {
   $rcb_theme = drupal_get_path('theme', 'rcb_theme');
   $site_logo = $base_url . '/' . $rcb_theme . '/logo.png';
 
-  $logo_json = '{';
-  $logo_json .= '"@context": "http://schema.org",';
-  $logo_json .= '"@type": "Organization",';
-  $logo_json .= '"url": "' . $base_url . '",';
-  $logo_json .= '"logo": "' . $site_logo . '"';
-  $logo_json .= '}';
-  $variables['schema_organization'] = Markup::create($logo_json);
+  $schema_organization = '{' . "\n";
+  $schema_organization .= '  "@context": "http://schema.org",' . "\n";
+  $schema_organization .= '  "@type": "Organization",' . "\n";
+  $schema_organization .= '  "url": "' . $base_url . '",' . "\n";
+  $schema_organization .= '  "logo": "' . $site_logo . '",' . "\n";
+  $schema_organization .= '  "sameAs": "https://www.facebook.com/Richard.C.Buchanan.III",' . "\n";
+  $schema_organization .= '  "sameAs": "https://plus.google.com/+RichardBuckBuchanan",' . "\n";
+  $schema_organization .= '  "sameAs": "https://www.linkedin.com/in/houseofcanon/",' . "\n";
+  $schema_organization .= '  "sameAs": "https://twitter.com/HouseOfCanon",' . "\n";
+  $schema_organization .= '  "sameAs": "http://www.youtube.com/c/RichardBuckBuchanan"' . "\n";
+  $schema_organization .= '}';
+  $variables['schema_organization'] = Markup::create($schema_organization);
 }
 
 /**
  * Implements template_preprocess_page().
  */
 function rcb_theme_preprocess_page(&$variables) {
+  global $base_url;
+  $rcb_theme = drupal_get_path('theme', 'rcb_theme');
+  $site_logo = $base_url . '/' . $rcb_theme . '/logo.png';
+
+  $variables['base_url'] = $base_url;
+  $variables['site_logo'] = $site_logo;
+  $variables['facebook'] = 'https://www.facebook.com/Richard.C.Buchanan.III';
+  $variables['google_plus'] = 'https://plus.google.com/+RichardBuckBuchanan';
+  $variables['linkedin'] = 'https://www.linkedin.com/in/houseofcanon';
+  $variables['twitter'] = 'https://twitter.com/HouseOfCanon';
+  $variables['youtube'] = 'http://www.youtube.com/c/RichardBuckBuchanan';
+
   $variables['header_attributes']['class'] = ['uk-hidden@m'];
   $variables['page_attributes']['class'] = [
     'uk-container',
