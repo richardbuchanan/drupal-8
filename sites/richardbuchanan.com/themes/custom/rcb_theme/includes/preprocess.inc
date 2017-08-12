@@ -391,7 +391,10 @@ function rcb_theme_preprocess_node(&$variables) {
   $node_image_url = $base_url . '/' . drupal_get_path('theme', 'rcb_theme') . '/images/default-image.png';
   $node_image_height = '533';
   $node_image_width = '1025';
+  $about = $variables['attributes']['about'];
+
   $variables['attributes']['typeof'] = 'schema:Article';
+  $variables['attributes']['about'] = $base_url . $about;
 
   if ($variables['display_submitted']) {
     $author = $node->getOwner()->getDisplayName();
