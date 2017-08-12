@@ -241,11 +241,19 @@ function rcb_theme_preprocess_field(&$variables) {
  * Implements template_preprocess_form().
  */
 function rcb_theme_preprocess_form(&$variables) {
+  global $base_url;
   $form_id = $variables['element']['#form_id'];
 
   switch ($form_id) {
     case 'search_form':
       $variables['layout'] = 'horizontal';
+      break;
+
+    case 'search_block_form':
+      $variables['base_url'] = $base_url;
+      $variables['attributes']['itemprop'] = 'potentialAction';
+      $variables['attributes']['itemscope'] = '';
+      $variables['attributes']['itemtype'] = 'http://schema.org/SearchAction';
       break;
 
     default:
@@ -270,7 +278,9 @@ function rcb_theme_preprocess_form_element(&$variables) {
  * Implements template_preprocess_input().
  */
 function rcb_theme_preprocess_input(&$variables) {
+  global $base_url;
   $type = $variables['element']['#type'];
+  $variables['search_query_string'] = FALSE;
 
   if ($type == 'submit') {
     $variables['button_icon'] = FALSE;
@@ -296,6 +306,21 @@ function rcb_theme_preprocess_input(&$variables) {
 
         default:
           $variables['attributes']['class'][] = 'uk-button-default';
+      }
+    }
+  }
+  elseif ($type == 'search') {
+    $parents_count = count($variables['element']['#array_parents']);
+
+    if ($parents_count == 1) {
+      $variables['search_query_string'] = $base_url . '/search/content?keys={keys}';
+      $variables['attributes']['itemprop'] = 'query-input';
+      $variables['attributes']['required'] = '';
+      unset($variables['attributes']['maxlength']);
+
+      $value_empty = isset($variables['attributes']['value']) && empty($variables['attributes']['value']);
+      if ($value_empty) {
+        unset($variables['attributes']['value']);
       }
     }
   }

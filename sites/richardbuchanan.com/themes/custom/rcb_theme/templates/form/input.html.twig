@@ -25,4 +25,7 @@
     errors ? 'uk-form-danger',
   ]
 %}
+{% if search_query_string %}
+  <meta itemprop="target" content="{{ search_query_string }}"/>
+{% endif %}
 <input{{ attributes.addClass(classes) }} />{{ children }}
