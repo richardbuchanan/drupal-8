@@ -12,16 +12,20 @@
 {% if breadcrumb and display_breadcrumbs %}
   <nav role="navigation" aria-labelledby="system-breadcrumb">
     <h2 id="system-breadcrumb" class="visually-hidden">{{ 'Breadcrumb'|t }}</h2>
-    <ol class="uk-breadcrumb">
+    <ol class="uk-breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
     {% for item in breadcrumb %}
       {% if item.url %}
-        <li><a href="{{ item.url }}">{{ item.text }}</a></li>
+        <li{{ item.list_attributes }}>
+          <a{{ item.attributes }}>
+            <span{{ item.text_attributes }}>{{ item.text }}</span>
+          </a>
+        </li>
       {% else %}
-        {% if not item.active %}
-          <li><span>{{ item.text }}</span></li>
-        {% else %}
-          <li class="uk-active"><span>{{ item.text }}</span></li>
-        {% endif %}
+        <li{{ item.list_attributes }}>
+          <span{{ item.attributes }}>
+            <span{{ item.text_attributes }}>{{ item.text }}</span>
+          </span>
+        </li>
       {% endif %}
     {% endfor %}
     </ol>

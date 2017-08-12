@@ -96,6 +96,37 @@ function rcb_theme_preprocess_block(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_breadcrumb().
+ */
+function rcb_theme_preprocess_breadcrumb(&$variables) {
+  foreach ($variables['breadcrumb'] as $key => $item) {
+    $variables['breadcrumb'][$key]['attributes'] = new Attribute;
+    $variables['breadcrumb'][$key]['list_attributes'] = new Attribute;
+    $variables['breadcrumb'][$key]['text_attributes'] = new Attribute;
+
+    if ($variables['breadcrumb'][$key]['url']) {
+      $variables['breadcrumb'][$key]['attributes']->setAttribute('href', $variables['breadcrumb'][$key]['url']);
+    }
+
+    if ($key == 0) {
+      $home = '<span class="uk-hidden">Richard Buchanan</span>';
+      $text = new TranslatableMarkup($home);
+      $variables['breadcrumb'][$key]['text'] = $text;
+      $variables['breadcrumb'][$key]['attributes']->addClass('uk-icon');
+      $variables['breadcrumb'][$key]['attributes']->setAttribute('title', t('Home'));
+      $variables['breadcrumb'][$key]['attributes']->setAttribute('uk-icon', 'icon: home; ratio: 0.9');
+      $variables['breadcrumb'][$key]['attributes']->setAttribute('uk-tooltip', '');
+    }
+
+    $variables['breadcrumb'][$key]['attributes']->setAttribute('property', 'item');
+    $variables['breadcrumb'][$key]['attributes']->setAttribute('typeof', 'WebPage');
+    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('property', 'itemListElement');
+    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('typeof', 'ListItem');
+    $variables['breadcrumb'][$key]['text_attributes']->setAttribute('property', 'name');
+  }
+}
+
+/**
  * Implements template_preprocess_comment().
  */
 function rcb_theme_preprocess_comment(&$variables) {

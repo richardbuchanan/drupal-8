@@ -9,7 +9,6 @@
  */
 
 use Drupal\Core\Link;
-use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**

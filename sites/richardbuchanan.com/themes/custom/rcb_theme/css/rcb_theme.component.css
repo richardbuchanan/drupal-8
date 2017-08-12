@@ -72,6 +72,12 @@
   margin: 0;
   padding: 0 0 15px;
 }
+.uk-breadcrumb>*>.uk-icon {
+  vertical-align: text-bottom;
+}
+.uk-breadcrumb>:nth-child(n+2):not(.uk-first-column)::before {
+  margin: 0 10px;
+}
 .uk-button-default {
   color: #619ec2;
   border-color: #619ec2;
