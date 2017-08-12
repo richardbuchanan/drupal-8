@@ -351,7 +351,6 @@ function rcb_theme_preprocess_node(&$variables) {
   $node_image_height = '533';
   $node_image_width = '1025';
   $variables['attributes']['typeof'] = 'schema:Article';
-  ksm($logo_url);
 
   if ($variables['display_submitted']) {
     $author = $node->getOwner()->getDisplayName();
