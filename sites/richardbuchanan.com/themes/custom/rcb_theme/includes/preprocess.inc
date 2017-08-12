@@ -343,14 +343,15 @@ function rcb_theme_preprocess_node(&$variables) {
   $author = $site_name;
   $date_published = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime', '', 'UTC');
   $logo = UIkit::getThemeSetting('logo');
-  $logo_url = $base_url . $logo['url'];
+  $logo_url = str_replace('.svg', '.png', $base_url . $logo['url']);
   $modified_timestamp = $node->getChangedTime();
   $date_modified = \Drupal::service('date.formatter')->format($modified_timestamp, 'html_datetime', '', 'UTC');
   $node_image_fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
-  $node_image_url = drupal_get_path('theme', 'rcb_theme') . '/images/default-image.png';
+  $node_image_url = $base_url . '/' . drupal_get_path('theme', 'rcb_theme') . '/images/default-image.png';
   $node_image_height = '533';
   $node_image_width = '1025';
   $variables['attributes']['typeof'] = 'schema:Article';
+  ksm($logo_url);
 
   if ($variables['display_submitted']) {
     $author = $node->getOwner()->getDisplayName();
