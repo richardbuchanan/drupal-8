@@ -456,4 +456,10 @@ function rcb_theme_preprocess_user(&$variables) {
  * Implements template_preprocess_username().
  */
 function rcb_theme_preprocess_username(&$variables) {
+  global $base_url;
+  $about = isset($variables['attributes']['about']) ? $variables['attributes']['about'] : FALSE;
+
+  if ($about) {
+    $variables['attributes']['about'] = $base_url . $about;
+  }
 }
