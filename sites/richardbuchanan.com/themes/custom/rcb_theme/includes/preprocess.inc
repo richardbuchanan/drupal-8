@@ -18,6 +18,7 @@ use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
 use Drupal\rcb_theme\RCBNodeImage;
+use Drupal\uikit\UIkit;
 
 /**
  * Implements template_preprocess_page().
@@ -328,6 +329,7 @@ function rcb_theme_preprocess_menu(&$variables) {
  * Implements template_preprocess_node().
  */
 function rcb_theme_preprocess_node(&$variables) {
+  global $base_url;
   $node = $variables['node'];
 
   $timestamp = $node->getCreatedTime();
@@ -335,6 +337,72 @@ function rcb_theme_preprocess_node(&$variables) {
   $date .= \Drupal::service('date.formatter')->format($timestamp, 'short') . '</span>';
   $date = Markup::create($date);
   $variables['date'] = $date;
+
+  $site_name = \Drupal::config('system.site')->get('name');
+  $node_url = $node->urlInfo()->toString();
+  $author = $site_name;
+  $date_published = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime', '', 'UTC');
+  $logo = UIkit::getThemeSetting('logo');
+  $logo_url = $base_url . $logo['url'];
+  $modified_timestamp = $node->getChangedTime();
+  $date_modified = \Drupal::service('date.formatter')->format($modified_timestamp, 'html_datetime', '', 'UTC');
+  $node_image_url = drupal_get_path('theme', 'rcb_theme') . '/images/default-image.png';
+  $node_image_height = '533';
+  $node_image_width = '1025';
+  $variables['attributes']['typeof'] = 'schema:Article';
+
+  if ($variables['display_submitted']) {
+    $author = $node->getOwner()->getDisplayName();
+  }
+  if ($node->hasField('field_image')) {
+    $node_image_uri = $node->field_image->entity->getFileUri();
+    $node_image_url = file_create_url($node_image_uri);
+    $image_field = $node->field_image;
+    $image_view = $image_field->view();
+    $image_properties = $image_view[0]['#item']->getProperties();
+    $node_image_height = $image_properties['height']->getValue();
+    $node_image_width = $image_properties['width']->getValue();
+  }
+
+  $structured_data = '<span class="hidden" property="schema:mainEntityOfPage"  typeof="schema:WebPage" content="' . $base_url . $node_url . '"></span>';
+  $structured_data .= '<span class="hidden" property="schema:author" content="' . $author . '"></span>';
+
+  $structured_data .= '<span class="hidden" property="schema:datePublished" content="' . $date_published . '"></span>';
+  $structured_data .= '<span class="hidden" property="schema:dateModified" content="' . $date_modified . '"></span>';
+
+  $structured_data .= '<div class="hidden" property="schema:publisher" typeof="schema:Organization">';
+
+  $structured_data .= '<div property="schema:logo" typeof="schema:ImageObject">';
+  $structured_data .= '<img src="' . $logo_url . '" />';
+  $structured_data .= '<span property="schema:url" content="' . $logo_url . '">' . $logo_url . '</span>';
+  $structured_data .= '<span property="schema:height" content="57"></span>';
+  $structured_data .= '<span property="schema:width" content="47"></span>';
+  $structured_data .= '</div>';
+
+  $structured_data .= '<span property="schema:name" content="' . $site_name . '"></span>';
+  $structured_data .= '</div>';
+
+  $structured_data .= '<div class="hidden" property="schema:image" typeof="schema:ImageObject">';
+  $structured_data .= '<img src="' . $node_image_url . '" />';
+  $structured_data .= '<span property="schema:url" content="' . $node_image_url . '"></span>';
+  $structured_data .= '<span property="schema:height" content="' . $node_image_height . '"></span>';
+  $structured_data .= '<span property="schema:width" content="' . $node_image_width . '"></span>';
+  $structured_data .= '</div>';
+
+  $variables['structured_data'] = new TranslatableMarkup($structured_data);
+
+  // https://search.google.com/structured-data/testing-tool
+  // https://developers.google.com/search/docs/data-types/sitename
+}
+
+function rcb_theme_preprocess_field__node__title(&$variables) {
+  foreach ($variables['items'] as $key => $item) {
+    $variables['items'][$key]['attributes']->removeAttribute('property');
+  }
+
+  if (isset($variables['attributes']['property'])) {
+    unset($variables['attributes']['property']);
+  }
 }
 
 /**
