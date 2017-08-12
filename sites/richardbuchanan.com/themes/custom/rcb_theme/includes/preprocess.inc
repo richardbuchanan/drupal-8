@@ -103,13 +103,15 @@ function rcb_theme_preprocess_breadcrumb(&$variables) {
     $variables['breadcrumb'][$key]['attributes'] = new Attribute;
     $variables['breadcrumb'][$key]['list_attributes'] = new Attribute;
     $variables['breadcrumb'][$key]['text_attributes'] = new Attribute;
+    $text = is_object($variables['breadcrumb'][$key]['text']) ? $variables['breadcrumb'][$key]['text']->getUntranslatedString() : $variables['breadcrumb'][$key]['text'];
 
     if ($variables['breadcrumb'][$key]['url']) {
       $variables['breadcrumb'][$key]['attributes']->setAttribute('href', $variables['breadcrumb'][$key]['url']);
     }
 
-    if ($key == 0) {
-      $home = '<span class="uk-hidden">Richard Buchanan</span>';
+    if ($text == 'Home') {
+      $site_name = \Drupal::config('system.site')->get('name');
+      $home = '<span class="uk-hidden">' . $site_name . '</span>';
       $text = new TranslatableMarkup($home);
       $variables['breadcrumb'][$key]['text'] = $text;
       $variables['breadcrumb'][$key]['attributes']->addClass('uk-icon');
