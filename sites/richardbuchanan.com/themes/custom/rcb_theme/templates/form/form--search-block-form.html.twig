@@ -10,11 +10,10 @@
  * @see template_preprocess_form()
  */
 #}
-<div itemscope itemtype="http://schema.org/WebSite">
-  <meta itemprop="url" content="{{ base_url }}"/>
-  <form{{ attributes.addClass('form--search-block-forn') }}>
-    <div class="uk-position-relative">
-      {{ children }}
-    </div>
-  </form>
-</div>
+{{ prefix }}
+<form{{ attributes.addClass('form--search-block-forn') }}>
+  <div class="uk-position-relative">
+    {{ children }}
+  </div>
+</form>
+{{ suffix }}

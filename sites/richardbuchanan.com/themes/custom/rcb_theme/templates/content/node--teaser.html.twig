@@ -87,7 +87,6 @@
     <h2 class="uk-hidden" property="schema:headline">{{ label }}</h2>
   {% endif %}
   {{ title_suffix }}
-  {{ structured_data }}
 
   <div{{ content_attributes.addClass('node--content') }}>
     {{ content|without('links') }}
@@ -111,4 +110,38 @@
       {% endif %}
     </footer>
   {% endif %}
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ article_id }}"
+    },
+    "headline": "Article headline",
+    "image": {
+      "@type": "ImageObject",
+      "url": "{{ article_image }}",
+      "height": {{ article_image_height }},
+      "width": {{ article_image_width }}
+    },
+    "datePublished": "{{ article_published }}",
+    "dateModified": "{{ article_modified }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ article_author }}"
+    },
+     "publisher": {
+      "@type": "Organization",
+      "name": "Richard Buchanan",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ article_publisher_image }}",
+        "width": 47,
+        "height": 57
+      }
+    },
+    "description": "{{ node.body.summary }}"
+  }
+  </script>
 </article>

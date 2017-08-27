@@ -18,29 +18,6 @@ use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
 use Drupal\rcb_theme\RCBNodeImage;
-use Drupal\uikit\UIkit;
-
-/**
- * Implements template_preprocess_html().
- */
-function rcb_theme_preprocess_html(&$variables) {
-  global $base_url;
-  $rcb_theme = drupal_get_path('theme', 'rcb_theme');
-  $site_logo = $base_url . '/' . $rcb_theme . '/logo.png';
-
-  $schema_organization = '{' . "\n";
-  $schema_organization .= '  "@context": "http://schema.org",' . "\n";
-  $schema_organization .= '  "@type": "Organization",' . "\n";
-  $schema_organization .= '  "url": "' . $base_url . '",' . "\n";
-  $schema_organization .= '  "logo": "' . $site_logo . '",' . "\n";
-  $schema_organization .= '  "sameAs": "https://www.facebook.com/Richard.C.Buchanan.III",' . "\n";
-  $schema_organization .= '  "sameAs": "https://plus.google.com/+RichardBuckBuchanan",' . "\n";
-  $schema_organization .= '  "sameAs": "https://www.linkedin.com/in/houseofcanon/",' . "\n";
-  $schema_organization .= '  "sameAs": "https://twitter.com/HouseOfCanon",' . "\n";
-  $schema_organization .= '  "sameAs": "http://www.youtube.com/c/RichardBuckBuchanan"' . "\n";
-  $schema_organization .= '}';
-  $variables['schema_organization'] = Markup::create($schema_organization);
-}
 
 /**
  * Implements template_preprocess_page().
@@ -162,11 +139,15 @@ function rcb_theme_preprocess_breadcrumb(&$variables) {
       $variables['breadcrumb'][$key]['attributes']->setAttribute('uk-tooltip', '');
     }
 
-    $variables['breadcrumb'][$key]['attributes']->setAttribute('property', 'item');
-    $variables['breadcrumb'][$key]['attributes']->setAttribute('typeof', 'WebPage');
-    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('property', 'itemListElement');
-    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('typeof', 'ListItem');
-    $variables['breadcrumb'][$key]['text_attributes']->setAttribute('property', 'name');
+    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('itemprop', 'itemListElement');
+    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('itemscope', '');
+    $variables['breadcrumb'][$key]['list_attributes']->setAttribute('itemtype', 'http://schema.org/ListItem');
+
+    $variables['breadcrumb'][$key]['attributes']->setAttribute('itemscope', '');
+    $variables['breadcrumb'][$key]['attributes']->setAttribute('itemtype', 'http://schema.org/Thing');
+    $variables['breadcrumb'][$key]['attributes']->setAttribute('itemprop', 'item');
+
+    $variables['breadcrumb'][$key]['text_attributes']->setAttribute('itemprop', 'name');
   }
 }
 
@@ -250,10 +231,20 @@ function rcb_theme_preprocess_form(&$variables) {
       break;
 
     case 'search_block_form':
-      $variables['base_url'] = $base_url;
-      $variables['attributes']['itemprop'] = 'potentialAction';
-      $variables['attributes']['itemscope'] = '';
-      $variables['attributes']['itemtype'] = 'http://schema.org/SearchAction';
+      $prefix = '';
+      $suffix = '';
+
+      if ($variables['attributes']['id'] == 'search-block-form') {
+        $prefix = '<div itemscope itemtype="http://schema.org/WebSite">';
+        $prefix .= '<meta itemprop="url" content="' . $base_url . '"/>';
+        $variables['attributes']['itemprop'] = 'potentialAction';
+        $variables['attributes']['itemscope'] = '';
+        $variables['attributes']['itemtype'] = 'http://schema.org/SearchAction';
+        $suffix = '</div>';
+      }
+
+      $variables['prefix'] = Markup::create($prefix);
+      $variables['suffix'] = Markup::create($suffix);
       break;
 
     default:
@@ -312,7 +303,7 @@ function rcb_theme_preprocess_input(&$variables) {
   elseif ($type == 'search') {
     $parents_count = count($variables['element']['#array_parents']);
 
-    if ($parents_count == 1) {
+    if ($parents_count == 1 && $variables['element']['#id'] == 'edit-keys') {
       $variables['search_query_string'] = $base_url . '/search/content?keys={keys}';
       $variables['attributes']['itemprop'] = 'query-input';
       $variables['attributes']['required'] = '';
@@ -408,8 +399,6 @@ function rcb_theme_preprocess_node(&$variables) {
   $node_url = $node->urlInfo()->toString();
   $author = $site_name;
   $date_published = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime', '', 'UTC');
-  $logo = UIkit::getThemeSetting('logo');
-  $logo_url = str_replace('.svg', '.png', $base_url . $logo['url']);
   $modified_timestamp = $node->getChangedTime();
   $date_modified = \Drupal::service('date.formatter')->format($modified_timestamp, 'html_datetime', '', 'UTC');
   $node_image_fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
@@ -434,35 +423,17 @@ function rcb_theme_preprocess_node(&$variables) {
     $node_image_width = $image_properties['width']->getValue();
   }
 
-  $structured_data = '<span class="hidden" property="schema:mainEntityOfPage"  typeof="schema:WebPage" content="' . $base_url . $node_url . '"></span>';
-  $structured_data .= '<span class="hidden" property="schema:author" content="' . $author . '"></span>';
+  unset($variables['attributes']['typeof']);
+  unset($variables['attributes']['about']);
 
-  $structured_data .= '<span class="hidden" property="schema:datePublished" content="' . $date_published . '"></span>';
-  $structured_data .= '<span class="hidden" property="schema:dateModified" content="' . $date_modified . '"></span>';
-
-  $structured_data .= '<div class="hidden" property="schema:publisher" typeof="schema:Organization">';
-
-  $structured_data .= '<div property="schema:logo" typeof="schema:ImageObject">';
-  $structured_data .= '<img src="' . $logo_url . '" />';
-  $structured_data .= '<span property="schema:url" content="' . $logo_url . '">' . $logo_url . '</span>';
-  $structured_data .= '<span property="schema:height" content="57"></span>';
-  $structured_data .= '<span property="schema:width" content="47"></span>';
-  $structured_data .= '</div>';
-
-  $structured_data .= '<span property="schema:name" content="' . $site_name . '"></span>';
-  $structured_data .= '</div>';
-
-  $structured_data .= '<div class="hidden" property="schema:image" typeof="schema:ImageObject">';
-  $structured_data .= '<img src="' . $node_image_url . '" />';
-  $structured_data .= '<span property="schema:url" content="' . $node_image_url . '"></span>';
-  $structured_data .= '<span property="schema:height" content="' . $node_image_height . '"></span>';
-  $structured_data .= '<span property="schema:width" content="' . $node_image_width . '"></span>';
-  $structured_data .= '</div>';
-
-  $variables['structured_data'] = new TranslatableMarkup($structured_data);
-
-  // https://search.google.com/structured-data/testing-tool
-  // https://developers.google.com/search/docs/data-types/sitename
+  $variables['article_id'] = $base_url . $node_url;
+  $variables['article_image'] = $node_image_url;
+  $variables['article_image_height'] = $node_image_height;
+  $variables['article_image_width'] = $node_image_width;
+  $variables['article_published'] = $date_published;
+  $variables['article_modified'] = $date_modified;
+  $variables['article_author'] = $author;
+  $variables['article_publisher_image'] = $base_url . '/' . drupal_get_path('theme', 'rcb_theme') . '/logo.png';
 }
 
 function rcb_theme_preprocess_field__node__title(&$variables) {

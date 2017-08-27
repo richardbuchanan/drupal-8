@@ -33,9 +33,9 @@
 %}
 <!DOCTYPE html>
 <html{{ html_attributes }}>
-  <head itemscope itemtype="http://schema.org/WebSite">
+  <head>
     <head-placeholder token="{{ placeholder_token }}">
-    <title itemprop='name'>{{ head_title|safe_join(' | ') }}</title>
+    <title>{{ head_title|safe_join(' | ') }}</title>
     <css-placeholder token="{{ placeholder_token }}">
     <js-placeholder token="{{ placeholder_token }}">
   </head>

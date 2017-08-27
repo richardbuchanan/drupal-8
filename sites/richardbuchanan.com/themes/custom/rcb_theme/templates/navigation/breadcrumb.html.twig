@@ -10,21 +10,23 @@
  */
 #}
 {% if breadcrumb and display_breadcrumbs %}
-  <nav role="navigation" aria-labelledby="system-breadcrumb">
+  <nav aria-labelledby="system-breadcrumb">
     <h2 id="system-breadcrumb" class="visually-hidden">{{ 'Breadcrumb'|t }}</h2>
-    <ol class="uk-breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+    <ol class="uk-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
     {% for item in breadcrumb %}
       {% if item.url %}
         <li{{ item.list_attributes }}>
           <a{{ item.attributes }}>
             <span{{ item.text_attributes }}>{{ item.text }}</span>
           </a>
+          <meta itemprop="position" content="{{ loop.index }}" />
         </li>
       {% else %}
         <li{{ item.list_attributes }}>
           <span{{ item.attributes }}>
             <span{{ item.text_attributes }}>{{ item.text }}</span>
           </span>
+          <meta itemprop="position" content="{{ loop.index }}" />
         </li>
       {% endif %}
     {% endfor %}
