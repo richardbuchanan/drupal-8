@@ -48,7 +48,7 @@ function rcb_theme_preprocess_page(&$variables) {
   ];
   $variables['sidebar_second_attributes']['class'] = [
     'uk-visible@l',
-    'uk-width-medium',
+    'uk-width-large',
   ];
   $variables['footer_attributes'] = new Attribute;
   $variables['footer_attributes']->setAttribute('id', 'page--footer');

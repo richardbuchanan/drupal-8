@@ -77,10 +77,16 @@
     'uk-article',
   ]
 %}
+{%
+  set title_classes = [
+    'uk-text-lead',
+    'uk-margin-remove-bottom',
+  ]
+%}
 <article{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
   {% if not page %}
-    <h2{{ title_attributes.addClass('uk-text-lead') }} property="schema:headline">
+    <h2{{ title_attributes.addClass(title_classes) }} property="schema:headline">
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
     </h2>
   {% else %}
@@ -88,13 +94,9 @@
   {% endif %}
   {{ title_suffix }}
 
-  <div{{ content_attributes.addClass('node--content') }}>
-    {{ content|without('links') }}
-  </div>
-
   {% if display_submitted or content.links %}
     <footer class="node--meta">
-      <ul class="node--links uk-subnav uk-margin-top">
+      <ul class="node--links uk-subnav uk-margin-remove-bottom">
         {% if display_submitted %}
           <li{{ author_attributes.addClass('node--author') }}>{{ author_name }}</li>
           <li class="node--date">{{ date }}</li>
@@ -105,11 +107,22 @@
         {% endif %}
       </ul>
 
+      {% if content.field_tags %}
+        {{ content.field_tags }}
+      {% endif %}
+
       {% if display_submitted %}
         {{ metadata }}
       {% endif %}
     </footer>
   {% endif %}
+
+  <div{{ content_attributes.addClass('node--content') }}>
+    {{ content|without('links')|without('field_tags') }}
+  </div>
+
+  <hr class="uk-divider-icon">
+
   <script type="application/ld+json">
   {
     "@context": "http://schema.org",

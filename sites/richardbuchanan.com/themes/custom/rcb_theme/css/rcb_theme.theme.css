@@ -63,6 +63,19 @@
 .node:last-child {
   margin-bottom: 0;
 }
+.node--view-mode-teaser {
+  padding: 0 15px;
+}
+.views-row:first-child .node--view-mode-teaser,
+.contextual+.views-row .node--view-mode-teaser {
+  padding-top: 15px;
+}
+.views-row:last-child .node--view-mode-teaser {
+  padding-bottom: 15px;
+}
+.views-row:last-child .node--view-mode-teaser hr {
+  display: none;
+}
 .node--links {
   margin-bottom: 0;
 }
