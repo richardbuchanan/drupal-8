@@ -197,7 +197,7 @@ function rcb_preprocess_node(&$variables) {
   $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['title'] = $node->getTitle();
-  $variables['image_url'] = 'http://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/images/about.png';
+  $variables['image_url'] = 'https://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/images/about.png';
   $variables['image_height'] = '390';
   $variables['image_width'] = '1215';
 
