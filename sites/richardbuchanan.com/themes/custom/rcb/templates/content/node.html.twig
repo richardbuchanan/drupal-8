@@ -68,32 +68,95 @@
  * @ingroup uikit_themeable
  */
 #}
-{% set classes = ['node', 'uk-article'] %}
-<article{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {{ title_suffix }}
-
-  {% if display_submitted %}
-    <div class="node--submitted uk-article-meta uk-margin-small-bottom">
-      <i class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 1"></i>
-      <span>{% trans %}{{ author_name }} | {{ date }}{% endtrans %}</span>
-      {{ metadata }}
-    </div>
-  {% endif %}
-
-  <div{{ content_attributes }}>
-    {{ content|without('field_tags')|without('links')|without('comment') }}
-  </div>
-
-  {% if content.field_tags %}
-    <div class="node--tags">
-      <i class="uk-margin-small-right" uk-icon="icon: tag; ratio: 1.25"></i>
-      <div class="uk-display-inline-block">
-        {{ content.field_tags }}
+{%
+  set classes = [
+  'uk-article',
+  'uk-margin-bottom',
+  ]
+%}
+{%
+  set content_classes = [
+    'node--content',
+    'uk-width-1-1',
+    display_submitted ? 'uk-width-3-4@m',
+    display_submitted ? 'uk-push-1-4@m',
+    'uk-margin-remove-top',
+  ]
+%}
+{%
+  set title_classes = [
+    'node--header',
+    'uk-width-1-1',
+    'uk-width-3-4@m',
+    'uk-push-1-4@m',
+    page ? 'uk-hidden',
+  ]
+%}
+<article{{ attributes.addClass(classes) }} itemscope="" itemtype="http://schema.org/BlogPosting">
+  <div uk-grid>
+    {{ title_prefix }}
+    <header{{ title_attributes.addClass(title_classes) }}>
+      <h2 class="uk-text-lead" itemprop="name headline">
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+      <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://richardbuchanan.com/{{ url }}"/>
+      <link itemprop="url" href="http://richardbuchanan.com/{{ url }}">
+      <meta itemprop="author" content="Richard Buchanan">
+      <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <img src="{{ image_url }}"/>
+        <meta itemprop="url" content="{{ image_url }}">
+        <meta itemprop="width" content="{{ image_width }}">
+        <meta itemprop="height" content="{{ image_height }}">
       </div>
+      <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+          <img src="https://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/logo.png" />
+          <meta itemprop="url" content="https://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/logo.png">
+          <meta itemprop="width" content="47">
+          <meta itemprop="height" content="57">
+        </div>
+        <meta itemprop="name" content="Richard Buchanan">
+      </div>
+      <meta itemprop="description" content="{{ node.body.summary }}">
+      <meta itemprop="datePublished" content="{{ created }}">
+      <meta itemprop="dateModified" content="{{ modified }}">
+    </header>
+    {{ title_suffix }}
+
+    <div{{ content_attributes.addClass(content_classes) }}>
+      {{ content|without('field_tags') }}
     </div>
-  {% endif %}
 
-  {{ content.comment }}
+    {% if display_submitted %}
+      <footer class="node--metadata uk-width-1-1 uk-width-1-4@m uk-pull-3-4@m uk-margin-remove-top">
+        {{ author_picture }}
+        <div{{ author_attributes.addClass('uk-article-meta') }}>
+          <div class="uk-margin-small-bottom">
+            <span class="uk-margin-small-right" uk-icon="icon:calendar"></span>
+            <a href="{{ url }}">{{ date }}</a>
+          </div>
 
+          {% if content.field_tags %}
+            <div class="uk-margin-small-bottom" uk-grid>
+              <span class="uk-margin-small-right uk-width-auto" uk-icon="icon:tag"></span>
+              {{ content.field_tags }}
+            </div>
+          {% endif %}
+
+          <div class="uk-margin-small-bottom">
+            <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
+            <a href="{{ url }}#comments">{{ node.comment.comment_count }} comments</a>
+          </div>
+
+          <div>
+            <a href="https://twitter.com/intent/tweet?text={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}&via=HouseOfCanon" class="uk-icon-button uk-margin-small-right" uk-icon="icon: twitter"></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" uk-icon="icon: facebook"></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&title={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" uk-icon="icon: linkedin"></a>
+          </div>
+
+          {{ metadata }}
+        </div>
+      </footer>
+    {% endif %}
+  </div>
 </article>

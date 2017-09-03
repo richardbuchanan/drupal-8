@@ -29,10 +29,10 @@
  */
 #}
 {% if content %}
-  <div{{ attributes.addClass('uk-margin') }}>
+  <div{{ attributes }}>
     {{ title_prefix }}
     {% if label %}
-      <h2{{ title_attributes }}>{{ label }}</h2>
+      <h3{{ title_attributes }}>{{ label }}</h3>
     {% endif %}
     {{ title_suffix }}
     {% block content %}

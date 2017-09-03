@@ -6,7 +6,7 @@
  */
 
 /**
- * Load uikit_blog's include files for theme processing.
+ * Load rcb's include files for theme processing.
  */
 include_once 'includes/preprocess.inc';
 include_once 'includes/process.inc';

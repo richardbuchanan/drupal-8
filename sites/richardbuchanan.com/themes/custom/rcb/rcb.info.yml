@@ -1,23 +1,16 @@
 name: 'RCB'
 type: theme
-description: 'UIkit sub-theme for richardbuchanan.com'
-core: '8.x'
-base theme: uikit_blog
+description: 'UIkit Sub-theme'
+core: 8.x
+base theme: uikit
 
 regions:
-  navbar: 'Navigation Bar'
-  offcanvas: 'Offcanvas Navigation'
-  page_header: 'Page Header'
+  navbar: 'Navigation bar'
+  offcanvas: 'Offcanvas navigation'
   content: Content
-  sidebar_first: 'Left Sidebar'
-  sidebar_second: 'Right Sidebar'
+  sidebar_first: 'Left sidebar'
+  sidebar_second: 'Right sidebar'
   footer: 'Footer'
 
 libraries:
   - rcb/global-style
-
-libraries-override:
-  footnotes/footnotes:
-      css:
-        component:
-          assets/css/footnotes.css: false

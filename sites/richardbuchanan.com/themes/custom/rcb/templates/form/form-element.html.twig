@@ -51,23 +51,23 @@
   set classes = [
     'form-item',
     name ? 'form-item-' ~ name|clean_class,
-    margin ? 'uk-margin',
   ]
 %}
 {%
   set description_classes = [
     description_display == 'invisible' ? 'visually-hidden',
-    'uk-margin-remove',
-    'uk-text-muted',
+    'uk-form-help-block',
+    description_display == 'before' ? 'uk-margin-small-bottom',
+    description_display == 'after' ? 'uk-margin-small-top',
     'uk-text-small',
   ]
 %}
 <div{{ attributes.addClass(classes) }}>
-  {% if type != 'item' %}<div class="uk-form-controls">{% endif %}
-    {% if label_display in ['before', 'invisible'] %}
-      {{ label }}
-    {% endif %}
+  {% if label_display in ['before', 'invisible'] %}
+    {{ label }}
+  {% endif %}
 
+  <div class="uk-form-controls">
     {% if description_display == 'before' and description.content %}
       <p{{ description.attributes.addClass(description_classes) }}>
         {{ description.content }}
@@ -84,20 +84,20 @@
       <span class="field-suffix">{{ suffix }}</span>
     {% endif %}
 
-    {% if label_display == 'after' %}
-      {{ label }}
-    {% endif %}
-
-    {% if errors %}
-      <div class="uk-alert uk-alert-danger">
-        {{ errors }}
-      </div>
-    {% endif %}
-
     {% if description_display in ['after', 'invisible'] and description.content %}
       <p{{ description.attributes.addClass(description_classes) }}>
         {{ description.content }}
       </p>
     {% endif %}
-    {% if type != 'item' %}</div>{% endif %}
+  </div>
+
+  {% if label_display == 'after' %}
+    {{ label }}
+  {% endif %}
+
+  {% if errors %}
+    <div class="uk-alert uk-alert-danger">
+      {{ errors }}
+    </div>
+  {% endif %}
 </div>

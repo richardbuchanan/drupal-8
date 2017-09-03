@@ -50,20 +50,14 @@
   set title_classes = [
     'field__label',
     label_display == 'visually_hidden' ? 'visually-hidden',
-    label_display == 'inline' ? 'uk-display-inline-block',
   ]
 %}
+
 {% if label_hidden %}
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
       {% for item in items %}
-        {%
-          set item_classes = [
-            'field__item',
-            'uk-margin',
-          ]
-        %}
-        <div{{ item.attributes.addClass(item_classes) }}>{{ item.content }}</div>
+        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
       {% endfor %}
     </div>
   {% else %}
@@ -75,19 +69,13 @@
   <div{{ attributes.addClass(classes) }}>
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
-      <div{% if label_display == 'inline' %} class="uk-display-inline-block"{% endif %}>
-    {% endif %}
-    {% for item in items %}
-      {%
-        set item_classes = [
-          'field__item',
-          label_display == 'inline' ? 'uk-display-inline-block' : 'uk-margin',
-        ]
-      %}
-      <div{{ item.attributes.addClass(item_classes) }}>{{ item.content }}</div>
-    {% endfor %}
-    {% if multiple %}
-      </div>
+    <div class="field__items">
+      {% endif %}
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+      {% endfor %}
+      {% if multiple %}
+    </div>
     {% endif %}
   </div>
 {% endif %}

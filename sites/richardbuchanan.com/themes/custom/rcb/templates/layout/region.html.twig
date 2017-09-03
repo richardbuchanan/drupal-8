@@ -15,14 +15,8 @@
  * @ingroup uikit_themeable
  */
 #}
-{%
-  set classes = [
-    'region',
-    'region-' ~ region|clean_class,
-  ]
-%}
 {% if content %}
-  <div{{ attributes.addClass(classes) }}>
+  <div{{ attributes }}>
     {{ content }}
   </div>
 {% endif %}

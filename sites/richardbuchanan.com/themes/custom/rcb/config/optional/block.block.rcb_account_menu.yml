@@ -5,17 +5,12 @@ dependencies:
     - system.menu.account
   module:
     - system
-    - uikit_components
-    - user
   theme:
     - rcb
-third_party_settings:
-  uikit_components:
-    uikit_navbar_alignment: right
 id: rcb_account_menu
 theme: rcb
-region: sidebar_second
-weight: -6
+region: navbar
+weight: -3
 provider: null
 plugin: 'system_menu_block:account'
 settings:
@@ -25,12 +20,4 @@ settings:
   label_display: '0'
   level: 1
   depth: 0
-visibility:
-  user_role:
-    id: user_role
-    roles:
-      authenticated: authenticated
-      administrator: administrator
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
+visibility: {  }

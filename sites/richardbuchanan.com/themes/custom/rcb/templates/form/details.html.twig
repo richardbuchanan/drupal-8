@@ -16,20 +16,22 @@
  * @ingroup uikit_themeable
  */
 #}
-<details{{ attributes.addClass('uk-margin') }}>
-  {%- if title -%}
-    <summary{{ summary_attributes }}>{{ title }}</summary>
-  {%- endif -%}
+<ul{{ attributes }}>
+  <li>
+    {%- if title -%}
+      <h3{{ summary_attributes }}>{{ title }}</h3>
+    {%- endif -%}
 
-  <div>
-    {% if errors %}
-      <div>
-        {{ errors }}
-      </div>
-    {% endif %}
+    <div class="uk-accordion-content">
+      {% if errors %}
+        <div>
+          {{ errors }}
+        </div>
+      {% endif %}
 
-    {{ description }}
-    {{ children }}
-    {{ value }}
-  </div>
-</details>
+      {{ description }}
+      {{ children }}
+      {{ value }}
+    </div>
+  </li>
+</ul>

@@ -9,20 +9,18 @@
  *
  * @see template_preprocess_input()
  * @see uikit_preprocess_input()
- * @see uikit_blog_preprocess_input()
  *
- * @ingroup uikit_blog_themeable
+ * @ingroup uikit_themeable
  */
 #}
 {%
   set classes = [
-    attributes.type != 'checkbox' and attributes.type != 'radio' and attributes.type != 'range' and attributes.type != 'submit' ? 'uk-input',
+    attributes.type == 'email' or attributes.type == 'password' or attributes.type == 'search' or attributes.type == 'text' ? 'uk-input',
+    attributes.type == 'email' or attributes.type == 'password' or attributes.type == 'text' ? 'uk-form-width-large',
+    attributes.type == 'search' and attributes.id == 'edit-keys' ? 'uk-form-width-large',
     attributes.type == 'checkbox' ? 'uk-checkbox',
-    attributes.type == 'hidden' ? 'uk-margin',
     attributes.type == 'radio' ? 'uk-radio',
-    attributes.type == 'range' ? 'uk-range',
-    attributes.type == 'search' ? 'uk-width-1-1',
-    size_modifier ? size_modifier,
+    attributes.type == 'hidden' ? 'uk-margin',
     errors ? 'uk-form-danger',
   ]
 %}

@@ -76,9 +76,13 @@
   ]
 %}
 <li>
-  <article{{ attributes.addClass(classes) }}>
+  <article{{ attributes.addClass(classes) }} itemprop="comment" itemscope itemtype="http://schema.org/Comment">
     <header class="uk-comment-header uk-position-relative">
       <div class="uk-grid-medium uk-flex-middle" uk-grid>
+
+        {% if user_picture %}
+          <div class="uk-width-auto">{{ user_picture }}</div>
+        {% endif %}
 
         <div class="uk-width-expand">
           <h4 class="uk-comment-title uk-margin-remove">{{ title }} <span class="uk-text-muted  uk-hidden-hover" uk-icon="link"></span></h4>
@@ -90,6 +94,7 @@
             indicator here would break the render cache.
           #}
           <mark class="uk-badge uk-label uk-float-right uk-hidden hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
+          <time datetime="{{ published }}" itemprop="datePublished"></time>
         </div>
 
         {#

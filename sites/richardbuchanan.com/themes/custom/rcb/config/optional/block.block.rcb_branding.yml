@@ -3,16 +3,12 @@ status: true
 dependencies:
   module:
     - system
-    - uikit_components
   theme:
     - rcb
-third_party_settings:
-  uikit_components:
-    uikit_navbar_alignment: left
 id: rcb_branding
 theme: rcb
-region: sidebar_first
-weight: -9
+region: navbar
+weight: -6
 provider: null
 plugin: system_branding_block
 settings:
@@ -21,6 +17,6 @@ settings:
   provider: system
   label_display: '0'
   use_site_logo: true
-  use_site_name: false
+  use_site_name: true
   use_site_slogan: true
 visibility: {  }

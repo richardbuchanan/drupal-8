@@ -25,7 +25,6 @@
 #}
 {%
   set status_classes = {
-    'info': 'uk-alert-primary',
     'status': 'uk-alert-success',
     'error': 'uk-alert-danger',
     'warning': 'uk-alert-warning',
@@ -36,7 +35,7 @@
     {% if status_headings[type] %}
       <h2 class="visually-hidden">{{ status_headings[type] }}</h2>
     {% endif %}
-    <div class="uk-alert {{ status_classes[type] }}" role="alert" uk-alert="animation: uk-animation-slide-top">
+    <div class="uk-alert {{ status_classes[type] }}" role="alert" uk-alert>
       <a class="uk-alert-close uk-close uk-icon" uk-close></a>
       {% if messages|length > 1 %}
         {% for message in messages %}

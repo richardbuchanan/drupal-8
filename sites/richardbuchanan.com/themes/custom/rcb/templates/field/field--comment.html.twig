@@ -27,14 +27,25 @@
  * @see uikit_preprocess_field__comment()
  */
 #}
-{% if comments or comment_form %}
-  <hr>
-{% endif %}
-
-<section{{ attributes }}>
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    'comment-wrapper',
+  ]
+%}
+{%
+  set title_classes = [
+    'title',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
   {% if comments and not label_hidden %}
     {{ title_prefix }}
-    <h2 id="comments"{{ title_attributes.addClass('uk-margin-remove') }}>{{ label }} ({{ comment_count }})</h2>
+    <h2 id="comments"{{ title_attributes.addClass(title_classes) }}>{{ label }} ({{ comment_count }})</h2>
     {{ title_suffix }}
   {% endif %}
 

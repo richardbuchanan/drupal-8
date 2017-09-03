@@ -3,13 +3,12 @@ status: true
 dependencies:
   module:
     - search
-    - system
   theme:
     - rcb
 id: rcb_search
 theme: rcb
-region: sidebar_second
-weight: -8
+region: sidebar_first
+weight: -1
 provider: null
 plugin: search_form_block
 settings:
@@ -17,9 +16,4 @@ settings:
   label: Search
   provider: search
   label_display: '0'
-visibility:
-  request_path:
-    id: request_path
-    pages: "/search\r\n/search/*"
-    negate: true
-    context_mapping: {  }
+visibility: {  }

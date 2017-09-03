@@ -38,9 +38,19 @@
  * @ingroup uikit_themeable
  */
 #}
-{% set classes = ['uk-subnav', 'uk-subnav-divider'] %}
-<ul{{ attributes.addClass(classes) }}>
-  {% for item in items %}
-    <li{{ item.attributes }}>{{ item.content }}</li>
-  {% endfor %}
-</ul>
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'uk-padding-remove',
+    'uk-width-expand',
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  <ul class="uk-list" itemprop="keywords">
+    {% for item in items %}
+      <li{{ item.attributes }}>{{ item.content }}</li>
+    {% endfor %}
+  </ul>
+</div>

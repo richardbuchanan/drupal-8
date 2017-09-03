@@ -11,94 +11,178 @@
  * @see process.inc
  */
 
-use Drupal\block\Entity\Block;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Template\Attribute;
-use Drupal\node\Entity\Node;
+use Drupal\Core\Datetime\DateFormatter;
 use Drupal\rcb\RCB;
-use Drupal\rcb\RCBNodeImage;
-
-/**
- * Implements template_preprocess_html().
- */
-function rcb_preprocess_html(&$variables) {
-  $variables['html_attributes']->addClass('uk-height-1-1');
-}
-
-/**
- * Implements template_preprocess_page().
- */
-function rcb_preprocess_page(&$variables) {
-  $node = isset($variables['node']) ? $variables['node'] : FALSE;
-  $fid = $node && isset($node->field_image->entity) ? $node->field_image->entity->id() : NULL;
-  $variables['node_image'] = RCBNodeImage::buildResponsiveImage($fid, 'wide');
-  $variables['book_navigation'] = [];
-
-  if ($node && $node->bundle() == 'book') {
-    if (!empty($node->book['bid']) && empty($node->in_preview)) {
-      $book_node = Node::load($node->book['bid']);
-
-      if ($book_node->access()) {
-        $variables['book_navigation'] = [
-          '#theme' => 'book_navigation',
-          '#book_link' => $node->book,
-          '#weight' => 100,
-          // The book navigation is a listing of Node entities, so associate its
-          // list cache tag for correct invalidation.
-          '#cache' => [
-            'tags' => $node->getEntityType()->getListCacheTags(),
-          ],
-        ];
-      }
-    }
-  }
-
-  $variables['page_header_attributes'] = new Attribute;
-  $variables['page_header_attributes']->addClass('rcb-page-header');
-
-  if ($variables['node_image']) {
-    $variables['page_header_attributes']->addClass('has-node-image');
-  }
-  if ($variables['book_navigation']) {
-    $variables['page_header_attributes']->addClass('has-book-navigation');
-  }
-}
 
 /**
  * Implements template_preprocess_region().
  */
 function rcb_preprocess_region(&$variables) {
-  switch ($variables['region']) {
+  $region = $variables['region'];
+
+  $attributes = new Attribute;
+  $get_class = Html::getClass($region);
+  $get_id = Html::getId($region);
+  $region_class = "region--$get_class";
+  $region_id = "region--$get_id";
+
+  $attributes->setAttribute('id', $region_id);
+  $attributes->addClass('region');
+  $attributes->addClass($region_class);
+
+  switch ($region) {
+    case 'content':
+      $attributes->addClass('uk-width-expand');
+      break;
+
+    case 'footer':
+      $attributes->setAttribute('uk-grid', '');
+      break;
+
     case 'sidebar_first':
-      $variables['attributes']['class'][] = 'uk-height-1-1';
+    case 'sidebar_second':
+      $attributes->addClass('uk-width-1-1');
+      $attributes->addClass('uk-width-1-4@l');
       break;
   }
+
+  if ($region == 'sidebar_first') {
+    $attributes->addClass('uk-hidden@m');
+  }
+
+  $variables['attributes'] = $attributes;
 }
 
 /**
  * Implements template_preprocess_block().
  */
 function rcb_preprocess_block(&$variables) {
-  $base_plugin_id = $variables['base_plugin_id'];
-  $book_navigation = $base_plugin_id == 'book_navigation';
-  $system_powered_by_block = $base_plugin_id == 'system_powered_by_block';
+  $plugin_id = $variables['plugin_id'];
 
-  $block = Block::load($variables['elements']['#id']);
-  $region = $block->getRegion();
+  switch ($plugin_id) {
+    case 'system_powered_by_block':
+      $content = RCB::systemPoweredByContent();
+      $variables['content'] = $content;
+      break;
+  }
+}
 
-  switch ($region) {
-    case 'footer':
-      if ($system_powered_by_block) {
-        $system_powered_by_content = RCB::systemPoweredByContent();
-        $variables['content'] = $system_powered_by_content;
-      }
+/**
+ * Implements template_preprocess_breadcrumb().
+ */
+function rcb_preprocess_breadcrumb(&$variables) {
+  $count = count($variables['breadcrumb']);
+  $attributes = new Attribute;
+  $attributes->setAttribute('id', 'system-breadcrumbs');
+  $attributes->setAttribute('role', 'navigation');
+  $attributes->setAttribute('aria-labelledby', 'system-breadcrumb');
+
+  if ($count <= 1) {
+    $attributes->addClass('uk-hidden');
+  }
+
+  $variables['attributes'] = $attributes;
+}
+
+/**
+ * Implements template_preprocess_comment().
+ */
+function rcb_preprocess_comment(&$variables) {
+  $comment = $variables['elements']['#comment'];
+  $timestamp = $comment->getCreatedTime();
+  $variables['published'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
+}
+
+/**
+ * Implements template_preprocess_details().
+ */
+function rcb_preprocess_details(&$variables) {
+  $variables['attributes']['uk-accordion'] = '';
+  $variables['summary_attributes']->addClass('uk-accordion-title');
+}
+
+/**
+ * Implements template_preprocess_form().
+ */
+function rcb_preprocess_form(&$variables) {
+  $form_id = $variables['element']['#form_id'];
+  $get_id = Html::getId($form_id);
+  $attributes = new Attribute;
+  $attributes->setAttribute('id', $get_id);
+  $orientation = FALSE;
+
+  switch ($form_id) {
+    case 'contact_message_feedback_form':
+      $orientation = 'horizontal';
       break;
 
-    case 'offcanvas':
-    case 'sidebar_second':
-      if ($book_navigation) {
-        $variables['content']['#theme'] = 'book_all_books_block__' . $region;
-      }
+    case 'search_block_form':
+      $attributes->addClass('uk-position-relative');
       break;
+
+    default:
+      $orientation = 'stacked';
+  }
+
+  switch ($orientation) {
+    case 'horizontal':
+      $attributes->addClass('uk-form-horizontal');
+      break;
+
+    case 'stacked':
+      $attributes->addClass('uk-form-stacked');
+      break;
+  }
+
+  foreach ($variables['attributes'] as $attribute => $value) {
+    if ($attribute != 'class') {
+      if (is_array($value)) {
+        foreach ($value as $item) {
+          $attributes->setAttribute($attribute, $item);
+        }
+      }
+      else {
+        $attributes->setAttribute($attribute, $value);
+      }
+    }
+    else {
+      foreach ($value as $class) {
+        $attributes->addClass($class);
+      }
+    }
+  }
+
+  $variables['attributes'] = $attributes;
+}
+
+/**
+ * Implements template_preprocess_input().
+ */
+function rcb_preprocess_input(&$variables) {
+  $type = $variables['element']['#type'];
+
+  if ($type == 'submit') {
+    $variables['attributes']['class'][] = 'uk-button';
+    $value = $variables['element']['#value']->getUntranslatedString();
+
+    if ($variables['attributes']['id'] != 'edit-submit--search-block-form') {
+      switch ($value) {
+        case 'Advanced search':
+        case 'Preview':
+        case 'Search':
+        case 'Send message':
+          $variables['attributes']['class'][] = 'uk-button-primary';
+          break;
+
+        default:
+          $variables['attributes']['class'][] = 'uk-button-default';
+      }
+    }
+    else {
+      $variables['attributes']['class'][] = 'uk-button-link';
+    }
   }
 }
 
@@ -107,154 +191,23 @@ function rcb_preprocess_block(&$variables) {
  */
 function rcb_preprocess_node(&$variables) {
   $node = $variables['node'];
+
   $timestamp = $node->getCreatedTime();
-  $date = \Drupal::service('date.formatter')->format($timestamp, 'short');
-  $variables['date'] = $date;
+  $variables['date'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
+  $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
+  $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
+  $variables['title'] = $node->getTitle();
+  $variables['image_url'] = 'http://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/images/about.png';
+  $variables['image_height'] = '390';
+  $variables['image_width'] = '1215';
 
-  if ($node->bundle() == 'book') {
-    $variables['has_node_image'] = FALSE;
+  if ($node->hasField('field_image')) {
+    $image = $node->get('field_image')->getValue();
 
-    if (!empty($node->book['bid']) && empty($node->in_preview) && isset($node->field_image->entity)) {
-      $variables['has_node_image'] = TRUE;
+    if ($image) {
+      $variables['image_url'] = file_create_url($node->field_image->entity->getFileUri());
+      $variables['image_height'] = $image[0]['height'];
+      $variables['image_width'] = $image[0]['width'];
     }
   }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for book-all-books-block.html.twig.
- */
-function rcb_preprocess_book_all_books_block(&$variables) {
-  $theme_original_hook = $variables['theme_hook_original'];
-  $theme_hook = str_replace('book_all_books_block__', '', $theme_original_hook);
-  $variables['book_menus'][0]['menu']['#theme'] = 'book_tree__' . $theme_hook;
-}
-
-/**
- * Implements hook_preprocess_HOOK() for book-tree.html.twig.
- */
-function rcb_preprocess_book_tree(&$variables) {
-  $theme_hook_original = $variables['theme_hook_original'];
-  $sidebar_second_book_tree = $theme_hook_original == 'book_tree__sidebar_second';
-  $offcanvas_book_tree = $theme_hook_original == 'book_tree__offcanvas';
-
-  if ($sidebar_second_book_tree || $offcanvas_book_tree) {
-    // Create copy of parent for first menu level.
-    $items = $variables['items'];
-    reset($items);
-    $header = key($items);
-    $nav_header = $items[$header];
-
-    // Create copy of parent below for the first menu level.
-    $header_below_items = $nav_header['below'];
-
-    // Setup the new copy of parent for first menu level.
-    $nav_header['below'] = [];
-    $nav_header['attributes']->addClass('uk-nav-header');
-
-    // Add copy of first parent as nav header.
-    $variables['items'] = [
-      $nav_header
-    ];
-
-    // Add copy of each parent below item.
-    foreach ($header_below_items as $key => $new_item) {
-      $variables['items'][$key] = $new_item;
-    }
-  }
-}
-
-/**
- * Implements template_preprocess_container().
- */
-function rcb_preprocess_container(&$variables) {
-  $filter_wrapper = in_array('filter-wrapper', $variables['attributes']['class']);
-  $anonymous_user = \Drupal::currentUser()->isAnonymous();
-
-  if ($filter_wrapper && $anonymous_user) {
-    $variables['attributes']['class'][] = 'uk-hidden';
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for feed-icon.html.twig.
- */
-function rcb_preprocess_feed_icon(&$variables) {
-  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
-}
-
-/**
- * Implements template_preprocess_form_element().
- */
-function rcb_preprocess_form_element(&$variables) {
-  switch ($variables['type']) {
-    case 'item':
-    case 'textarea':
-      $variables['margin'] = FALSE;
-      break;
-
-    default:
-      $variables['margin'] = TRUE;
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for input.html.twig.
- */
-function rcb_preprocess_input(&$variables) {
-  $element = $variables['element'];
-  $type = $variables['attributes']['type'];
-  $submit = $type == 'submit';
-  $text_inputs = $type != 'checkbox' & $type != 'radio' && $type != 'range' && $type != 'submit';
-  $variables['size_modifier'] = FALSE;
-
-  if ($submit) {
-    // Add the uk-button class.
-    $variables['attributes']['class'] = ['uk-button'];
-
-    // Add uk-button-* classes based on the value of the button.
-    $value = $element['#value']->render();
-    switch ($value) {
-      case 'Advanced search':
-      case 'Create new account':
-      case 'Log in':
-      case 'Save':
-      case 'Search':
-      case 'Send message':
-      case 'Submit':
-        $variables['attributes']['class'][] = 'uk-button-primary';
-        break;
-
-      default:
-        $variables['attributes']['class'][] = 'uk-button-default';
-    }
-  }
-
-  if ($text_inputs) {
-    $size = $variables['attributes']['size'];
-
-    if ($size > 0) {
-      $variables['size_modifier'] = 'uk-form-width-large';
-    }
-    else {
-      $variables['size_modifier'] = 'uk-form-width-medium';
-    }
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for page-title.html.twig.
- */
-function rcb_preprocess_page_title(&$variables) {
-  if (($key = array_search('uk-text-center', $variables['title_attributes']['class'])) !== false) {
-    unset($variables['title_attributes']['class'][$key]);
-  }
-}
-
-/**
- * Implements template_preprocess_user().
- */
-function rcb_preprocess_user(&$variables) {
-  $created = $variables['elements']['#user']->getCreatedTime();
-  $member_for = \Drupal::service('date.formatter')->formatInterval(\Drupal::time()->getRequestTime() - $created);
-  $variables['content']['member_for']['#markup'] = t('<p><strong>Member for</strong> @member_for</p>', ['@member_for' => $member_for]);
 }

@@ -15,20 +15,28 @@
  * @ingroup uikit_themeable
  */
 #}
-{% if content_left %}
-  <div class="uk-navbar-left">
-    {{ content_left }}
-  </div>
-{% endif %}
+<div class="uk-navbar-container uk-margin-bottom">
+  <div class="uk-container uk-container-large">
+    <nav class="uk-navbar">
 
-{% if content_center %}
-  <div class="uk-navbar-center">
-    {{ content_center }}
-  </div>
-{% endif %}
+      {% if content_left %}
+        <div class="uk-navbar-left">
+          {{ content_left }}
+        </div>
+      {% endif %}
 
-{% if content_right %}
-  <div class="uk-navbar-right">
-    {{ content_right }}
+      {% if content_center %}
+        <div class="uk-navbar-center">
+          {{ content_center }}
+        </div>
+      {% endif %}
+
+      <div class="uk-navbar-right">
+        <a uk-navbar-toggle-icon href="#offcanvas" uk-toggle class="uk-navbar-toggle uk-margin-small-right uk-hidden@m"></a>
+        {% if content_right %}
+          {{ content_right }}
+        {% endif %}
+      </div>
+    </nav>
   </div>
-{% endif %}
+</div>

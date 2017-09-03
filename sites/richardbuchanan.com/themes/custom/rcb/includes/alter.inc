@@ -16,36 +16,14 @@
  * @see \Drupal\Core\Render\Renderer
  */
 
-use Drupal\Core\Template\Attribute;
-use Drupal\block\Entity\Block;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Implements hook_theme_suggestions_HOOK_alter().
+ * Implemnts hook_form_FORM_ID_alter() for search_block_form.
  */
-function rcb_theme_suggestions_block_alter(array &$suggestions, array $variables) {
-  $block_id = $variables['elements']['#id'];
-  $block = Block::load($block_id);
-  $region = $block->getRegion();
-  $suggestions[] = 'block__' . $region . '__' . $block_id;
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for comment_form().
- */
-function rcb_form_comment_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if (\Drupal::currentUser()->isAnonymous()) {
-    $form['author']['name']['#required'] = TRUE;
-    $form['author']['mail']['#required'] = TRUE;
-    $form['author']['homepage']['#access'] = FALSE;
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for user_login_form().
- */
-function rcb_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  $form['user_links']['reset_password']['#attributes']['class'] = ['uk-link', 'uk-link-muted'];
-  $form['actions']['#attributes'] = new Attribute;
-  $form['actions']['#attributes']->addClass('uk-display-inline-block');
-  $form['actions']['#attributes']->addClass('uk-width-1-1');
+function rcb_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['actions']['submit']['#attributes']['id'] = 'edit-submit--search-block-form';
+  $form['actions']['submit']['#theme_wrappers'] = ['input__search__search_block_form'];
+  $form['keys']['#attributes']['id'] = 'edit-keys--search-block-form';
+  $form['keys']['#attributes']['placeholder'] = t('Search');
 }

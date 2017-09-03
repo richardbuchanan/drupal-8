@@ -17,12 +17,25 @@
  * @ingroup uikit_themeable
  */
 #}
-{% if site_logo %}
+{%
+  set classes = [
+    'uk-navbar-item',
+  ]
+%}
+
+{% if site_logo and site_name %}
+  <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="uk-navbar-item uk-logo">
+    <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
+    <span class="uk-margin-small-left">{{ site_name }}</span>
+  </a>
+{% elseif site_logo %}
   <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="uk-navbar-item uk-logo">
     <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
   </a>
+{% elseif site_name %}
+  <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="uk-navbar-item uk-logo">{{ site_name }}</a>
 {% endif %}
 
 {% if site_slogan %}
-  <span>{{ site_slogan }}</span>
+  <span class="uk-navbar-item uk-margin-small-left">{{ site_slogan }}</span>
 {% endif %}

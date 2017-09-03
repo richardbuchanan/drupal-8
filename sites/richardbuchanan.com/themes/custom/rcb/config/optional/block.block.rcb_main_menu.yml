@@ -5,16 +5,12 @@ dependencies:
     - system.menu.main
   module:
     - system
-    - uikit_components
   theme:
     - rcb
-third_party_settings:
-  uikit_components:
-    uikit_navbar_alignment: left
 id: rcb_main_menu
 theme: rcb
-region: sidebar_first
-weight: -8
+region: navbar
+weight: -5
 provider: null
 plugin: 'system_menu_block:main'
 settings:

@@ -2,17 +2,15 @@ global-style:
   version: VERSION
   css:
     base:
+      //fonts.googleapis.com/css?family=Droid+Sans:400,700: { type: external }
+      //fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i: { type: external }
+      //fonts.googleapis.com/css?family=Droid+Sans+Mono: { type: external }
       css/rcb.base.css: {}
     layout:
       css/rcb.layout.css: {}
     component:
-      //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css: { type: external }
       css/rcb.component.css: {}
     theme:
       css/rcb.theme.css: {}
   js:
     js/rcb.theme.js: {}
-    //cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js: { type: external, attributes: { defer: true } }
-  dependencies:
-    - uikit/uikit
-    - uikit_blog/global-style

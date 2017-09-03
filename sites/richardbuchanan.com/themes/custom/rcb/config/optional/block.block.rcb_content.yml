@@ -8,7 +8,7 @@ dependencies:
 id: rcb_content
 theme: rcb
 region: content
-weight: -1
+weight: 0
 provider: null
 plugin: system_main_block
 settings:

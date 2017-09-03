@@ -15,15 +15,10 @@
  * @ingroup uikit_themeable
  */
 #}
-{%
-  set classes = [
-    'region',
-    'region-' ~ region|clean_class,
-    'uk-offcanvas-bar',
-  ]
-%}
 {% if content %}
-  <div{{ attributes.addClass(classes) }}>
-    {{ content }}
+  <div id="offcanvas" uk-offcanvas>
+    <div{{ attributes.addClass('uk-offcanvas-bar') }}>
+      {{ content }}
+    </div>
   </div>
 {% endif %}
