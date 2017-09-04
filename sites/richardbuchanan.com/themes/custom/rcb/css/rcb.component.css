@@ -156,6 +156,17 @@ a:hover {
 .rcb-icon [stroke*='#']:not(.rcb-preserve) {
   stroke: currentcolor;
 }
+.rcb-thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid #E5E5E5;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
 [class*=region--sidebar]>.uk-section>.uk-container {
   padding-left: 20px;
   padding-right: 20px;

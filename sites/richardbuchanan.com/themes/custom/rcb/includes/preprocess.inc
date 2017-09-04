@@ -158,6 +158,14 @@ function rcb_preprocess_form(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_image().
+ */
+function rcb_preprocess_image(&$variables) {
+  $variables['attributes']['class'][] = 'rcb-thumbnail';
+  $variables['attributes']['class'][] = 'uk-margin-small-bottom';
+}
+
+/**
  * Implements template_preprocess_input().
  */
 function rcb_preprocess_input(&$variables) {
