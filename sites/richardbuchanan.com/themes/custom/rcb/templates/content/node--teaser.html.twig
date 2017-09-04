@@ -124,6 +124,9 @@
     {{ title_suffix }}
 
     <div{{ content_attributes.addClass(content_classes) }}>
+      {% if image_default %}
+        <img class="uk-margin-small-bottom" src="{{ image_url }}" height="{{ image_height }}" width="{{ image_width }}" />
+      {% endif %}
       {{ content|without('field_tags') }}
     </div>
 

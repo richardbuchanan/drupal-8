@@ -12,8 +12,8 @@
  */
 
 use Drupal\Component\Utility\Html;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Datetime\DateFormatter;
 use Drupal\rcb\RCB;
 
 /**
@@ -197,17 +197,67 @@ function rcb_preprocess_node(&$variables) {
   $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['title'] = $node->getTitle();
+  $variables['image_default'] = FALSE;
   $variables['image_url'] = 'https://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/images/about.png';
   $variables['image_height'] = '390';
   $variables['image_width'] = '1215';
 
   if ($node->hasField('field_image')) {
     $image = $node->get('field_image')->getValue();
+    $tags = $node->get('field_tags')->getValue();
 
     if ($image) {
       $variables['image_url'] = file_create_url($node->field_image->entity->getFileUri());
       $variables['image_height'] = $image[0]['height'];
       $variables['image_width'] = $image[0]['width'];
+    }
+    elseif ($tags) {
+      $terms = [];
+
+      foreach ($tags as $tag) {
+        $tid = $tag['target_id'];
+        $term = Term::load($tid);
+        $term_name = strtolower($term->getName());
+        $term_name = str_replace(' ', '-', $term_name);
+        $terms[] = $term_name;
+      }
+
+      $filename = implode('-', $terms);
+      $height = 0;
+      $width = 0;
+
+      switch ($filename) {
+        case 'drupal-7-uikit-2':
+        case 'drupal-7-uikit-3':
+        case 'drupal-8-uikit-2':
+        case 'drupal-8-uikit-3':
+          $filename = "$filename.png";
+          $height = 260;
+          $width = 1900;
+          break;
+
+        case 'drupal-uikit':
+          $filename = 'uikit-for-drupal.png';
+          $height = 320;
+          $width = 1900;
+          break;
+
+        default:
+          $filename = FALSE;
+      }
+
+      if ($filename) {
+        $default_images_directory = '/sites/richardbuchanan.com/files/default-images/';
+        $path = $default_images_directory . $filename;
+        $file_exists = file_exists(DRUPAL_ROOT . $path);
+
+        if ($file_exists) {
+          $variables['image_default'] = TRUE;
+          $variables['image_url'] = file_create_url($path);
+          $variables['image_height'] = $height;
+          $variables['image_width'] = $width;
+        }
+      }
     }
   }
 }
