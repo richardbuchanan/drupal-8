@@ -199,12 +199,14 @@ function rcb_preprocess_input(&$variables) {
  */
 function rcb_preprocess_node(&$variables) {
   $node = $variables['node'];
-
   $timestamp = $node->getCreatedTime();
+  $default_images_directory = '/sites/richardbuchanan.com/files/default-images/';
+
   $variables['date'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
   $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['title'] = $node->getTitle();
+
   $variables['image_default'] = FALSE;
   $variables['image_url'] = 'https://richardbuchanan.com/sites/richardbuchanan.com/themes/custom/rcb/images/about.png';
   $variables['image_height'] = '390';
@@ -255,7 +257,6 @@ function rcb_preprocess_node(&$variables) {
       }
 
       if ($filename) {
-        $default_images_directory = '/sites/richardbuchanan.com/files/default-images/';
         $path = $default_images_directory . $filename;
         $file_exists = file_exists(DRUPAL_ROOT . $path);
 
@@ -267,5 +268,11 @@ function rcb_preprocess_node(&$variables) {
         }
       }
     }
+  }
+  elseif ($node->getType() == 'blog_post') {
+    $path = 'https://richardbuchanan.com' . $default_images_directory . 'rcb-blog.png';
+    $variables['image_url'] = file_create_url($path);
+    $variables['image_height'] = 219;
+    $variables['image_width'] = 651;
   }
 }
