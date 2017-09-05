@@ -212,6 +212,7 @@ a:hover {
 #search-block-form--mobile #edit-keys--search-block-form {
   border-color: #1f6f9e;
   color: #1f6f9e;
+  padding-left: 10px;
 }
 #edit-keys--search-block-form:-webkit-autofill,
 #edit-keys--search-block-form:-webkit-autofill:hover,
