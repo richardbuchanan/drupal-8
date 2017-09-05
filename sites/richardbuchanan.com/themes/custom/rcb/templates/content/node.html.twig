@@ -141,16 +141,19 @@
 
         {{ content|without('field_tags')|without('comment') }}
       </div>
-
-      {% if comments_open %}
-        {{ content.comment }}
-      {% endif %}
     </div>
 
     {% if display_submitted %}
       <footer class="node--metadata uk-width-1-1 uk-width-1-4@m uk-pull-3-4@m uk-margin-remove-top">
         {{ author_picture }}
-        <div{{ author_attributes.addClass('uk-article-meta') }}>
+        {%
+          set author_classes = [
+            'uk-article-meta',
+            'uk-margin-top',
+            'rcb-margin-remove-top@m',
+          ]
+        %}
+        <div{{ author_attributes.addClass(author_classes) }}>
           <div class="uk-margin-small-bottom">
             <span class="uk-margin-small-right" uk-icon="icon:calendar"></span>
             <a href="{{ url }}">{{ date }}</a>
@@ -179,6 +182,10 @@
           {{ metadata }}
         </div>
       </footer>
+    {% endif %}
+
+    {% if comments_open %}
+      {{ content.comment }}
     {% endif %}
   </div>
 </article>

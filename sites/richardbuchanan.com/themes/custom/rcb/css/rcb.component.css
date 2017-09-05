@@ -191,6 +191,11 @@ a:hover {
 [class*=region--sidebar]>.uk-section .rcb-section-block-title {
   font-family: "Droid Sans", apple-system,BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
+@media (min-width: 960px) {
+  .rcb-margin-remove-top\@m {
+    margin-top: 0 !important;
+  }
+}
 
 /**
  * Drupal components.
