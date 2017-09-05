@@ -174,9 +174,9 @@
           {% endif %}
 
           <div>
-            <a href="https://twitter.com/intent/tweet?text={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}&via=HouseOfCanon" class="uk-icon-button uk-margin-small-right" uk-icon="icon: twitter"></a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" uk-icon="icon: facebook"></a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&title={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" uk-icon="icon: linkedin"></a>
+            <a href="https://twitter.com/intent/tweet?text={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}&via=HouseOfCanon" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="icon: twitter"></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="icon: facebook"></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&title={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="icon: linkedin"></a>
           </div>
 
           {{ metadata }}
