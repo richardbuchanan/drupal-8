@@ -80,13 +80,21 @@
     <header class="uk-comment-header uk-position-relative">
       <div class="uk-grid-medium uk-flex-middle" uk-grid>
 
-        {% if user_picture %}
-          <div class="uk-width-auto">{{ user_picture }}</div>
-        {% endif %}
+        <div class="uk-width-auto">
+          {% if default_user_picture %}
+            <img class="uk-comment-avatar" src="/sites/richardbuchanan.com/files/pictures/placeholder-avatar.png" />
+          {% else %}
+            {{ user_picture }}
+          {% endif %}
+        </div>
 
         <div class="uk-width-expand">
-          <h4 class="uk-comment-title uk-margin-remove">{{ title }} <span class="uk-text-muted  uk-hidden-hover" uk-icon="link"></span></h4>
-          <p class="uk-comment-meta uk-margin-remove-top">{{ submitted }}</p>
+          <h4 class="uk-comment-title uk-margin-remove">{{ title }}</h4>
+          <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+            <li>{{ author }}</li>
+            <li>{{ published }}</li>
+            {{ content.links }}
+          </ul>
 
           {#
             Hide the "new" indicator by default, let a piece of JavaScript ask the
@@ -107,10 +115,6 @@
         {% endif %}
 
         <span class="uk-hidden">{{ permalink }}</span>
-      </div>
-
-      <div class="uk-position-top-right uk-position-small uk-hidden-hover">
-        {{ content.links }}
       </div>
     </header>
 

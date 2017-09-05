@@ -127,7 +127,20 @@
       {% if image_default %}
         <img class="uk-margin-small-bottom" src="{{ image_url }}" height="{{ image_height }}" width="{{ image_width }}" />
       {% endif %}
-      {{ content|without('field_tags') }}
+
+      {%
+        set main_content_classes = [
+          not node.isPublished() ? 'uk-alert',
+          not node.isPublished() ? 'uk-alert-warning',
+        ]
+      %}
+      <div{{ main_attributes.addClass(main_content_classes) }}>
+        {% if not node.isPublished() %}
+          <p><em class="placeholder">{{ title }}</em> is currently unpublished.</p>
+        {% endif %}
+
+        {{ content|without('field_tags') }}
+      </div>
     </div>
 
     {% if display_submitted %}
@@ -139,23 +152,17 @@
             <a href="{{ url }}">{{ date }}</a>
           </div>
 
-          {% if content.field_tags %}
+          {% if has_tags %}
             <div class="uk-margin-small-bottom" uk-grid>
               <span class="uk-margin-small-right uk-width-auto" uk-icon="icon:tag"></span>
               {{ content.field_tags }}
             </div>
           {% endif %}
 
-          {% if node.comment %}
+          {% if comments_open %}
             <div class="uk-margin-small-bottom">
               <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
-              {% if node.comment.comment_count == 0 or node.comment.comment_count > 1 %}
-                {% set comments = 'comments' %}
-              {% else %}
-                {% set comments = 'comment' %}
-              {% endif %}
-              {% set comment_count = node.comment.comment_count ? node.comment.comment_count : 0 %}
-              <a href="{{ url }}#comments">{{ comment_count }} {{ comments }}</a>
+              <a href="{{ url }}#comments">{{ comment_count }}</a>
             </div>
           {% endif %}
 

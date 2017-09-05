@@ -70,8 +70,8 @@
 #}
 {%
   set classes = [
-  'uk-article',
-  'uk-margin-bottom',
+    'uk-article',
+    'uk-margin-bottom',
   ]
 %}
 {%
@@ -127,7 +127,24 @@
       {% if image_default %}
         <img class="uk-align-center uk-margin-small-bottom" src="{{ image_url }}" height="{{ image_height }}" width="{{ image_width }}" />
       {% endif %}
-      {{ content|without('field_tags') }}
+
+      {%
+        set main_content_classes = [
+          not node.isPublished() ? 'uk-alert',
+          not node.isPublished() ? 'uk-alert-warning',
+        ]
+      %}
+      <div{{ main_attributes.addClass(main_content_classes) }}>
+        {% if not node.isPublished() %}
+          <p><em class="placeholder">{{ title }}</em> is currently unpublished. Use the <em class="placeholder">Edit</em> tab to publish <em class="placeholder">{{ title }}</em>.</p>
+        {% endif %}
+
+        {{ content|without('field_tags')|without('comment') }}
+      </div>
+
+      {% if comments_open %}
+        {{ content.comment }}
+      {% endif %}
     </div>
 
     {% if display_submitted %}
@@ -139,17 +156,19 @@
             <a href="{{ url }}">{{ date }}</a>
           </div>
 
-          {% if content.field_tags %}
+          {% if has_tags %}
             <div class="uk-margin-small-bottom" uk-grid>
               <span class="uk-margin-small-right uk-width-auto" uk-icon="icon:tag"></span>
               {{ content.field_tags }}
             </div>
           {% endif %}
 
-          <div class="uk-margin-small-bottom">
-            <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
-            <a href="#comment-form">Add new comment</a>
-          </div>
+          {% if comments_open %}
+            <div class="uk-margin-small-bottom">
+              <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
+              <a href="#comment-form">Add new comment</a>
+            </div>
+          {% endif %}
 
           <div>
             <a href="https://twitter.com/intent/tweet?text={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}&via=HouseOfCanon" class="uk-icon-button uk-margin-small-right" uk-icon="icon: twitter"></a>

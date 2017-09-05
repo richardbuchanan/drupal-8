@@ -44,6 +44,10 @@
   ]
 %}
 <section id="comments"{{ attributes.addClass(classes) }}>
+  {% if comment_count != '0' %}
+    <hr class="uk-divider-icon uk-margin-large uk-margin-large-top">
+  {% endif %}
+
   {{ title_prefix }}
   <h2 {{ title_attributes.addClass(title_classes) }}>{{ label }} ({{ comment_count }})</h2>
   {{ title_suffix }}
@@ -55,8 +59,8 @@
   {% endif %}
 
   {% if comment_form %}
+    <hr class="uk-divider-icon uk-margin-large">
     <h2{{ content_attributes.addClass('uk-margin-top') }}>{{ 'Add new comment'|t }}</h2>
     {{ comment_form }}
   {% endif %}
-
 </section>

@@ -15,6 +15,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Template\Attribute;
 use Drupal\rcb\RCB;
+use Drupal\user\Entity\User;
 
 /**
  * Implements template_preprocess_region().
@@ -93,6 +94,19 @@ function rcb_preprocess_comment(&$variables) {
   $comment = $variables['elements']['#comment'];
   $timestamp = $comment->getCreatedTime();
   $variables['published'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
+
+  $comment_uid = $variables['comment']->getOwnerId();
+  $comment_user = User::load($comment_uid);
+  $variables['default_user_picture'] = FALSE;
+
+  if ($comment_user->user_picture->isEmpty()) {
+    $variables['default_user_picture'] = TRUE;
+  }
+
+  $title = $variables['title']->getGeneratedLink();
+  $title = str_replace('class="permalink"', 'class="permalink uk-link-reset"', $title);
+  $variables['title']->setGeneratedLink($title);
+  $variables['content']['links']['#create_placeholder'] = FALSE;
 }
 
 /**
@@ -199,9 +213,40 @@ function rcb_preprocess_input(&$variables) {
  */
 function rcb_preprocess_node(&$variables) {
   $node = $variables['node'];
-  $timestamp = $node->getCreatedTime();
-  $default_images_directory = '/sites/richardbuchanan.com/files/default-images/';
 
+  $comment = $node->hasField('comment');
+  $variables['comments_open'] = FALSE;
+
+  if ($comment) {
+    $comment_field_name = 'comment';
+    $comments_open = $node->$comment_field_name->status == '2';
+
+    if ($comments_open) {
+      $variables['comments_open'] = TRUE;
+      $comment_count = $node->$comment_field_name->comment_count;
+
+      switch ($comment_count) {
+        case '1':
+          $variables['comment_count'] = "$comment_count comment";
+          break;
+
+        default:
+          $variables['comment_count'] = "$comment_count comments";
+      }
+    }
+  }
+
+  $tags = $node->hasField('field_tags') ? $node->get('field_tags')->getValue() : [];
+  $has_tags = FALSE;
+
+  if ($tags) {
+    $tags_field_name = 'field_tags';
+    $has_tags = count($node->$tags_field_name->getValue()) ? TRUE : FALSE;
+  }
+
+  $variables['has_tags'] = $has_tags;
+
+  $timestamp = $node->getCreatedTime();
   $variables['date'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
   $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
@@ -212,67 +257,69 @@ function rcb_preprocess_node(&$variables) {
   $variables['image_height'] = '390';
   $variables['image_width'] = '1215';
 
-  if ($node->hasField('field_image')) {
-    $image = $node->get('field_image')->getValue();
-    $tags = $node->get('field_tags')->getValue();
+  $blog_post = $node->getType() == 'blog_post';
+  $default_images_directory = '/sites/richardbuchanan.com/files/default-images/';
+  $image = $node->hasField('field_image') ? $node->get('field_image')->getValue() : [];
 
-    if ($image) {
-      $variables['image_url'] = file_create_url($node->field_image->entity->getFileUri());
-      $variables['image_height'] = $image[0]['height'];
-      $variables['image_width'] = $image[0]['width'];
-    }
-    elseif ($tags) {
-      $terms = [];
-
-      foreach ($tags as $tag) {
-        $tid = $tag['target_id'];
-        $term = Term::load($tid);
-        $term_name = strtolower($term->getName());
-        $term_name = str_replace(' ', '-', $term_name);
-        $terms[] = $term_name;
-      }
-
-      $filename = implode('-', $terms);
-      $height = 0;
-      $width = 0;
-
-      switch ($filename) {
-        case 'drupal-7-uikit-2':
-        case 'drupal-7-uikit-3':
-        case 'drupal-8-uikit-2':
-        case 'drupal-8-uikit-3':
-          $filename = "$filename.png";
-          $height = 260;
-          $width = 1900;
-          break;
-
-        case 'drupal-uikit':
-          $filename = 'uikit-for-drupal.png';
-          $height = 320;
-          $width = 1900;
-          break;
-
-        default:
-          $filename = FALSE;
-      }
-
-      if ($filename) {
-        $path = $default_images_directory . $filename;
-        $file_exists = file_exists(DRUPAL_ROOT . $path);
-
-        if ($file_exists) {
-          $variables['image_default'] = TRUE;
-          $variables['image_url'] = file_create_url($path);
-          $variables['image_height'] = $height;
-          $variables['image_width'] = $width;
-        }
-      }
-    }
+  if ($image) {
+    $variables['image_url'] = file_create_url($node->field_image->entity->getFileUri());
+    $variables['image_height'] = $image[0]['height'];
+    $variables['image_width'] = $image[0]['width'];
   }
-  elseif ($node->getType() == 'blog_post') {
+  elseif ($blog_post) {
     $path = 'https://richardbuchanan.com' . $default_images_directory . 'rcb-blog.png';
     $variables['image_url'] = file_create_url($path);
     $variables['image_height'] = 219;
     $variables['image_width'] = 651;
   }
+  elseif ($tags) {
+    $terms = [];
+
+    foreach ($tags as $tag) {
+      $tid = $tag['target_id'];
+      $term = Term::load($tid);
+      $term_name = strtolower($term->getName());
+      $term_name = str_replace(' ', '-', $term_name);
+      $terms[] = $term_name;
+    }
+
+    $filename = implode('-', $terms);
+    $height = 0;
+    $width = 0;
+
+    switch ($filename) {
+      case 'drupal-7-uikit-2':
+      case 'drupal-7-uikit-3':
+      case 'drupal-8-uikit-2':
+      case 'drupal-8-uikit-3':
+        $filename = "$filename.png";
+        $height = 260;
+        $width = 1900;
+        break;
+
+      case 'drupal-uikit':
+        $filename = 'uikit-for-drupal.png';
+        $height = 320;
+        $width = 1900;
+        break;
+
+      default:
+        $filename = FALSE;
+    }
+
+    if ($filename) {
+      $path = $default_images_directory . $filename;
+      $file_exists = file_exists(DRUPAL_ROOT . $path);
+
+      if ($file_exists) {
+        $variables['image_default'] = TRUE;
+        $variables['image_url'] = file_create_url($path);
+        $variables['image_height'] = $height;
+        $variables['image_width'] = $width;
+      }
+    }
+  }
+
+  $variables['main_attributes'] = new Attribute;
+  $variables['main_attributes']->setAttribute('id', 'node--main-content');
 }
