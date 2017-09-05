@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Theme override to display an input form element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the input element.
+ * - children: Optional additional rendered elements.
+ *
+ * @see template_preprocess_input()
+ * @see uikit_preprocess_input()
+ *
+ * @ingroup uikit_themeable
+ */
+#}
+<button{{ attributes }}>
+  <span class="rcb-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1">
+      <circle class="rcb-preserve" fill="none" stroke="#1f6f9e" stroke-width="1.1" cx="9" cy="9" r="7"></circle>
+      <path class="rcb-preserve" fill="none" stroke="#1f6f9e" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path>
+    </svg>
+  </span>
+</button>
+{{ children }}

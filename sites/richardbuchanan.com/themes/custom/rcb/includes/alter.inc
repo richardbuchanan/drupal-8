@@ -23,7 +23,15 @@ use Drupal\Core\Form\FormStateInterface;
  */
 function rcb_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['actions']['submit']['#attributes']['id'] = 'edit-submit--search-block-form';
-  $form['actions']['submit']['#theme_wrappers'] = ['input__search__search_block_form'];
+
+  if ($form['form_id']['#id'] == 'edit-search-block-form') {
+    $form['actions']['submit']['#theme_wrappers'] = ['input__search__search_block_form'];
+  }
+  else {
+    $form['actions']['submit']['#theme_wrappers'] = ['input__search__search_block_form__mobile'];
+    $form['#id'] = 'search-block-form--mobile';
+  }
+
   $form['keys']['#attributes']['id'] = 'edit-keys--search-block-form';
   $form['keys']['#attributes']['placeholder'] = t('Search');
 }

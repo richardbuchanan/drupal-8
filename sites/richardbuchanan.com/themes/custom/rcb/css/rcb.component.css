@@ -196,6 +196,10 @@ a:hover {
   color: #e5e5e5;
   padding: 0 40px 0 0;
 }
+#search-block-form--mobile #edit-keys--search-block-form {
+  border-color: #1f6f9e;
+  color: #1f6f9e;
+}
 #edit-keys--search-block-form:-webkit-autofill,
 #edit-keys--search-block-form:-webkit-autofill:hover,
 #edit-keys--search-block-form:-webkit-autofill:focus {
