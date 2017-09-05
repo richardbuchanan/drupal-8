@@ -132,8 +132,15 @@ a:hover {
 .uk-form-stacked>*+* {
   margin-top: 20px;
 }
-[class*=uk-form-width] {
-  max-width: 100%;
+@media (max-width: 359px) {
+  .uk-form-width-medium {
+    width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  .uk-form-width-large {
+    width: 100%;
+  }
 }
 
 /**
