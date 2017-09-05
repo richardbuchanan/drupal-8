@@ -146,15 +146,18 @@
             </div>
           {% endif %}
 
-          <div class="uk-margin-small-bottom">
-            <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
-            {% if node.comment.comment_count == 0 or node.comment.comment_count > 1 %}
-              {% set comments = 'comments' %}
-            {% else %}
-              {% set comments = 'comment' %}
-            {% endif %}
-            <a href="{{ url }}#comments">{{ node.comment.comment_count }} {{ comments }}</a>
-          </div>
+          {% if node.comment %}
+            <div class="uk-margin-small-bottom">
+              <span class="uk-margin-small-right" uk-icon="icon:comments"></span>
+              {% if node.comment.comment_count == 0 or node.comment.comment_count > 1 %}
+                {% set comments = 'comments' %}
+              {% else %}
+                {% set comments = 'comment' %}
+              {% endif %}
+              {% set comment_count = node.comment.comment_count ? node.comment.comment_count : 0 %}
+              <a href="{{ url }}#comments">{{ comment_count }} {{ comments }}</a>
+            </div>
+          {% endif %}
 
           <div>
             <a href="https://twitter.com/intent/tweet?text={{ title|url_encode }}&url=http%3A//richardbuchanan.com{{ url }}&via=HouseOfCanon" class="uk-icon-button uk-margin-small-right" uk-icon="icon: twitter"></a>

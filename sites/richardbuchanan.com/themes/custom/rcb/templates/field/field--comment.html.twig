@@ -40,14 +40,13 @@
   set title_classes = [
     'title',
     label_display == 'visually_hidden' ? 'visually-hidden',
+    comment_count == '0' ? 'uk-hidden',
   ]
 %}
-<section{{ attributes.addClass(classes) }}>
-  {% if comments and not label_hidden %}
-    {{ title_prefix }}
-    <h2 id="comments"{{ title_attributes.addClass(title_classes) }}>{{ label }} ({{ comment_count }})</h2>
-    {{ title_suffix }}
-  {% endif %}
+<section id="comments"{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  <h2 {{ title_attributes.addClass(title_classes) }}>{{ label }} ({{ comment_count }})</h2>
+  {{ title_suffix }}
 
   {% if comments %}
     <ul class="uk-comment-list">
