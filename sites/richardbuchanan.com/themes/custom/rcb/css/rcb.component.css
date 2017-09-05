@@ -132,7 +132,9 @@ a:hover {
 .uk-form-stacked>*+* {
   margin-top: 20px;
 }
-.uk-section
+[class*=uk-form-width] {
+  max-width: 100%;
+}
 
 /**
  * Custom components.
