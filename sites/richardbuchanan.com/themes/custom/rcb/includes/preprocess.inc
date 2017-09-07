@@ -18,6 +18,26 @@ use Drupal\rcb\RCB;
 use Drupal\user\Entity\User;
 
 /**
+ * Implements template_preprocess_html().
+ */
+function rcb_preprocess_html(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $user_login = $current_path == '/user' && \Drupal::currentUser()->isAnonymous();
+
+  if ($current_path == '/user/login' || $current_path == '/user/password' || $user_login) {
+    $noindex = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'name' => 'robots',
+        'content' => 'noindex, nofollow',
+      ],
+    ];
+
+    $variables['#attached']['html_head'][] = [$noindex, 'meta_noindex'];
+  }
+}
+
+/**
  * Implements template_preprocess_region().
  */
 function rcb_preprocess_region(&$variables) {
