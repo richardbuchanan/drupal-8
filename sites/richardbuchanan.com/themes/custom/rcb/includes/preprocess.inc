@@ -212,10 +212,14 @@ function rcb_preprocess_input(&$variables) {
     if ($variables['attributes']['id'] != 'edit-submit--search-block-form') {
       switch ($value) {
         case 'Advanced search':
-        case 'Preview':
+        case 'Save':
         case 'Search':
         case 'Send message':
           $variables['attributes']['class'][] = 'uk-button-primary';
+          break;
+
+        case 'Preview':
+          $variables['attributes']['class'][] = 'uk-button-secondary';
           break;
 
         default:
@@ -233,6 +237,7 @@ function rcb_preprocess_input(&$variables) {
  */
 function rcb_preprocess_node(&$variables) {
   $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
 
   $comment = $node->hasField('comment');
   $variables['comments_open'] = FALSE;
@@ -267,7 +272,17 @@ function rcb_preprocess_node(&$variables) {
   $variables['has_tags'] = $has_tags;
 
   $timestamp = $node->getCreatedTime();
-  $variables['date'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
+
+  switch ($view_mode) {
+    case 'sidebar_teaser':
+      $options['granularity'] = 1;
+      $variables['date'] = t('@time ago', array('@time' => \Drupal::service('date.formatter')->formatTimeDiffSince($timestamp, $options)));
+      break;
+
+    default:
+      $variables['date'] = \Drupal::service('date.formatter')->format($timestamp, 'custom', 'F j, Y');
+  }
+
   $variables['created'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['modified'] = \Drupal::service('date.formatter')->format($timestamp, 'html_datetime');
   $variables['title'] = $node->getTitle();
