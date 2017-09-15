@@ -25,8 +25,8 @@ libraries-override:
   core/drupal.tabledrag: uikit/tabledrag
   comment/drupal.comment-new-indicator: uikit/comment-new-indicator
 
-# Information added by Drupal.org packaging script on 2017-07-31
-version: '8.x-3.0-beta11'
+# Information added by Drupal.org packaging script on 2017-09-12
+version: '8.x-3.0-beta12'
 core: '8.x'
 project: 'uikit'
-datestamp: 1501496951
+datestamp: 1505207361
