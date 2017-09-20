@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function altering_entity_forms_entity_type_alter(array &$entity_types) {
+  /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
+  // Set the form class for menu add/edit forms to an alternate implementation
+  // of the Drupal\Core\Entity\EntityStorageInterface interface.
+  $entity_types['menu']
+    ->setFormClass('add', 'Drupal\altering_entity_forms\Form\MenuFormAlter')
+    ->setFormClass('edit', 'Drupal\altering_entity_forms\Form\MenuFormAlter');
+}

@@ -12,9 +12,12 @@
  */
 
 use Drupal\Component\Utility\Html;
-use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 use Drupal\rcb\RCB;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
 
 /**
@@ -135,6 +138,56 @@ function rcb_preprocess_comment(&$variables) {
 function rcb_preprocess_details(&$variables) {
   $variables['attributes']['uk-accordion'] = '';
   $variables['summary_attributes']->addClass('uk-accordion-title');
+}
+
+/**
+ * Implements template_preprocess_file_link().
+ */
+function rcb_preprocess_file_link(&$variables) {
+  $file = $variables['file'];
+  $options = array();
+
+  $variables['attributes']->removeAttribute('class');
+  $file_entity = ($file instanceof File) ? $file : File::load($file->fid);
+  // @todo Wrap in file_url_transform_relative(). This is currently
+  // impossible. As a work-around, we currently add the 'url.site' cache context
+  // to ensure different file URLs are generated for different sites in a
+  // multisite setup, including HTTP and HTTPS versions of the same site.
+  // Fix in https://www.drupal.org/node/2646744.
+  $url = file_create_url($file_entity->getFileUri());
+  $variables['#cache']['contexts'][] = 'url.site';
+
+  $mime_type = $file->getMimeType();
+  // Set options as per anchor format described at
+  // http://microformats.org/wiki/file-format-examples
+  $options['attributes']['type'] = $mime_type . '; length=' . $file->getSize();
+
+  // Use the description as the link text if available.
+  if (empty($variables['description'])) {
+    $link_text = $file_entity->getFilename();
+  }
+  else {
+    $link_text = $variables['description'];
+  }
+
+  $options['attributes']['title'] = t('Download @filename', ['@filename' => $file_entity->getFilename()]);
+
+  // Classes to add to the file field for icons.
+  $classes = array(
+    'file',
+    // Add a specific class for each and every mime type.
+    'file--mime-' . strtr($mime_type, array('/' => '-', '.' => '-')),
+    // Add a more general class for groups of well known MIME types.
+    'file--' . file_icon_class($mime_type),
+    'uk-button-link',
+  );
+
+  // Set file classes to the options array.
+  $variables['attributes'] = new Attribute($variables['attributes']);
+  $variables['attributes']->addClass($classes);
+
+  $variables['link'] = \Drupal::l($link_text, Url::fromUri($url, $options));
+  $variables['icon'] = Markup::create('<i class="uk-icon uk-button-link uk-margin-small-right" uk-icon="icon:download"></i>');
 }
 
 /**
