@@ -1,0 +1,6 @@
+rcb_statistics.settings:
+  title: Statistics
+  description: 'Configure the logging of content statistics.'
+  route_name: rcb_statistics.settings
+  parent: system.admin_config_system
+  weight: -15

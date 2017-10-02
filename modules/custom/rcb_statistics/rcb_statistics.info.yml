@@ -1,0 +1,9 @@
+name: 'RCB Statistics'
+type: module
+description: 'Logs content statistics for your site.'
+package: Core
+version: 8.x-1.0-rc1
+core: 8.x
+configure: rcb_statistics.settings
+dependencies:
+  - node

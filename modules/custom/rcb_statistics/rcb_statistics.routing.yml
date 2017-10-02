@@ -1,0 +1,7 @@
+rcb_statistics.settings:
+  path: '/admin/config/system/statistics'
+  defaults:
+    _form: 'Drupal\rcb_statistics\StatisticsSettingsForm'
+    _title: 'Statistics'
+  requirements:
+    _permission: 'administer statistics'
