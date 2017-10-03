@@ -113,3 +113,14 @@ function rcb_module_entity_view_alter(array &$build, EntityInterface $entity, En
     }
   }
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function rcb_module_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $nid = $variables['elements']['#node']->id();
+
+  if ($nid == '117') {
+    $suggestions[] = 'node__home';
+  }
+}

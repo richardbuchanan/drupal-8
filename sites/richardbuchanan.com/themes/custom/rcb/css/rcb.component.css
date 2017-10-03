@@ -117,6 +117,10 @@ a:hover {
 .uk-form input.uk-button-secondary:hover {
   background-color: #d19b06;
 }
+.uk-card-default {
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+}
 .uk-navbar {
   min-height: 80px;
 }
