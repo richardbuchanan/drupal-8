@@ -10,8 +10,8 @@ dependencies:
 
 configure: uikit_components.admin
 
-# Information added by Drupal.org packaging script on 2017-09-14
-version: '8.x-3.0-beta4'
+# Information added by Drupal.org packaging script on 2017-10-15
+version: '8.x-3.0-beta5'
 core: '8.x'
 project: 'uikit_components'
-datestamp: 1505393646
+datestamp: 1508074450
