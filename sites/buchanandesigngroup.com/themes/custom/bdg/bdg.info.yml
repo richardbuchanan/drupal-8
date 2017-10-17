@@ -11,6 +11,7 @@ regions:
   sidebar_first: 'Left Sidebar'
   sidebar_second: 'Right Sidebar'
   footer: 'Footer'
+  footer_bottom: 'Footer Bottom'
 
 libraries:
   - bdg/global-style

@@ -1,0 +1,4 @@
+name: 'BDG Custom'
+type: module
+description: 'Custom module for buchanandesigngroup.com'
+core: 8.x

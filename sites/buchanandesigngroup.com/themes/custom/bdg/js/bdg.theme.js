@@ -9,6 +9,7 @@
 
   Drupal.behaviors.BDG = {
     attach: function () {
+
     }
   };
 })(jQuery);

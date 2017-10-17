@@ -11,13 +11,57 @@
  * @see process.inc
  */
 
+use Drupal\Core\Template\Attribute;
+
 /**
  * Implements template_preprocess_page().
  */
-/* -- Delete this line if you want to use this function
 function bdg_preprocess_page(&$variables) {
+  $variables['page_wrapper_attributes'] = new Attribute();
+  $variables['page_wrapper_attributes']->setAttribute('id', 'page-wrapper');
+
+  $variables['page_attributes'] = new Attribute();
+  $variables['page_attributes']->setAttribute('id', 'page');
+  $variables['page_attributes']->addClass('uk-container');
+  $variables['page_attributes']->addClass('uk-container-expand');
+  $variables['page_attributes']->addClass('uk-padding-small');
+  $variables['page_attributes']->addClass('uk-padding-remove-top');
+  $variables['page_attributes']->addClass('uk-padding-remove-bottom');
+
+  $variables['footer_top_attributes'] = new Attribute();
+  $variables['footer_top_attributes']->setAttribute('id', 'page-footer-top');
+  $variables['footer_top_attributes']->addClass('uk-padding-small');
+  $variables['footer_top_attributes']->addClass('uk-container-expand');
+  $variables['footer_top_attributes']->addClass('uk-padding-small');
+
+  $variables['footer_bottom_attributes'] = new Attribute();
+  $variables['footer_bottom_attributes']->setAttribute('id', 'page-footer-bottom');
+  $variables['footer_bottom_attributes']->addClass('uk-padding-small');
+  $variables['footer_bottom_attributes']->addClass('uk-container-expand');
+  $variables['footer_bottom_attributes']->addClass('uk-padding-small');
 }
-// */
+
+/**
+ * Implements template_preprocess_input().
+ */
+function bdg_preprocess_input(&$variables) {
+  if ($variables['element']['#type'] == 'submit') {
+    $variables['attributes']['class'][] = 'uk-button';
+    $value = $variables['element']['#value']->__toString();
+
+    switch ($value) {
+      case 'Log in':
+      case 'Preview':
+      case 'Send message':
+      case 'Submit':
+        $variables['attributes']['class'][] = 'uk-button-primary';
+        break;
+
+      default:
+        $variables['attributes']['class'][] = 'uk-button-default';
+    }
+  }
+}
 
 /**
  * Implements template_preprocess_block().

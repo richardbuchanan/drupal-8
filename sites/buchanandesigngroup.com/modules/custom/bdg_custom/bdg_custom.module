@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_link_alter().
+ */
+function bdg_custom_link_alter(&$variables) {
+  $route = $variables['url']->getRouteName();
+
+  if ($route == 'user.login') {
+    $variables['text'] = t('My Account');
+  }
+}

@@ -1,1 +1,15 @@
 /* Macro arrangement of a web page, including any grid systems. */
+#page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body.toolbar-tray-open #page-wrapper {
+  min-height: calc(100vh - 80px);
+}
+body.toolbar-tray-open.toolbar-vertical #page-wrapper {
+  min-height: calc(100vh - 40px);
+}
+#page {
+  flex-grow: 1;
+}

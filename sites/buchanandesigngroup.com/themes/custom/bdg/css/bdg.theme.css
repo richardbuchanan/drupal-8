@@ -1,1 +1,36 @@
 /* Purely visual styling (“look-and-feel”) for a component. */
+#page-footer {
+  background-color: #202020;
+  border-top: 6px solid #337ab7;
+  color: #999;
+  font-size: .925rem;
+}
+#page-footer .uk-list {
+  margin-bottom: 0;
+}
+#page-footer .uk-list>li:nth-child(n+2),
+#page-footer .uk-list>li>ul {
+  margin-top: 0;
+}
+#page-footer .uk-list>li>a {
+  color: #bbb;
+}
+#page-footer-bottom {
+  background-color: #101010;
+  font-size: .835rem;
+  text-align: center;
+}
+#main-navigation-footer .uk-subnav {
+  margin-bottom: 0;
+}
+#main-navigation-footer .uk-subnav>.uk-active>a,
+#main-navigation-footer .uk-subnav>*>:first-child {
+  color: #999;
+}
+#main-navigation-footer .uk-subnav>*>:first-child {
+  text-transform: none;
+}
+#main-navigation-footer .uk-subnav>*>a:focus,
+#main-navigation-footer .uk-subnav>*>a:hover {
+  text-decoration: underline;
+}
