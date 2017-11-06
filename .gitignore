@@ -64,3 +64,5 @@ modules/contrib/devel
 sites/default/files
 sites/localhost.*
 sites/sites.php
+.gitignore
+node_modules/
