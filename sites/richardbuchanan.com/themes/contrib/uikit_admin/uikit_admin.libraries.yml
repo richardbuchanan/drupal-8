@@ -1,0 +1,40 @@
+global-style:
+  version: VERSION
+  css:
+    base:
+      css/uikit_admin.base.css: {}
+    layout:
+      css/uikit_admin.layout.css: {}
+    component:
+      css/uikit_admin.component.css: {}
+      css/uikit_admin.dropbutton.css: {}
+      css/uikit_admin.views-ui.css: {}
+    theme:
+      css/uikit_admin.theme.css: {}
+  js:
+    js/uikit_admin.theme.js: {}
+  dependencies:
+    - toolbar/toolbar
+
+system.admin:
+  version: VERSION
+  css:
+    theme:
+      css/uikit_admin.system.admin.css: { weight: -10 }
+
+tableheader:
+  version: VERSION
+  js:
+    js/uikit_admin.tableheader.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+    - core/drupal.displace
+
+user:
+  version: VERSION
+  css:
+    theme:
+      css/uikit_admin.user.css: {}
