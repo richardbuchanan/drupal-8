@@ -1,16 +1,16 @@
 uikit:
   remote: https://getuikit.com/
-  version: 3.0.0-beta.30
+  version: 3.0.0-beta.33
   license:
     name: MIT
     url: https://github.com/uikit/uikit/blob/develop/LICENSE.md
     gpl-compatible: true
   css:
     base:
-      //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/css/uikit.min.css: { type: external, minified: true }
+      //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.33/css/uikit.min.css: { type: external, minified: true }
   js:
-    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js: { type: external, minified: true }
-    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit-icons.min.js: { type: external, minified: true }
+    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.33/js/uikit.min.js: { type: external, minified: true }
+    //cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.33/js/uikit-icons.min.js: { type: external, minified: true }
   dependencies:
     - core/jquery
     - core/jquery.once
@@ -58,12 +58,68 @@ comment-new-indicator:
     - history/api
     - core/drupal.displace
 
+autocomplete:
+  version: VERSION
+  js:
+    js/uikit.autocomplete.js: {}
+
 dropbutton:
   version: VERSION
-  js:
-    js/uikit.dropbutton.js: {}
+  css:
+    component:
+      css/uikit.dropbutton.css: {}
 
-tabledrag:
+jquery.ui:
+  version: VERSION
+  css:
+    theme:
+      css/uikit.jquery.ui.css: {}
+
+jquery.ui.dialog:
+  version: VERSION
+  css:
+    theme:
+      css/uikit.jquery.ui.dialog.css: {}
+
+progress:
   version: VERSION
   js:
-    js/uikit.tabledrag.js: {}
+    js/uikit.progress.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+
+tableheader:
+  version: VERSION
+  js:
+    js/uikit.tableheader.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+    - core/drupal.displace
+
+tableselect:
+  version: VERSION
+  js:
+    js/uikit.tableselect.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+
+toolbar.menu:
+  version: VERSION
+  css:
+    state:
+      css/uikit.toolbar.menu.css: {}
+
+views_ui.admin.styling:
+  version: VERSION
+  css:
+    component:
+      css/uikit.views_ui.admin.css: {}
+    theme:
+      css/uikit.views_ui.admin.theme.css: {}

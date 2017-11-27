@@ -13,4 +13,13 @@
  * @ingroup uikit_themeable
  */
 #}
-<input{{ attributes }} />{{ children }}
+{%
+  set classes = [
+    'uk-input',
+    errors ? 'uk-form-danger',
+  ]
+%}
+<div class="uk-inline">
+  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: refresh"></span>
+  <input{{ attributes.addClass(classes) }} />{{ children }}
+</div>
