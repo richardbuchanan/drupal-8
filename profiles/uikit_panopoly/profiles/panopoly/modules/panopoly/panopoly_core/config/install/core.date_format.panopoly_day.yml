@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: panopoly_day
-label: Day
-locked: false
-pattern: 'F j, Y'

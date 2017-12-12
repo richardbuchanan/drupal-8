@@ -1,8 +1,0 @@
-name: 'Altering entity forms'
-type: module
-description: 'Exmaple module for altering entity forms (i.e. node add/edit forms).'
-core: 8.x
-
-dependencies:
-  - drupal:menu_ui
-  - drupal:node
