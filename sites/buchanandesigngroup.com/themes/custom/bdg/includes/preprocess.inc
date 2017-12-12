@@ -46,7 +46,7 @@ function bdg_preprocess_page(&$variables) {
  */
 function bdg_preprocess_input(&$variables) {
   if ($variables['element']['#type'] == 'submit') {
-    $variables['attributes']['class'][] = 'uk-button';
+    $variables['attributes']['class'] = ['uk-button'];
     $value = $variables['element']['#value']->__toString();
 
     switch ($value) {
