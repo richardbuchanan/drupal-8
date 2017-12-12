@@ -21,6 +21,7 @@ class TwigExtension extends \Twig_Extension {
   public function getFunctions() {
     return [
       new \Twig_SimpleFunction('drupal_view', 'views_embed_view'),
+      new \Twig_SimpleFunction('drupal_view_result', 'views_get_view_result'),
       new \Twig_SimpleFunction('drupal_block', [$this, 'drupalBlock']),
       new \Twig_SimpleFunction('drupal_region', [$this, 'drupalRegion']),
       new \Twig_SimpleFunction('drupal_entity', [$this, 'drupalEntity']),
@@ -119,6 +120,11 @@ class TwigExtension extends \Twig_Extension {
         }
         $build[$id] = $view_builder->view($block);
       }
+    }
+
+    if ($build) {
+      $build['#region'] = $region;
+      $build['#theme_wrappers'] = ['region'];
     }
 
     return $build;

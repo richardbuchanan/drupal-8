@@ -39,8 +39,8 @@ libraries-override:
   core/drupal.tableselect: uikit/tableselect
   comment/drupal.comment-new-indicator: uikit/comment-new-indicator
 
-# Information added by Drupal.org packaging script on 2017-11-27
-version: '8.x-3.0-rc4'
+# Information added by Drupal.org packaging script on 2017-12-01
+version: '8.x-3.0'
 core: '8.x'
 project: 'uikit'
-datestamp: 1511808195
+datestamp: 1512158290

@@ -20,13 +20,27 @@ libraries:
 libraries-extend:
   core/drupal.active-link:
     - uikit/active-link
+  core/drupal.autocomplete:
+    - uikit/autocomplete
+  core/drupal.dropbutton:
+    - uikit/dropbutton
+  core/jquery.ui:
+    - uikit/jquery.ui
+  core/jquery.ui.dialog:
+    - uikit/jquery.ui.dialog
+  toolbar/toolbar.menu:
+    - uikit/toolbar.menu
+  views_ui/admin.styling:
+    - uikit/views_ui.admin.styling
 
 libraries-override:
-  core/drupal.tabledrag: uikit/tabledrag
+  core/drupal.progress: uikit/progress
+  core/drupal.tableheader: uikit/tableheader
+  core/drupal.tableselect: uikit/tableselect
   comment/drupal.comment-new-indicator: uikit/comment-new-indicator
 
-# Information added by Drupal.org packaging script on 2017-09-15
-version: '8.x-3.0-beta13'
+# Information added by Drupal.org packaging script on 2017-12-01
+version: '8.x-3.0'
 core: '8.x'
 project: 'uikit'
-datestamp: 1505484248
+datestamp: 1512158290
